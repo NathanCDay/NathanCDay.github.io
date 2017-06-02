@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Shiny</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="shortcut icon" type="image/png" href="www/favicon2.png">
+
+<link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Tangerine">
+          
+<link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto">
+          
+<style>
+    .navbar {
+        font-family: 'Atomic Age';
+    }
+    .tocify {
+        font-family: 'Atomic Age';
+    }
+    h1,h2,h3,h4,h5,h6 {
+        font-family: 'Atomic Age';
+    }
+    p {
+        font-family: 'Roboto';
+    }
+
+</style>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Nate Day</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="sports_senti.html">
+    <span class="fa fa-play"></span>
+     
+    Sports Sentiment
+  </a>
+</li>
+<li>
+  <a href="shiny.html">
+    <span class="fa fa-flask"></span>
+     
+    Shiny
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-bar-chart"></span>
+     
+    Data Docs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="state_park_viz.html">
+        <span class="fa fa-globe"></span>
+         
+        State Park Popularity
+      </a>
+    </li>
+    <li>
+      <a href="Milestone.html">
+        <span class="fa fa-calendar-check-o"></span>
+         
+        Milestone Report
+      </a>
+    </li>
+    <li>
+      <a href="Cats_with_Pipes.html">
+        <span class="fa fa-puzzle-piece"></span>
+         
+        Piping with Purrr
+      </a>
+    </li>
+    <li>
+      <a href="dc_crime.html">
+        <span class="fa fa-map"></span>
+         
+        DC Crime Report
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://www.linkedin.com/in/nathan-day-59b48435/">
+    <span class="fa fa-linkedin-square fa-2x"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://stackoverflow.com/users/5878751/nate-day?tab=profile">
+    <span class="fa fa-stack-overflow fa-2x"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/NathanCDay">
+    <span class="fa fa-github fa-2x"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Shiny</h1>
+
+</div>
+
+
+<p>In my day job I constantly am trying to put together the proper series of plots to help people understand and identify the relevant trends in their data. This minimizes the investigative and exploratory capabilities of the researchers themselves and I believe that using reactive frameworks like R’s <a href="https://shiny.rstudio.com/">“Shiny”</a> with javscript driven interactive visualization libraries like <a href="https://plot.ly/r/">“plotly”</a>, <a href="http://www.highcharts.com/">“highcharts”</a>, and <a href="https://d3js.org/">“d3”</a> can help restore some of that. Finding a harmony between quick one-offs and investing in a high quality chart viz pipeline is the hard part.</p>
+<hr />
+<div id="live-demos" class="section level3">
+<h3>Live Demos</h3>
+<p>I have built a couple apps as practice with various tools, all of which are avaible on <a href="https://cran.r-project.org/">CRAN.</a></p>
+<ul>
+<li><a href="https://nathanday.shinyapps.io/Shiny_Pokemon/">Pokemon Stat Distributions</a>
+<ul>
+<li>Packages: <code>ggbeeswarm</code>, <code>DT</code>, <code>plotly</code></li>
+<li>Tabsets offer multiple viewing options</li>
+<li>Hover events provide additional details</li>
+<li>Filters by type for restricted comparisons</li>
+</ul></li>
+<li><a href="https://nathanday.shinyapps.io/orange_polls/">Presidental Approval</a>
+<ul>
+<li>Packages: <code>rvest</code>, <code>ggplot2</code>, <code>plotly</code></li>
+<li>Compares ratings of past Presdients</li>
+<li>Highlights historic nature of Donald Trump</li>
+<li>Uses loess and linear models for fitting historical trends</li>
+</ul></li>
+</ul>
+</div>
+
+<hr>
+    <p>Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>
+        Hosted on <a href = "https://pages.github.com/">Github</a>.
+            Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
+            Copyright &copy; 2017.
+            </p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
