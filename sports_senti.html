@@ -437,13 +437,13 @@ div.tocify {
 
 <div id="intro" class="section level1">
 <h1>Intro</h1>
-<p>With the season finals for the NBA and NHL dominating the sports-cast schedule, I decided to build a quick text anlysis of athletes from the NBA, NHL, NASCAR, and PGA. I’ve always thought of hockey players as nicer than normal althetes and wanted to compare them against other sporting proffesionals. Let’s see how nice they actually are … eh?</p>
+<p>With the season finals for the NBA and NHL dominating the sports-cast schedule, I decided to build a quick text analysis of athletes from the NBA, NHL, NASCAR, and PGA. I’ve always thought of hockey players as nicer than normal athletes and wanted to compare them against other sporting professionals. Let’s see how nice they actually are … eh?</p>
 <hr />
-<p>This analysis would not be possible with out the <a href="http://tidyverse.org/"><code>tidyverse</code></a> or the fantastic packages of <a href="https://github.com/trinker">Tyler Rinker</a>, <a href="https://github.com/juliasilge">Julia Silge</a> and <a href="https://github.com/dgrtwo">David Robinson</a>. Thank you all for your inspiration and contribution to the text analysis toolchest of <code>R</code>.</p>
+<p>This analysis would not be possible with out the <a href="http://tidyverse.org/"><code>tidyverse</code></a> or the fantastic packages of <a href="https://github.com/trinker">Tyler Rinker</a>, <a href="https://github.com/juliasilge">Julia Silge</a> and <a href="https://github.com/dgrtwo">David Robinson</a>. Thank you all for your inspiration and contribution to the text analysis tool chest of <code>R</code>.</p>
 </div>
 <div id="scrape" class="section level1">
 <h1>Scrape</h1>
-<p>Because of <a href="http://www.asapsports.com/">ASAPSports</a> we can access transcripts from a wide-range of proffessional and amauter athelete interviews. Unfortunatley this data is not immediately avaialbe in “tidy” format, or even as a .csv, but have no fear our web-scraping bff <a href="https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en">Selector Gadget</a> and <a href="https://cran.r-project.org/web/packages/rvest/rvest.pdf"><code>library(rvest)</code></a> are here!!!!!</p>
+<p>Because of <a href="http://www.asapsports.com/">ASAPSports</a> we can access transcripts from a wide-range of professional and amateur athlete interviews. Unfortunately this data is not immediately available in “tidy” format, or even as a .csv, but have no fear our web-scraping bff <a href="https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en">Selector Gadget</a> and <a href="https://cran.r-project.org/web/packages/rvest/rvest.pdf"><code>library(rvest)</code></a> are here!!!!!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
 
 <span class="co"># my favorites</span>
@@ -531,7 +531,7 @@ sports %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(speaker
 </div>
 <div id="read-ability" class="section level1">
 <h1>Read-ability</h1>
-<p><a href="https://github.com/trinker">Tyler Rinker</a> has developed a series of standardized text analysis pacakges that are available on CRAN. Here we are going to use two of his packages to quantify each athlete’s interview transcript with six readability systems.</p>
+<p><a href="https://github.com/trinker">Tyler Rinker</a> has developed a series of standardized text analysis packages that are available on CRAN. Here we are going to use two of his packages to quantify each athlete’s interview transcript with six readability systems.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(syllable)
 <span class="kw">library</span>(readability)
 
@@ -567,11 +567,11 @@ read_scores %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(!(
 <span class="st">    </span><span class="kw">scale_color_d3</span>() +
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>After we kick out those outliers, we can see that NBA althetes are consistantly rated the highest in terms of reading level. And that NASCAR althetes are consistantly the lowest. It also looks like the gaps between NASCAR-NBA and NHL-NBA might be statistically significant. Remember, non-overallping 95% mean confidence intervals indicate significant difference at p = .05, before multiple test corrections ;)</p>
+<p>After we kick out those outliers, we can see that NBA athletes are consistently rated the highest in terms of reading level. And that NASCAR athletes are consistently the lowest. It also looks like the gaps between NASCAR-NBA and NHL-NBA might be statistically significant. Remember, non-overlapping 95% mean confidence intervals indicate significant difference at p = .05, before multiple test corrections ;)</p>
 </div>
 <div id="sentiment" class="section level1">
 <h1>Sentiment</h1>
-<p>Okay so we measured readability and it seems like not all althletes speak at similar reading levels. But really we wanted to find out if NHL players are nicer than their peers. So we are going to use another great Tyler Rinker package and the fantastic <a href="https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html"><code>library(tidytext)</code></a> from the StackOverflow data team, Julia Silge and David Robinson.</p>
+<p>Okay so we measured readability and it seems like not all athletes speak at similar reading levels. But really we wanted to find out if NHL players are nicer than their peers. So we are going to use another great Tyler Rinker package and the fantastic <a href="https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html"><code>library(tidytext)</code></a> from the Stack Overflow data team, Julia Silge and David Robinson.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sentimentr)
 sents &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <span class="kw">sentiment_by</span>(text) ) %&gt;%
 <span class="st">    </span><span class="kw">select</span>(<span class="dt">words =</span> word_count,
@@ -595,8 +595,8 @@ sents %&lt;&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span cl
 <span class="st">    </span><span class="kw">unlist</span>()</code></pre></div>
 <pre><code>##                                                                                                                                                                                                                                    text 
 ## &quot;Yeah, yesterday was pretty tough.  I didn&#39;t play 18 holes into the tough bit.  But yeah, I felt that if I played the same way, in a way where it wasn&#39;t really blowing that much, you could all of a sudden be a bit more aggressive.&quot;</code></pre>
-<p>That makes sense, it does sound like he had a bad day. Golf can do that to anyone, even proffesionals.</p>
-<p>Let’s drop that statement as an outlier and drop any athletes with just a single sentiment value and reinvestigate by sports</p>
+<p>That makes sense, it does sound like he had a bad day. Golf can do that to anyone, even professionals.</p>
+<p>Let’s drop that statement as an outlier and drop any athletes with just a single sentiment value and re-investigate by sports</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sents %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(sent &gt;<span class="st"> </span>-<span class="fl">0.5</span>) %&gt;%
 <span class="st">    </span><span class="kw">group_by</span>(initials) %&gt;%
 <span class="st">    </span><span class="kw">filter</span>(<span class="kw">n</span>() !=<span class="st"> </span><span class="dv">1</span>) %&gt;%
@@ -610,8 +610,8 @@ sents %&lt;&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span cl
 <span class="st">    </span><span class="kw">scale_color_d3</span>() +
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>From the looks of this plot it seems like hockey players are the lowest (in this case least positive) sentiment athletes, but this scoring system is based on word score summantion, lets try binning words based on associated sentiment.</p>
-<p>To do this we will switch pacakge gears.</p>
+<p>From the looks of this plot it seems like hockey players are the lowest (in this case least positive) sentiment athletes, but this scoring system is based on word score summation, lets try binning words based on associated sentiment.</p>
+<p>To do this we will switch package gears.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidytext)
 
 <span class="co"># new scoring system</span>
@@ -634,15 +634,15 @@ sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words
 <span class="st">    </span><span class="kw">coord_flip</span>() +
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Well now it looks like all athletes have a similar sentiment distribution with high levels of ‘positve’, ‘anticipation’ and ‘trust’ sentiments across sports. Maybe all of that sports psycology is onto something after all. (Bob Rotella is a golf-genius)</p>
-<p>But to truely see whether hockey players are nice, lets do side by side comparisons for each sport, only panelled by sentiments.</p>
+<p>Well now it looks like all athletes have a similar sentiment distribution with high levels of ‘positive’, ‘anticipation’ and ‘trust’ sentiments across sports. Maybe all of that sports psychology is onto something after all. (Bob Rotella is a golf-genius)</p>
+<p>But to truly see whether hockey players are nice, lets do side by side comparisons for each sport, only paneled by sentiments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sport_words, <span class="kw">aes</span>(sport, prop, <span class="dt">fill =</span> sport)) +
 <span class="st">    </span><span class="kw">geom_col</span>() +
 <span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>sentiment, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) +
 <span class="st">    </span><span class="kw">coord_flip</span>() +
 <span class="st">    </span><span class="kw">scale_fill_rickandmorty</span>() <span class="co"># it really exists like that szechuan sauce</span></code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Now we can see golfers are the angriest, racers have the most anticipation, basketball players have the least fear and hockey players are the most positive and least negative (at least in this small sample). Maybe hockey players really are nicer than other proffesional althetes. More tests are in order and more scraping is required to power them, off we go.</p>
+<p>Now we can see golfers are the angriest, racers have the most anticipation, basketball players have the least fear and hockey players are the most positive and least negative (at least in this small sample). Maybe hockey players really are nicer than other professional athletes. More tests are in order and more scraping is required to power them, off we go.</p>
 <p>Thanks for reading :)</p>
 </div>
 
