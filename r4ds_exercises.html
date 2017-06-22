@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>R4DS Exercises</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="shortcut icon" type="image/png" href="www/favicon2.png">
+
+<link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Tangerine">
+          
+<link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto">
+          
+<style>
+    .navbar {
+        font-family: 'Atomic Age';
+    }
+    .tocify {
+        font-family: 'Atomic Age';
+    }
+    h1 {
+        font-family: 'Atomic Age';
+    }
+    p {
+        font-family: 'Roboto';
+    }
+
+</style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #2a211c; color: #bdae9d; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #2a211c; color: #bdae9d; border-right: 1px solid #bdae9d; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #bdae9d; background-color: #2a211c; }
+code > span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+code > span.dt { text-decoration: underline; } /* DataType */
+code > span.dv { color: #44aa43; } /* DecVal */
+code > span.bn { color: #44aa43; } /* BaseN */
+code > span.fl { color: #44aa43; } /* Float */
+code > span.ch { color: #049b0a; } /* Char */
+code > span.st { color: #049b0a; } /* String */
+code > span.co { color: #0066ff; font-style: italic; } /* Comment */
+code > span.al { color: #ffff00; } /* Alert */
+code > span.fu { color: #ff9358; font-weight: bold; } /* Function */
+code > span.er { color: #ffff00; font-weight: bold; } /* Error */
+code > span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #049b0a; } /* SpecialChar */
+code > span.vs { color: #049b0a; } /* VerbatimString */
+code > span.ss { color: #049b0a; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #0066ff; font-style: italic; } /* Documentation */
+code > span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Nate Day</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-user"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="r4ds_exercises.html">
+    <span class="fa fa-pencil"></span>
+     
+    R4DS
+  </a>
+</li>
+<li>
+  <a href="sports_senti.html">
+    <span class="fa fa-futbol-o"></span>
+     
+    Sports Sentiment
+  </a>
+</li>
+<li>
+  <a href="shiny.html">
+    <span class="fa fa-flask"></span>
+     
+    Shiny
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-bar-chart"></span>
+     
+    Data Docs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="state_park_viz.html">
+        <span class="fa fa-globe"></span>
+         
+        State Park Popularity
+      </a>
+    </li>
+    <li>
+      <a href="Cats_with_Pipes.html">
+        <span class="fa fa-puzzle-piece"></span>
+         
+        Piping with Purrr
+      </a>
+    </li>
+    <li>
+      <a href="dc_crime.html">
+        <span class="fa fa-gavel"></span>
+         
+        DC Crime Report
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://www.linkedin.com/in/nathan-day-59b48435/">
+    <span class="fa fa-linkedin-square fa-2x"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://stackoverflow.com/users/5878751/nate-day?tab=responses">
+    <span class="fa fa-stack-overflow fa-2x"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/NathanCDay?tab=stars">
+    <span class="fa fa-github fa-2x"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">R4DS Exercises</h1>
+
+</div>
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>I am guiding a group walkthrough of Garrett Grolemund and Hadley Wickam’s great book <a href="http://r4ds.had.co.nz/">R for Data Science</a>. We are trying to cover a chapter of material per week and have a one-hour weekly code review to sit together and discuss the Excersises. If you live around Charlottesville and are interested in joining, there is brief but intense vetting process :)</p>
+<p>These are the answers to the Excercises we have covered so far and will update after our mostly weekly meetings.</p>
+</div>
+<div id="ggplot2" class="section level2">
+<h2>3 ggplot2</h2>
+<div id="first-steps" class="section level3">
+<h3>3.2.4 First Steps</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr) <span class="co"># %&lt;&gt;%</span>
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<ol style="list-style-type: decimal">
+<li>Run ggplot(data = mpg). What do you see?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg) <span class="co"># grey square</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/3.2.4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is the initialized plotting area</span></code></pre></div>
+<p>How many rows are in mpg? How many columns?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(mpg)</code></pre></div>
+<pre><code>## [1] 234  11</code></pre>
+<p>What does the drv variable describe? Read the help for ?mpg to find out.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?mpg </code></pre></div>
+<p>Make a scatterplot of hwy vs cyl.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hwy, <span class="dt">y =</span> cyl))</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-3-1.png" width="672" /> What happens if you make a scatterplot of class vs drv? Why is the plot not useful?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> class, <span class="dt">y =</span> drv))<span class="co"># factor vs factor points</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need some sort of density/count viz instead</span></code></pre></div>
+</div>
+<div id="aesthetics" class="section level3">
+<h3>3.3.1 Aesthetics</h3>
+<ol style="list-style-type: decimal">
+<li>What’s gone wrong with this code? Why are the points not blue?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>))</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/3.3.1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># aes is for mapping columns in mpg by name</span>
+<span class="co"># doesn&#39;t understand color names inside aes() so uses default color scale</span>
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/3.3.1-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just move it outside</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mpg) <span class="co"># chr/fct is categorical, int/num is numeric</span></code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    234 obs. of  11 variables:
+##  $ manufacturer: chr  &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; ...
+##  $ model       : chr  &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; ...
+##  $ displ       : num  1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+##  $ year        : int  1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 ...
+##  $ cyl         : int  4 4 4 4 6 6 6 4 4 4 ...
+##  $ trans       : chr  &quot;auto(l5)&quot; &quot;manual(m5)&quot; &quot;manual(m6)&quot; &quot;auto(av)&quot; ...
+##  $ drv         : chr  &quot;f&quot; &quot;f&quot; &quot;f&quot; &quot;f&quot; ...
+##  $ cty         : int  18 21 20 21 16 18 18 18 16 20 ...
+##  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
+##  $ fl          : chr  &quot;p&quot; &quot;p&quot; &quot;p&quot; &quot;p&quot; ...
+##  $ class       : chr  &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; ...</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">color =</span> hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="co"># continuous graident</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Color&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">size =</span> hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="co"># continuous gradient</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Size&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Error: A continuous variable can not be mapped to shape</span>
+<span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">shape =</span> hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="co"># can&#39;t map continuous to shape</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Shape&quot;</span>)</code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>What happens if you map the same variable to multiple aesthetics?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">fill =</span> trans)) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you waste resolution</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">fill =</span> trans)) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">stroke =</span> <span class="dv">2</span>, <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># stroke is the outline thickness of shapes 21:25</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ &lt; 5)?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) +
+<span class="st">    </span><span class="kw">geom_bar</span>() +
+<span class="st">    </span><span class="kw">facet_wrap</span>(~hwy) <span class="co"># bins it</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="facets" class="section level3">
+<h3>3.5.1 Facets</h3>
+<p>What happens if you facet on a continuous variable?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) +
+<span class="st">    </span><span class="kw">geom_bar</span>() +
+<span class="st">    </span><span class="kw">facet_wrap</span>(~hwy) <span class="co"># coherces to intervals</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/3.5.1-1.png" width="672" /></p>
+<p>What do the empty cells in plot with facet_grid(drv ~ cyl) mean? How do they relate to this plot?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> drv, <span class="dt">y =</span> cyl)) +
+<span class="st">    </span><span class="kw">facet_wrap</span>(drv ~<span class="st"> </span>cyl) <span class="co"># combinations do not exist</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># facet_wrap() will drop them </span></code></pre></div>
+<p>What plots does the following code make? What does . do?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +
+<span class="st">    </span><span class="kw">facet_grid</span>(drv ~<span class="st"> </span>.) <span class="co"># compares against nothing if var is first (facets on y)</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +
+<span class="st">    </span><span class="kw">facet_grid</span>(~<span class="st"> </span>cyl) <span class="co"># don&#39;t need a dot if var is second (facets on x)</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p>Take the first faceted plot in this section:</p>
+<p>What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>class, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds) <span class="co"># a larger dataset</span></code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:
+##  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
+##  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...
+##  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...
+##  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...
+##  $ depth  : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...
+##  $ table  : num  55 61 65 58 58 57 57 55 61 61 ...
+##  $ price  : int  326 326 327 334 335 336 336 337 337 338 ...
+##  $ x      : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...
+##  $ y      : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...
+##  $ z      : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># helps to break up data into sub-groups</span>
+
+<span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price, <span class="dt">color =</span> clarity)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) +
+<span class="st">    </span><span class="kw">facet_grid</span>(~cut)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># depends on the trends/comparisons</span>
+<span class="co"># acts as another resolution dim</span></code></pre></div>
+<p>Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol argument?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?facet_wrap
+<span class="co"># build a grid based on number of rows/cols</span>
+<span class="co"># allows panels to fill grid by rows or columns too</span>
+
+?facet_grid
+<span class="co"># build all possible var combos based on levels of fct/as.factor(chr)</span>
+
+<span class="co"># control order/position with levels(fct) in both</span></code></pre></div>
+</div>
+<div id="geoms" class="section level3">
+<h3>3.6.1 Geoms</h3>
+<ol style="list-style-type: decimal">
+<li>What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># eval = F</span>
+<span class="kw">geom_line</span>()
+<span class="kw">geom_boxplot</span>()
+<span class="kw">geom_histogram</span>()
+<span class="kw">geom_density</span>()
+<span class="kw">geom_area</span>()</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> drv)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a scatter plot with a trend smooth</span>
+<span class="co"># defaults to loess (Localy weighted polynomial regression)</span></code></pre></div>
+<p><a href="https://en.wikipedia.org/wiki/Local_regression#Definition_of_a_LOESS_model">Local regression - Wikipedia</a></p>
+<p>3a. What does show.legend = FALSE do? What happens if you remove it?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> drv)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">show.legend =</span> F)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># removes legend for a specific layer</span>
+<span class="co"># avoid/make confustion?</span></code></pre></div>
+<p>3b. Why do you think I used it earlier in the chapter?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#to avoid visual confustion? tricky example?</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>What does the se argument to geom_smooth() do?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> drv)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>() <span class="co"># shows a confidence interval, .95 default</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>Will these two graphs look different? Why/why not?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> cyl, <span class="dt">group =</span> cyl)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>()</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>() +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># no, every sub-layer tries to inherit from the top layer, unless &quot;inherit.aes = F&quot;</span></code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>Recreate the R code necessary to generate the following graphs.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># try to change/add one argument per interation</span>
+
+<span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">group =</span> drv)) +<span class="st"> </span><span class="co"># establish a grouping var</span>
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +<span class="st"> </span><span class="co"># color var does grouping by default</span>
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="ot">NULL</span>), <span class="dt">se =</span> F) <span class="co"># turn off color group for this layer</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-4.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="ot">NULL</span>, <span class="dt">linetype =</span> drv), <span class="dt">se =</span> F) <span class="co"># turn on linetype aes for this layer</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-5.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">fill =</span> drv)) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">stroke =</span> <span class="dv">3</span>, <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) +
+<span class="st">    </span><span class="kw">theme_grey</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-6.png" width="672" /></p>
+</div>
+</div>
+<div id="polishing-ggplot2" class="section level2">
+<h2>28 Polishing ggplot2</h2>
+<div id="label" class="section level3">
+<h3>28.2.1 Label</h3>
+<ol style="list-style-type: decimal">
+<li>Create one plot on the fuel economy data with customised title, subtitle, caption, x, y, and colour labels.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) +
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;My title&quot;</span>,
+       <span class="dt">subtitle =</span> <span class="st">&quot;My sub-title&quot;</span>,
+       <span class="dt">x =</span> <span class="st">&quot;Engine displacement (L)&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;Highway fuel economy (mpg)&quot;</span>,
+       <span class="dt">caption =</span> <span class="st">&quot;My caption&quot;</span>,
+       <span class="dt">colour =</span> <span class="st">&quot;Car type&quot;</span>
+)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>The geom_smooth() is somewhat misleading because the hwy for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines. Use your modelling tools to fit and display a better model.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_wo_2seaters &lt;-<span class="st"> </span><span class="kw">filter</span>(mpg, class !=<span class="st"> &quot;2seater&quot;</span>)
+
+<span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) +
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> <span class="kw">filter</span>(mpg, class !=<span class="st"> &quot;2seater&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just adjust the data going into the geom_smooth() layer</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Take an exploratory graphic that you’ve created in the last month, and add informative titles to make it easier for others to understand.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;ChickWeight&quot;</span>)
+<span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(Time, weight, <span class="dt">color =</span> Diet)) +
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> F) +
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;The Effect of Diet on Weight Gain&quot;</span>,
+         <span class="dt">y =</span> <span class="st">&quot;Weight (grams)&quot;</span>,
+         <span class="dt">x =</span> <span class="st">&quot;Time (days)&quot;</span>)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="annotations" class="section level3">
+<h3>28.3.1 Annotations</h3>
+<ol style="list-style-type: decimal">
+<li>Use geom_text() with infinite positions to place text at the four corners of the plot.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corners &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),
+                  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+<span class="kw">ggplot</span>(corners, <span class="kw">aes</span>(x,y)) +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;bot_right&quot;</span>, <span class="dt">x =</span> <span class="ot">Inf</span>, <span class="dt">y =</span> -<span class="ot">Inf</span>) +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;top_right&quot;</span>, <span class="dt">x =</span> <span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>) +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;bot_left&quot;</span>, <span class="dt">x =</span> -<span class="ot">Inf</span>, <span class="dt">y =</span> -<span class="ot">Inf</span>) +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;top_left&quot;</span>, <span class="dt">x =</span> -<span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Read the documentation for annotate(). How can you use it to add a text label to a plot without having to create a tibble?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?annotate
+<span class="kw">ggplot</span>(corners, <span class="kw">aes</span>(x,y)) +
+<span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> .<span class="dv">5</span>, <span class="dt">y =</span> .<span class="dv">5</span>, <span class="dt">label =</span> <span class="st">&quot;Middle&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>How do labels with geom_text() interact with faceting? How can you add a label to a single facet? How can you put a different label in each facet? (Hint: think about the underlying data.)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg %&lt;&gt;%<span class="st"> </span><span class="kw">group_by</span>(cyl) %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">avg_cty =</span> <span class="kw">round</span>(<span class="kw">mean</span>(cty),<span class="dv">1</span>))
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
+<span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># delete unwanted labels for facets</span>
+mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mpg$cyl ==<span class="st"> </span><span class="dv">6</span>, ., <span class="ot">NA</span>)
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
+<span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
+<pre><code>## Warning: Removed 155 rows containing missing values (geom_text).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># really the best thing to do is use a seperate tibble</span>
+<span class="kw">data</span>(mpg)
+avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span class="kw">group_by</span>(cyl) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg_cty =</span> <span class="kw">round</span>(<span class="kw">mean</span>(cty), <span class="dv">1</span>))
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
+<span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>What arguments to geom_label() control the appearance of the background box?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_label</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty, <span class="dt">fill =</span> <span class="kw">as.factor</span>(cyl)), <span class="dt">y =</span> <span class="dv">30</span>, <span class="dt">x =</span> <span class="dv">15</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
+<span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>What are the four arguments to arrow()? How do they work? Create a series of plots that demonstrate the most important options.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>())</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrow</span>()</code></pre></div>
+<pre><code>## $angle
+## [1] 30
+## 
+## $length
+## [1] 0.25inches
+## 
+## $ends
+## [1] 2
+## 
+## $type
+## [1] 1
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;arrow&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need to complete :(</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>),
+  <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>)
+)
+
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x, y)) +
+<span class="st">  </span><span class="kw">geom_hex</span>() +
+<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) +
+<span class="st">  </span><span class="kw">coord_fixed</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
+<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
+<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>) +
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">34</span>:<span class="dv">44</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
+<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>, <span class="dt">date_breaks =</span> <span class="st">&quot;4 years&quot;</span>) +
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">34</span>:<span class="dv">44</span>, <span class="dt">labels =</span> presidential$name) +
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Is it there?&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span>/<span class="dv">20</span>) +
+<span class="st">    </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Because&quot;</span>,<span class="dt">override.aes =</span> <span class="kw">list</span>(<span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">shape =</span> <span class="dv">24</span>, <span class="dt">size =</span> <span class="dv">4</span>)))</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>Still need to write up these last exercises, Christina and Crystal care to share their code :)</p>
+</div>
+</div>
+
+<hr>
+<p>
+    Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
+    Hosted on <a href = "https://pages.github.com/">Github</a>.
+        Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
+        Copyright &copy; 2017.
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

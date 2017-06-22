@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Nathan Day" />
 
 
 <title>Sports Sentiment</title>
@@ -40,7 +39,7 @@
     .tocify {
         font-family: 'Atomic Age';
     }
-    h1,h2,h3,h4,h5,h6 {
+    h1 {
         font-family: 'Atomic Age';
     }
     p {
@@ -340,6 +339,13 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="r4ds_exercises.html">
+    <span class="fa fa-pencil"></span>
+     
+    R4DS
+  </a>
+</li>
+<li>
   <a href="sports_senti.html">
     <span class="fa fa-futbol-o"></span>
      
@@ -415,7 +421,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Sports Sentiment</h1>
-<h4 class="author"><em>Nathan Day</em></h4>
 <h4 class="date"><em>6/1/2017</em></h4>
 
 </div>
@@ -534,7 +539,7 @@ read_scores &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Those two outliers are: Kyle Bush (NASCAR) and J.R. Smith (NBA). Let’s see why…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sports, speaker %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;J.R. SMITH&quot;</span>, <span class="st">&quot;KYLE BUSCH&quot;</span>))</code></pre></div>
-<pre><code>## # A tibble: 2 × 3
+<pre><code>## # A tibble: 2 x 3
 ##    sport                                               text    speaker
 ##    &lt;chr&gt;                                              &lt;chr&gt;      &lt;chr&gt;
 ## 1    NBA            He drove the green, I&#39;ll tell you that. J.R. SMITH
@@ -633,11 +638,12 @@ sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words
 </div>
 
 <hr>
-    <p>Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>
-        Hosted on <a href = "https://pages.github.com/">Github</a>.
-            Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-            Copyright &copy; 2017.
-            </p>
+<p>
+    Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
+    Hosted on <a href = "https://pages.github.com/">Github</a>.
+        Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
+        Copyright &copy; 2017.
+</p>
 
 
 </div>
