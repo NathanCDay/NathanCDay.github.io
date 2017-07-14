@@ -427,13 +427,13 @@ div.tocify {
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>I am guiding a group walkthrough of Garrett Grolemund and Hadley Wickam’s great book <a href="http://r4ds.had.co.nz/">R for Data Science</a>. We are trying to cover a chapter of material per week and have a one-hour weekly code review to sit together and discuss the Excersises. If you live around Charlottesville and are interested in joining, there is brief but intense vetting process :)</p>
-<p>These are the answers to the Excercises we have covered so far and will update after our mostly weekly meetings.</p>
+<p>I’m guiding a group walkthrough of Garrett Grolemund and Hadley Wickam’s great book <a href="http://r4ds.had.co.nz/">R for Data Science</a>. We are trying to cover a chapter of material per week and have a one-hour weekly code review to sit together and discuss the Excersises. If you live around Charlottesville and are interested in joining, ping me.</p>
+<p>These are the answers to the excercises we have covered so far and will update after our mostly weekly meetings.</p>
 </div>
-<div id="ggplot2" class="section level2">
-<h2>3 ggplot2</h2>
+<div id="date-visualization" class="section level2">
+<h2>3 Date visualization</h2>
 <div id="first-steps" class="section level3">
-<h3>3.2.4 First Steps</h3>
+<h3>3.2 First Steps</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr) <span class="co"># %&lt;&gt;%</span>
 <span class="kw">library</span>(tidyverse)</code></pre></div>
 <ol style="list-style-type: decimal">
@@ -457,7 +457,7 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need some sort of density/count viz instead</span></code></pre></div>
 </div>
 <div id="aesthetics" class="section level3">
-<h3>3.3.1 Aesthetics</h3>
+<h3>3.3 Aesthetics</h3>
 <ol style="list-style-type: decimal">
 <li>What’s gone wrong with this code? Why are the points not blue?</li>
 </ol>
@@ -525,7 +525,7 @@ div.tocify {
 <p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="facets" class="section level3">
-<h3>3.5.1 Facets</h3>
+<h3>3.5 Facets</h3>
 <p>What happens if you facet on a continuous variable?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) +
 <span class="st">    </span><span class="kw">geom_bar</span>() +
@@ -584,7 +584,7 @@ div.tocify {
 <span class="co"># control order/position with levels(fct) in both</span></code></pre></div>
 </div>
 <div id="geoms" class="section level3">
-<h3>3.6.1 Geoms</h3>
+<h3>3.6 Geoms</h3>
 <ol style="list-style-type: decimal">
 <li>What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?</li>
 </ol>
@@ -671,10 +671,687 @@ div.tocify {
 <p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-6.png" width="672" /></p>
 </div>
 </div>
-<div id="polishing-ggplot2" class="section level2">
-<h2>28 Polishing ggplot2</h2>
+<div id="data-transformation" class="section level2">
+<h2>5 Data transformation</h2>
+<div id="filter-rows-with-filter" class="section level3">
+<h3>5.2 Filter rows with <code>filter()</code></h3>
+<ol style="list-style-type: decimal">
+<li>Find all flights that:</li>
+<li>Had an arrival delay of two or more hours</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
+flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(arr_delay &gt;<span class="st"> </span><span class="dv">120</span>)</code></pre></div>
+<pre><code>## # A tibble: 10,034 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      811            630       101     1047
+##  2  2013     1     1      848           1835       853     1001
+##  3  2013     1     1      957            733       144     1056
+##  4  2013     1     1     1114            900       134     1447
+##  5  2013     1     1     1505           1310       115     1638
+##  6  2013     1     1     1525           1340       105     1831
+##  7  2013     1     1     1549           1445        64     1912
+##  8  2013     1     1     1558           1359       119     1718
+##  9  2013     1     1     1732           1630        62     2028
+## 10  2013     1     1     1803           1620       103     2008
+## # ... with 10,024 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Flew to Houston (IAH or HOU)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(dest %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;IAH&quot;</span>, <span class="st">&quot;HOU&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 9,313 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      623            627        -4      933
+##  4  2013     1     1      728            732        -4     1041
+##  5  2013     1     1      739            739         0     1104
+##  6  2013     1     1      908            908         0     1228
+##  7  2013     1     1     1028           1026         2     1350
+##  8  2013     1     1     1044           1045        -1     1352
+##  9  2013     1     1     1114            900       134     1447
+## 10  2013     1     1     1205           1200         5     1503
+## # ... with 9,303 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Were operated by United, American, or Delta</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(carrier %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;AA&quot;</span>, <span class="st">&quot;UA&quot;</span>, <span class="st">&quot;DL&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 139,504 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      554            600        -6      812
+##  5  2013     1     1      554            558        -4      740
+##  6  2013     1     1      558            600        -2      753
+##  7  2013     1     1      558            600        -2      924
+##  8  2013     1     1      558            600        -2      923
+##  9  2013     1     1      559            600        -1      941
+## 10  2013     1     1      559            600        -1      854
+## # ... with 139,494 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Departed in summer (July, August, and September)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(month %in%<span class="st"> </span><span class="dv">7</span>:<span class="dv">9</span>)</code></pre></div>
+<pre><code>## # A tibble: 86,326 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     7     1        1           2029       212      236
+##  2  2013     7     1        2           2359         3      344
+##  3  2013     7     1       29           2245       104      151
+##  4  2013     7     1       43           2130       193      322
+##  5  2013     7     1       44           2150       174      300
+##  6  2013     7     1       46           2051       235      304
+##  7  2013     7     1       48           2001       287      308
+##  8  2013     7     1       58           2155       183      335
+##  9  2013     7     1      100           2146       194      327
+## 10  2013     7     1      100           2245       135      337
+## # ... with 86,316 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Arrived more than two hours late, but didn’t leave late</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(arr_delay &gt;<span class="st"> </span><span class="dv">120</span>, dep_delay &lt;=<span class="st"> </span><span class="dv">0</span>)</code></pre></div>
+<pre><code>## # A tibble: 29 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1    27     1419           1420        -1     1754
+##  2  2013    10     7     1350           1350         0     1736
+##  3  2013    10     7     1357           1359        -2     1858
+##  4  2013    10    16      657            700        -3     1258
+##  5  2013    11     1      658            700        -2     1329
+##  6  2013     3    18     1844           1847        -3       39
+##  7  2013     4    17     1635           1640        -5     2049
+##  8  2013     4    18      558            600        -2     1149
+##  9  2013     4    18      655            700        -5     1213
+## 10  2013     5    22     1827           1830        -3     2217
+## # ... with 19 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Were delayed by at least an hour, but made up over 30 minutes in flight</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(dep_delay &gt;<span class="st"> </span><span class="dv">60</span>, arr_delay &lt;<span class="st"> </span>(dep_delay -<span class="st"> </span><span class="dv">30</span>))</code></pre></div>
+<pre><code>## # A tibble: 1,819 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1     2205           1720       285       46
+##  2  2013     1     1     2326           2130       116      131
+##  3  2013     1     3     1503           1221       162     1803
+##  4  2013     1     3     1839           1700        99     2056
+##  5  2013     1     3     1850           1745        65     2148
+##  6  2013     1     3     1941           1759       102     2246
+##  7  2013     1     3     1950           1845        65     2228
+##  8  2013     1     3     2257           2000       177       45
+##  9  2013     1     4     1917           1700       137     2135
+## 10  2013     1     4     2010           1745       145     2257
+## # ... with 1,809 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Departed between midnight and 6am (inclusive)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(dep_time %in%<span class="st"> </span><span class="dv">0</span>:<span class="dv">600</span>)</code></pre></div>
+<pre><code>## # A tibble: 9,344 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 9,334 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Another useful dplyr filtering helper is between(). What does it do? Can you use it to simplify the code needed to answer the previous challenges?</li>
+</ol>
+<p>I don’t think using <code>between()</code> is an advantage over using <code>%in%</code> operator</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(dep_time %in%<span class="st"> </span><span class="dv">0</span>:<span class="dv">600</span>)</code></pre></div>
+<pre><code>## # A tibble: 9,344 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 9,334 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># vs</span>
+flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span class="kw">between</span>(dep_time, <span class="dv">0</span>, <span class="dv">600</span>))</code></pre></div>
+<pre><code>## # A tibble: 9,344 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 9,334 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>How many flights have a missing dep_time? What other variables are missing? What might these rows represent?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_time)) %&gt;%<span class="st"> </span><span class="kw">nrow</span>()</code></pre></div>
+<pre><code>## [1] 8255</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_time)) %&gt;%<span class="st"> </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">sum</span>(<span class="kw">is.na</span>(.))) <span class="co"># look for mostly na columns</span></code></pre></div>
+<pre><code>## $year
+## [1] 0
+## 
+## $month
+## [1] 0
+## 
+## $day
+## [1] 0
+## 
+## $dep_time
+## [1] 8255
+## 
+## $sched_dep_time
+## [1] 0
+## 
+## $dep_delay
+## [1] 8255
+## 
+## $arr_time
+## [1] 8255
+## 
+## $sched_arr_time
+## [1] 0
+## 
+## $arr_delay
+## [1] 8255
+## 
+## $carrier
+## [1] 0
+## 
+## $flight
+## [1] 0
+## 
+## $tailnum
+## [1] 2512
+## 
+## $origin
+## [1] 0
+## 
+## $dest
+## [1] 0
+## 
+## $air_time
+## [1] 8255
+## 
+## $distance
+## [1] 0
+## 
+## $hour
+## [1] 0
+## 
+## $minute
+## [1] 0
+## 
+## $time_hour
+## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_time))</code></pre></div>
+<pre><code>## # A tibble: 8,255 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1       NA           1630        NA       NA
+##  2  2013     1     1       NA           1935        NA       NA
+##  3  2013     1     1       NA           1500        NA       NA
+##  4  2013     1     1       NA            600        NA       NA
+##  5  2013     1     2       NA           1540        NA       NA
+##  6  2013     1     2       NA           1620        NA       NA
+##  7  2013     1     2       NA           1355        NA       NA
+##  8  2013     1     2       NA           1420        NA       NA
+##  9  2013     1     2       NA           1321        NA       NA
+## 10  2013     1     2       NA           1545        NA       NA
+## # ... with 8,245 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(<span class="kw">is.na</span>(flights))</code></pre></div>
+<pre><code>##           year          month            day       dep_time sched_dep_time 
+##              0              0              0           8255              0 
+##      dep_delay       arr_time sched_arr_time      arr_delay        carrier 
+##           8255           8713              0           9430              0 
+##         flight        tailnum         origin           dest       air_time 
+##              0           2512              0              0           9430 
+##       distance           hour         minute      time_hour 
+##              0              0              0              0</code></pre>
+<p>Departure delay, arrival time, arrival delay and airtime are all missing in these flight records. Perhaps all of these flights were canceled.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Why is NA ^ 0 not missing? Why is NA | TRUE not missing? Why is FALSE &amp; NA not missing? Can you figure out the general rule? (NA * 0 is a tricky counterexample!)</li>
+</ol>
+<p><code>NA</code> refers to an unknown value. Depending on the operation, results will vary:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># NA represent a number (-Inf:Inf)</span>
+<span class="ot">NA</span>^<span class="dv">0</span> <span class="co"># all numbers raised to 0 are 1</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># NA represents a logical ( so either TRUE or FALSE )</span>
+<span class="ot">NA</span> |<span class="st"> </span><span class="ot">TRUE</span> <span class="co"># regardless of NA, one TRUE in an `or` operator returns TRUE</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> &amp;<span class="st"> </span><span class="ot">NA</span> <span class="co"># one FALSE in an `and` operator returns FALSE</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">NA</span> *<span class="st"> </span><span class="dv">0</span> <span class="co"># Inf * 0 = Inf</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+</div>
+<div id="arrange-rows-with-arrange" class="section level3">
+<h3>5.3 Arrange rows with <code>arrange()</code></h3>
+<ol style="list-style-type: decimal">
+<li>How could you use arrange() to sort all missing values to the start? (Hint: use <code>is.na()</code>).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(-<span class="kw">is.na</span>(dep_time))</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1       NA           1630        NA       NA
+##  2  2013     1     1       NA           1935        NA       NA
+##  3  2013     1     1       NA           1500        NA       NA
+##  4  2013     1     1       NA            600        NA       NA
+##  5  2013     1     2       NA           1540        NA       NA
+##  6  2013     1     2       NA           1620        NA       NA
+##  7  2013     1     2       NA           1355        NA       NA
+##  8  2013     1     2       NA           1420        NA       NA
+##  9  2013     1     2       NA           1321        NA       NA
+## 10  2013     1     2       NA           1545        NA       NA
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Sort flights to find the most delayed flights. Find the flights that left earliest.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(-dep_delay) <span class="co"># most delayed</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     9      641            900      1301     1242
+##  2  2013     6    15     1432           1935      1137     1607
+##  3  2013     1    10     1121           1635      1126     1239
+##  4  2013     9    20     1139           1845      1014     1457
+##  5  2013     7    22      845           1600      1005     1044
+##  6  2013     4    10     1100           1900       960     1342
+##  7  2013     3    17     2321            810       911      135
+##  8  2013     6    27      959           1900       899     1236
+##  9  2013     7    22     2257            759       898      121
+## 10  2013    12     5      756           1700       896     1058
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(dep_delay) <span class="co"># left earliest</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013    12     7     2040           2123       -43       40
+##  2  2013     2     3     2022           2055       -33     2240
+##  3  2013    11    10     1408           1440       -32     1549
+##  4  2013     1    11     1900           1930       -30     2233
+##  5  2013     1    29     1703           1730       -27     1947
+##  6  2013     8     9      729            755       -26     1002
+##  7  2013    10    23     1907           1932       -25     2143
+##  8  2013     3    30     2030           2055       -25     2213
+##  9  2013     3     2     1431           1455       -24     1601
+## 10  2013     5     5      934            958       -24     1225
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Sort flights to find the fastest flights.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(distance /<span class="st"> </span>air_time)</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1    28     1917           1825        52     2118
+##  2  2013     6    29      755            800        -5     1035
+##  3  2013     8    28      932            940        -8     1116
+##  4  2013     1    30     1037            955        42     1221
+##  5  2013    11    27      556            600        -4      727
+##  6  2013     5    21      558            600        -2      721
+##  7  2013    12     9     1540           1535         5     1720
+##  8  2013     6    10     1356           1300        56     1646
+##  9  2013     7    28     1322           1325        -3     1612
+## 10  2013     4    11     1349           1345         4     1542
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">speed =</span> distance /<span class="st"> </span>air_time) %&gt;%<span class="st"> </span><span class="kw">arrange</span>(speed)</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 20
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1    28     1917           1825        52     2118
+##  2  2013     6    29      755            800        -5     1035
+##  3  2013     8    28      932            940        -8     1116
+##  4  2013     1    30     1037            955        42     1221
+##  5  2013    11    27      556            600        -4      727
+##  6  2013     5    21      558            600        -2      721
+##  7  2013    12     9     1540           1535         5     1720
+##  8  2013     6    10     1356           1300        56     1646
+##  9  2013     7    28     1322           1325        -3     1612
+## 10  2013     4    11     1349           1345         4     1542
+## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, speed &lt;dbl&gt;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Which flights travelled the longest? Which travelled the shortest?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sorted &lt;-<span class="st"> </span>flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(-distance) 
+sorted[<span class="dv">2</span>]</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 1
+##    month
+##    &lt;int&gt;
+##  1     1
+##  2     1
+##  3     1
+##  4     1
+##  5     1
+##  6     1
+##  7     1
+##  8     1
+##  9     1
+## 10     1
+## # ... with 336,766 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(sorted, <span class="dv">5</span>)</code></pre></div>
+<pre><code>## # A tibble: 1 x 19
+##    year month   day dep_time sched_dep_time dep_delay arr_time
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+## 1  2013     1     5      858            900        -2     1519
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># longest</span>
+flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(distance) <span class="co"># shortest</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     7    27       NA            106        NA       NA
+##  2  2013     1     3     2127           2129        -2     2222
+##  3  2013     1     4     1240           1200        40     1333
+##  4  2013     1     4     1829           1615       134     1937
+##  5  2013     1     4     2128           2129        -1     2218
+##  6  2013     1     5     1155           1200        -5     1241
+##  7  2013     1     6     2125           2129        -4     2224
+##  8  2013     1     7     2124           2129        -5     2212
+##  9  2013     1     8     2127           2130        -3     2304
+## 10  2013     1     9     2126           2129        -3     2217
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+<div id="select-columns-with-select" class="section level3">
+<h3>5.4 Select columns with <code>select()</code></h3>
+<ol style="list-style-type: decimal">
+<li>Brainstorm as many ways as possible to select dep_time, dep_delay, arr_time, and arr_delay from flights.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">select</span>(<span class="kw">matches</span>(<span class="st">&quot;^dep|^arr&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 4
+##    dep_time dep_delay arr_time arr_delay
+##       &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1      517         2      830        11
+##  2      533         4      850        20
+##  3      542         2      923        33
+##  4      544        -1     1004       -18
+##  5      554        -6      812       -25
+##  6      554        -4      740        12
+##  7      555        -5      913        19
+##  8      557        -3      709       -14
+##  9      557        -3      838        -8
+## 10      558        -2      753         8
+## # ... with 336,766 more rows</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>What happens if you include the name of a variable multiple times in a select() call?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">select</span>(arr_time, arr_time)</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 1
+##    arr_time
+##       &lt;int&gt;
+##  1      830
+##  2      850
+##  3      923
+##  4     1004
+##  5      812
+##  6      740
+##  7      913
+##  8      709
+##  9      838
+## 10      753
+## # ... with 336,766 more rows</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>What does the one_of() function do? Why might it be helpful in conjunction with this vector?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>, <span class="st">&quot;dep_delay&quot;</span>, <span class="st">&quot;arr_delay&quot;</span>)
+flights %&gt;%<span class="st"> </span><span class="kw">select</span>(<span class="kw">one_of</span>(vars)) <span class="co"># selects any matching columns from vars</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 5
+##     year month   day dep_delay arr_delay
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1  2013     1     1         2        11
+##  2  2013     1     1         4        20
+##  3  2013     1     1         2        33
+##  4  2013     1     1        -1       -18
+##  5  2013     1     1        -6       -25
+##  6  2013     1     1        -4        12
+##  7  2013     1     1        -5        19
+##  8  2013     1     1        -3       -14
+##  9  2013     1     1        -3        -8
+## 10  2013     1     1        -2         8
+## # ... with 336,766 more rows</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Does the result of running the following code surprise you? How do the select helpers deal with case by default? How can you change that default?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, <span class="kw">contains</span>(<span class="st">&quot;TIME&quot;</span>)) <span class="co"># ignore.case == TRUE is default</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 6
+##    dep_time sched_dep_time arr_time sched_arr_time air_time
+##       &lt;int&gt;          &lt;int&gt;    &lt;int&gt;          &lt;int&gt;    &lt;dbl&gt;
+##  1      517            515      830            819      227
+##  2      533            529      850            830      227
+##  3      542            540      923            850      160
+##  4      544            545     1004           1022      183
+##  5      554            600      812            837      116
+##  6      554            558      740            728      150
+##  7      555            600      913            854      158
+##  8      557            600      709            723       53
+##  9      557            600      838            846      140
+## 10      558            600      753            745      138
+## # ... with 336,766 more rows, and 1 more variables: time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, <span class="kw">contains</span>(<span class="st">&quot;TIME&quot;</span>, <span class="dt">ignore.case =</span> <span class="ot">FALSE</span>)) <span class="co"># matches nothing</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 0</code></pre>
+</div>
+<div id="add-new-variables-with-mutate" class="section level3">
+<h3>5.5 Add new variables with <code>mutate()</code></h3>
+<ol style="list-style-type: decimal">
+<li>Currently dep_time and sched_dep_time are convenient to look at, but hard to compute with because they’re not really continuous numbers. Convert them to a more convenient representation of number of minutes since midnight.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">transmute</span>(<span class="dt">new_dep_time =</span> (dep_time %/%<span class="st"> </span><span class="dv">100</span>)*<span class="dv">60</span> +<span class="st"> </span>(dep_time %%<span class="st"> </span><span class="dv">100</span>) )</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 1
+##    new_dep_time
+##           &lt;dbl&gt;
+##  1          317
+##  2          333
+##  3          342
+##  4          344
+##  5          354
+##  6          354
+##  7          355
+##  8          357
+##  9          357
+## 10          358
+## # ... with 336,766 more rows</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Compare <code>air_time</code> with <code>arr_time - dep_time</code>. What do you expect to see? What do you see? What do you need to do to fix it?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">transmute</span>(air_time, <span class="dt">new_diff =</span> arr_time -<span class="st"> </span>dep_time)</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 2
+##    air_time new_diff
+##       &lt;dbl&gt;    &lt;int&gt;
+##  1      227      313
+##  2      227      317
+##  3      160      381
+##  4      183      460
+##  5      116      258
+##  6      150      186
+##  7      158      358
+##  8       53      152
+##  9      140      281
+## 10      138      195
+## # ... with 336,766 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need to convert to minutes first</span>
+flights %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">arr_time =</span> (arr_time %/%<span class="st"> </span><span class="dv">100</span>)*<span class="dv">60</span> +<span class="st"> </span>(arr_time %%<span class="st"> </span><span class="dv">100</span>),
+                   <span class="dt">dep_time =</span> (dep_time %/%<span class="st"> </span><span class="dv">100</span>)*<span class="dv">60</span> +<span class="st"> </span>(dep_time %%<span class="st"> </span><span class="dv">100</span>) ) %&gt;%
+<span class="st">    </span><span class="kw">transmute</span>(air_time, <span class="dt">new_diff =</span> arr_time -<span class="st"> </span>dep_time)</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 2
+##    air_time new_diff
+##       &lt;dbl&gt;    &lt;dbl&gt;
+##  1      227      193
+##  2      227      197
+##  3      160      221
+##  4      183      260
+##  5      116      138
+##  6      150      106
+##  7      158      198
+##  8       53       72
+##  9      140      161
+## 10      138      115
+## # ... with 336,766 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now adjust for tz</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Compare dep_time, sched_dep_time, and dep_delay. How would you expect those three numbers to be related?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dep_time should equal sum(sched_dep_time, dep_delay)</span>
+flights %&gt;%<span class="st"> </span><span class="kw">rowwise</span>() %&gt;%
+<span class="st">    </span><span class="kw">transmute</span>(dep_time, <span class="dt">sum_dep =</span> <span class="kw">sum</span>(sched_dep_time, dep_delay, <span class="dt">na.rm =</span> T))</code></pre></div>
+<pre><code>## Source: local data frame [336,776 x 2]
+## Groups: &lt;by row&gt;
+## 
+## # A tibble: 336,776 x 2
+##    dep_time sum_dep
+##       &lt;int&gt;   &lt;dbl&gt;
+##  1      517     517
+##  2      533     533
+##  3      542     542
+##  4      544     544
+##  5      554     594
+##  6      554     554
+##  7      555     595
+##  8      557     597
+##  9      557     597
+## 10      558     598
+## # ... with 336,766 more rows</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Find the 10 most delayed flights using a ranking function. How do you want to handle ties? Carefully read the documentation for min_rank().</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(-dep_delay) %&gt;%
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">10</span>)</code></pre></div>
+<pre><code>## # A tibble: 10 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     9      641            900      1301     1242
+##  2  2013     6    15     1432           1935      1137     1607
+##  3  2013     1    10     1121           1635      1126     1239
+##  4  2013     9    20     1139           1845      1014     1457
+##  5  2013     7    22      845           1600      1005     1044
+##  6  2013     4    10     1100           1900       960     1342
+##  7  2013     3    17     2321            810       911      135
+##  8  2013     6    27      959           1900       899     1236
+##  9  2013     7    22     2257            759       898      121
+## 10  2013    12     5      756           1700       896     1058
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">top_n</span>(<span class="dv">10</span>, dep_delay)</code></pre></div>
+<pre><code>## # A tibble: 10 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     9      641            900      1301     1242
+##  2  2013     1    10     1121           1635      1126     1239
+##  3  2013    12     5      756           1700       896     1058
+##  4  2013     3    17     2321            810       911      135
+##  5  2013     4    10     1100           1900       960     1342
+##  6  2013     6    15     1432           1935      1137     1607
+##  7  2013     6    27      959           1900       899     1236
+##  8  2013     7    22      845           1600      1005     1044
+##  9  2013     7    22     2257            759       898      121
+## 10  2013     9    20     1139           1845      1014     1457
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>What does 1:3 + 1:10 return? Why? R will attempt to “recycle” the shorter of the two lists until all of the values in the longer list have been evaluated. If the shorter this is not a multiple of the longer, then a warning will be raised.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">3</span> +<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span> <span class="co"># warning</span></code></pre></div>
+<pre><code>## Warning in 1:3 + 1:10: longer object length is not a multiple of shorter
+## object length</code></pre>
+<pre><code>##  [1]  2  4  6  5  7  9  8 10 12 11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span> +<span class="st"> </span><span class="dv">1</span>:<span class="dv">2</span> <span class="co"># no warning</span></code></pre></div>
+<pre><code>##  [1]  2  4  4  6  6  8  8 10 10 12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span> +<span class="st"> </span><span class="dv">5</span> <span class="co"># no warning</span></code></pre></div>
+<pre><code>##  [1]  6  7  8  9 10 11 12 13 14 15</code></pre>
+<p>What trigonometric functions does R provide?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?sin <span class="co"># a lot of them</span></code></pre></div>
+</div>
+<div id="grouped-summaries-with-summarise" class="section level3">
+<h3>5.6 Grouped summaries with <code>summarise()</code></h3>
+<ol style="list-style-type: decimal">
+<li>Brainstorm at least 5 different ways to assess the typical delay characteristics of a group of flights. Consider the following scenarios:</li>
+</ol>
+<p>1a. A flight is 15 minutes early 50% of the time, and 15 minutes late 50% of the time.</p>
+<p>1b. A flight is always 10 minutes late.</p>
+<p>1c. A flight is 30 minutes early 50% of the time, and 30 minutes late 50% of the time.</p>
+<p>1d. 99% of the time a flight is on time. 1% of the time it’s 2 hours late.</p>
+<p>Which is more important: arrival delay or departure delay?</p>
+<p>Come up with another approach that will give you the same output as not_cancelled %&gt;% count(dest) and not_cancelled %&gt;% count(tailnum, wt = distance) (without using count()).</p>
+<p>Our definition of cancelled flights (is.na(dep_delay) | is.na(arr_delay) ) is slightly suboptimal. Why? Which is the most important column?</p>
+<p>Look at the number of cancelled flights per day. Is there a pattern? Is the proportion of cancelled flights related to the average delay?</p>
+<p>Which carrier has the worst delays? Challenge: can you disentangle the effects of bad airports vs. bad carriers? Why/why not? (Hint: think about flights %&gt;% group_by(carrier, dest) %&gt;% summarise(n()))</p>
+<p>What does the sort argument to count() do. When might you use it?</p>
+</div>
+</div>
+<div id="graphics-for-communication" class="section level2">
+<h2>28 Graphics for communication</h2>
 <div id="label" class="section level3">
-<h3>28.2.1 Label</h3>
+<h3>28.2 Label</h3>
 <ol style="list-style-type: decimal">
 <li>Create one plot on the fuel economy data with customised title, subtitle, caption, x, y, and colour labels.</li>
 </ol>
@@ -689,7 +1366,7 @@ div.tocify {
        <span class="dt">colour =</span> <span class="st">&quot;Car type&quot;</span>
 )</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>The geom_smooth() is somewhat misleading because the hwy for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines. Use your modelling tools to fit and display a better model.</li>
 </ol>
@@ -699,7 +1376,7 @@ div.tocify {
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) +
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> <span class="kw">filter</span>(mpg, class !=<span class="st"> &quot;2seater&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just adjust the data going into the geom_smooth() layer</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Take an exploratory graphic that you’ve created in the last month, and add informative titles to make it easier for others to understand.</li>
@@ -711,10 +1388,10 @@ div.tocify {
          <span class="dt">y =</span> <span class="st">&quot;Weight (grams)&quot;</span>,
          <span class="dt">x =</span> <span class="st">&quot;Time (days)&quot;</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 </div>
 <div id="annotations" class="section level3">
-<h3>28.3.1 Annotations</h3>
+<h3>28.3 Annotations</h3>
 <ol style="list-style-type: decimal">
 <li>Use geom_text() with infinite positions to place text at the four corners of the plot.</li>
 </ol>
@@ -725,14 +1402,14 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;top_right&quot;</span>, <span class="dt">x =</span> <span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>) +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;bot_left&quot;</span>, <span class="dt">x =</span> -<span class="ot">Inf</span>, <span class="dt">y =</span> -<span class="ot">Inf</span>) +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;top_left&quot;</span>, <span class="dt">x =</span> -<span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Read the documentation for annotate(). How can you use it to add a text label to a plot without having to create a tibble?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?annotate
 <span class="kw">ggplot</span>(corners, <span class="kw">aes</span>(x,y)) +
 <span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> .<span class="dv">5</span>, <span class="dt">y =</span> .<span class="dv">5</span>, <span class="dt">label =</span> <span class="st">&quot;Middle&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>How do labels with geom_text() interact with faceting? How can you add a label to a single facet? How can you put a different label in each facet? (Hint: think about the underlying data.)</li>
 </ol>
@@ -741,7 +1418,7 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># delete unwanted labels for facets</span>
 mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mpg$cyl ==<span class="st"> </span><span class="dv">6</span>, ., <span class="ot">NA</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
@@ -749,7 +1426,7 @@ mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mp
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
 <pre><code>## Warning: Removed 155 rows containing missing values (geom_text).</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-52-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># really the best thing to do is use a seperate tibble</span>
 <span class="kw">data</span>(mpg)
 avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span class="kw">group_by</span>(cyl) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg_cty =</span> <span class="kw">round</span>(<span class="kw">mean</span>(cty), <span class="dv">1</span>))
@@ -757,7 +1434,7 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-52-3.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>What arguments to geom_label() control the appearance of the background box?</li>
 </ol>
@@ -765,12 +1442,10 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_label</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty, <span class="dt">fill =</span> <span class="kw">as.factor</span>(cyl)), <span class="dt">y =</span> <span class="dv">30</span>, <span class="dt">x =</span> <span class="dv">15</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>What are the four arguments to arrow()? How do they work? Create a series of plots that demonstrate the most important options.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>())</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrow</span>()</code></pre></div>
 <pre><code>## $angle
 ## [1] 30
@@ -787,7 +1462,14 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 ## attr(,&quot;class&quot;)
 ## [1] &quot;arrow&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need to complete :(</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+</div>
+<div id="scales" class="section level3">
+<h3>28.4 Scales</h3>
+<ol style="list-style-type: decimal">
+<li>Why doesn’t the following code override the default scale? Because <code>?geom_hex()</code> tells us that it is counting the number of cases in each hexagon and mapping that value to the <code>fill</code> aesthetic. So changing the <code>color</code> scale has no appreciable effect.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the data from earlier</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
 df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>),
   <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10000</span>)
@@ -795,9 +1477,14 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 
 <span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x, y)) +
 <span class="st">  </span><span class="kw">geom_hex</span>() +
-<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) +
+<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) +<span class="st"> </span><span class="co"># now it works</span>
 <span class="st">  </span><span class="kw">coord_fixed</span>()</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>What is the first argument to every scale? How does it compare to labs()? <code>aesthetics</code>, which is defining the names of the aesthetics a scale works with. This is similar to <code>labs()</code> that takes a name-value pairs first and can also be used to label legends/aesthetics.</p></li>
+<li>Change the display of the presidential terms by:</li>
+<li><p>Combining the two variants shown above</p></li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
@@ -805,7 +1492,10 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Improving the display of the y-axis.</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
@@ -814,7 +1504,10 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>) +
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">34</span>:<span class="dv">44</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Labelling each term with the name of the president.</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
@@ -824,12 +1517,40 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>, <span class="dt">date_breaks =</span> <span class="st">&quot;4 years&quot;</span>) +
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">34</span>:<span class="dv">44</span>, <span class="dt">labels =</span> presidential$name) +
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Is it there?&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Adding informative plot labels.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># code by Crystal Passmore</span>
+presidential %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
+<span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">34</span>, <span class="dv">44</span>, <span class="dt">by =</span> <span class="dv">1</span>), <span class="dt">labels =</span> presidential$name) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;President&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Presidentail Terms&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Placing breaks every 4 years (this is trickier than it seems!).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">presidential %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="dv">33</span> +<span class="st"> </span><span class="kw">row_number</span>()) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(start, id, <span class="dt">colour =</span> party)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
+<span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">34</span>, <span class="dv">44</span>, <span class="dt">by =</span> <span class="dv">1</span>), <span class="dt">labels =</span> presidential$name) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;President&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Presidentail Terms&quot;</span>) +
+<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">date_breaks =</span> <span class="st">&quot;4 years&quot;</span>, <span class="dt">date_labels =</span> <span class="st">&quot;%y&quot;</span>)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Use override.aes to make the legend on the following plot easier to see.</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span>/<span class="dv">20</span>) +
 <span class="st">    </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Because&quot;</span>,<span class="dt">override.aes =</span> <span class="kw">list</span>(<span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">shape =</span> <span class="dv">24</span>, <span class="dt">size =</span> <span class="dv">4</span>)))</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
-<p>Still need to write up these last exercises, Christina and Crystal care to share their code :)</p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
 </div>
 </div>
 
@@ -865,7 +1586,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
