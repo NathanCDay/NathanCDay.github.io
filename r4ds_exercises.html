@@ -425,13 +425,13 @@ div.tocify {
 </div>
 
 
-<div id="overview" class="section level2">
-<h2>Overview</h2>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
 <p>I’m guiding a group walkthrough of Garrett Grolemund and Hadley Wickam’s great book <a href="http://r4ds.had.co.nz/">R for Data Science</a>. We are trying to cover a chapter of material per week and have a one-hour weekly code review to sit together and discuss the Excersises. If you live around Charlottesville and are interested in joining, ping me.</p>
 <p>These are the answers to the excercises we have covered so far and will update after our mostly weekly meetings.</p>
 </div>
-<div id="date-visualization" class="section level2">
-<h2>3 Date visualization</h2>
+<div id="intro-to-ggplot2" class="section level1">
+<h1>3 Intro to <code>ggplot2</code></h1>
 <div id="first-steps" class="section level3">
 <h3>3.2 First Steps</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr) <span class="co"># %&lt;&gt;%</span>
@@ -524,8 +524,8 @@ div.tocify {
 <span class="st">    </span><span class="kw">facet_wrap</span>(~hwy) <span class="co"># bins it</span></code></pre></div>
 <p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
-<div id="facets" class="section level3">
-<h3>3.5 Facets</h3>
+<div id="facetting" class="section level3">
+<h3>3.5 Facetting</h3>
 <p>What happens if you facet on a continuous variable?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) +
 <span class="st">    </span><span class="kw">geom_bar</span>() +
@@ -671,10 +671,10 @@ div.tocify {
 <p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-6.png" width="672" /></p>
 </div>
 </div>
-<div id="data-transformation" class="section level2">
-<h2>5 Data transformation</h2>
-<div id="filter-rows-with-filter" class="section level3">
-<h3>5.2 Filter rows with <code>filter()</code></h3>
+<div id="intro-to-dplyr" class="section level1">
+<h1>5 Intro to <code>dplyr</code></h1>
+<div id="filter" class="section level3">
+<h3>5.2 Filter</h3>
 <ol style="list-style-type: decimal">
 <li>Find all flights that:</li>
 <li>Had an arrival delay of two or more hours</li>
@@ -970,8 +970,8 @@ flights %&gt;%<span class="st"> </span><span class="kw">filter</span>(<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">NA</span> *<span class="st"> </span><span class="dv">0</span> <span class="co"># Inf * 0 = Inf</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 </div>
-<div id="arrange-rows-with-arrange" class="section level3">
-<h3>5.3 Arrange rows with <code>arrange()</code></h3>
+<div id="arrange" class="section level3">
+<h3>5.3 Arrange</h3>
 <ol style="list-style-type: decimal">
 <li>How could you use arrange() to sort all missing values to the start? (Hint: use <code>is.na()</code>).</li>
 </ol>
@@ -1119,8 +1119,8 @@ flights %&gt;%<span class="st"> </span><span class="kw">arrange</span>(distance)
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 </div>
-<div id="select-columns-with-select" class="section level3">
-<h3>5.4 Select columns with <code>select()</code></h3>
+<div id="select" class="section level3">
+<h3>5.4 Select</h3>
 <ol style="list-style-type: decimal">
 <li>Brainstorm as many ways as possible to select dep_time, dep_delay, arr_time, and arr_delay from flights.</li>
 </ol>
@@ -1197,8 +1197,8 @@ flights %&gt;%<span class="st"> </span><span class="kw">select</span>(<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(flights, <span class="kw">contains</span>(<span class="st">&quot;TIME&quot;</span>, <span class="dt">ignore.case =</span> <span class="ot">FALSE</span>)) <span class="co"># matches nothing</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 0</code></pre>
 </div>
-<div id="add-new-variables-with-mutate" class="section level3">
-<h3>5.5 Add new variables with <code>mutate()</code></h3>
+<div id="mutate" class="section level3">
+<h3>5.5 Mutate</h3>
 <ol style="list-style-type: decimal">
 <li>Currently dep_time and sched_dep_time are convenient to look at, but hard to compute with because they’re not really continuous numbers. Convert them to a more convenient representation of number of minutes since midnight.</li>
 </ol>
@@ -1331,8 +1331,8 @@ flights %&gt;%<span class="st"> </span><span class="kw">rowwise</span>() %&gt;%
 <p>What trigonometric functions does R provide?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?sin <span class="co"># a lot of them</span></code></pre></div>
 </div>
-<div id="grouped-summaries-with-summarise" class="section level3">
-<h3>5.6 Grouped summaries with <code>summarise()</code></h3>
+<div id="summarise" class="section level3">
+<h3>5.6 Summarise</h3>
 <ol style="list-style-type: decimal">
 <li>Brainstorm at least 5 different ways to assess the typical delay characteristics of a group of flights. Consider the following scenarios:</li>
 </ol>
@@ -1348,8 +1348,8 @@ flights %&gt;%<span class="st"> </span><span class="kw">rowwise</span>() %&gt;%
 <p>What does the sort argument to count() do. When might you use it?</p>
 </div>
 </div>
-<div id="graphics-for-communication" class="section level2">
-<h2>28 Graphics for communication</h2>
+<div id="advanced-ggplot2" class="section level1">
+<h1>28 Advanced <code>ggplot2</code></h1>
 <div id="label" class="section level3">
 <h3>28.2 Label</h3>
 <ol style="list-style-type: decimal">
