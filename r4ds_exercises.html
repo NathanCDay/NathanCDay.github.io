@@ -1335,7 +1335,9 @@ flights %&gt;%<span class="st"> </span><span class="kw">rowwise</span>() %&gt;%
 <h3>5.6 Summarise</h3>
 <p>Useful objects from section 5.6 for exercises:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled &lt;-<span class="st"> </span>flights %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(dep_delay), !<span class="kw">is.na</span>(arr_delay))</code></pre></div>
+<span class="st">    </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(dep_delay), !<span class="kw">is.na</span>(arr_delay))
+
+cancelled &lt;-<span class="st"> </span><span class="kw">filter</span>(flights, <span class="kw">is.na</span>(air_time))</code></pre></div>
 <ol style="list-style-type: decimal">
 <li>Brainstorm at least 5 different ways to assess the typical delay characteristics of a group of flights. Consider the following scenarios:</li>
 </ol>
@@ -1455,7 +1457,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ta
 <li>Look at the number of cancelled flights per day. Is there a pattern? Is the proportion of cancelled flights related to the average delay?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scale the vars (year, month, day) to numeric</span>
-flights %&gt;%
+cancelled %&gt;%
 <span class="st">    </span><span class="kw">transmute</span>(<span class="dt">time_scale =</span> (month<span class="dv">-1</span>)*<span class="dv">30</span> +<span class="st"> </span>day) %&gt;%<span class="st"> </span><span class="co"># rough but good enough</span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(time_scale)) +
 <span class="st">    </span><span class="kw">geom_density</span>() +
@@ -1463,7 +1465,7 @@ flights %&gt;%
                        <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="dv">1</span>:<span class="dv">12</span>)) <span class="co"># crude month markers, but good enough</span></code></pre></div>
 <p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># better built-in fxns exist...?scale_x_datetime</span></code></pre></div>
-<p>Looks like local maxima are found near the first of the month for February, April, June, August and November. Not sure why but seems to be cyclic and coorelated with the begining of the month.</p>
+<p>Looks like local maxima are found near major holidays: Valentine’s Day, July 4th and Christmas. I would have guess Thanksgiving would be a big cancel event, maybe if we looked at more data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">group_by</span>(month, day) %&gt;%
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">prop_canceled =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(air_time)) /<span class="st"> </span><span class="kw">n</span>(),
               <span class="dt">avg_dep_delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> T)) %&gt;%
