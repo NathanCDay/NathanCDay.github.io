@@ -39,7 +39,7 @@
     .tocify {
         font-family: 'Atomic Age';
     }
-    h1,h2,h3,h4,h5,h6 {
+    h1 {
         font-family: 'Atomic Age';
     }
     p {
@@ -332,22 +332,22 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-    Home
-  </a>
-</li>
-<li>
   <a href="about.html">
-    <span class="fa fa-info"></span>
+    <span class="fa fa-user"></span>
      
     About
   </a>
 </li>
 <li>
+  <a href="r4ds_exercises.html">
+    <span class="fa fa-pencil"></span>
+     
+    R4DS
+  </a>
+</li>
+<li>
   <a href="sports_senti.html">
-    <span class="fa fa-play"></span>
+    <span class="fa fa-futbol-o"></span>
      
     Sports Sentiment
   </a>
@@ -376,13 +376,6 @@ div.tocify {
       </a>
     </li>
     <li>
-      <a href="Milestone.html">
-        <span class="fa fa-calendar-check-o"></span>
-         
-        Milestone Report
-      </a>
-    </li>
-    <li>
       <a href="Cats_with_Pipes.html">
         <span class="fa fa-puzzle-piece"></span>
          
@@ -391,9 +384,27 @@ div.tocify {
     </li>
     <li>
       <a href="dc_crime.html">
-        <span class="fa fa-map"></span>
+        <span class="fa fa-gavel"></span>
          
         DC Crime Report
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wrench"></span>
+     
+    Tech Docs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cloudflare.html">
+        <span class="fa fa-cloud"></span>
+         
+        HTTPS via CloudFlare
       </a>
     </li>
   </ul>
@@ -407,13 +418,13 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="http://stackoverflow.com/users/5878751/nate-day?tab=profile">
+  <a href="https://stackoverflow.com/users/5878751/nate-day?tab=responses">
     <span class="fa fa-stack-overflow fa-2x"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/NathanCDay">
+  <a href="https://github.com/NathanCDay?tab=stars">
     <span class="fa fa-github fa-2x"></span>
      
   </a>
@@ -525,7 +536,7 @@ word_sources %&gt;%
 <span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1000</span>) %&gt;%
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">percent_total =</span> <span class="kw">sum</span>(rel_freq))</code></pre></div>
 <pre><code>## Selecting by rel_freq</code></pre>
-<pre><code>## # A tibble: 3 × 2
+<pre><code>## # A tibble: 3 x 2
 ##    source percent_total
 ##     &lt;chr&gt;         &lt;dbl&gt;
 ## 1   blogs     0.7213822
@@ -566,7 +577,7 @@ word_sources %&gt;%
 <span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1000</span>) %&gt;%
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">percent_total =</span> <span class="kw">sum</span>(rel_freq))</code></pre></div>
 <pre><code>## Selecting by rel_freq</code></pre>
-<pre><code>## # A tibble: 3 × 2
+<pre><code>## # A tibble: 3 x 2
 ##    source percent_total
 ##     &lt;chr&gt;         &lt;dbl&gt;
 ## 1   blogs     0.4105591
@@ -664,18 +675,18 @@ topn_lean &lt;-<span class="st"> </span><span class="kw">map</span>(topn_list, ~
 <span class="st">                     </span><span class="kw">mutate</span>(<span class="dt">p =</span> n /<span class="st"> </span><span class="kw">sum</span>(n)))
 
 topn_lean[[<span class="st">&quot;fast&quot;</span>]] <span class="co"># with probabilities</span></code></pre></div>
-<pre><code>## # A tibble: 10 × 3
+<pre><code>## # A tibble: 10 x 3
 ##           pred     n          p
 ##          &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
-## 1         food    20 0.28169014
-## 2      forward    18 0.25352113
-## 3  approaching     9 0.12676056
-## 4        paced     7 0.09859155
-## 5         lane     4 0.05633803
-## 6        break     3 0.04225352
-## 7          lol     3 0.04225352
-## 8         time     3 0.04225352
-## 9        track     3 0.04225352
+##  1        food    20 0.28169014
+##  2     forward    18 0.25352113
+##  3 approaching     9 0.12676056
+##  4       paced     7 0.09859155
+##  5        lane     4 0.05633803
+##  6       break     3 0.04225352
+##  7         lol     3 0.04225352
+##  8        time     3 0.04225352
+##  9       track     3 0.04225352
 ## 10        love     1 0.01408451</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>( topn_lean[[<span class="st">&quot;fast&quot;</span>]] ) <span class="co"># wow that&#39;s fast</span></code></pre></div>
 <pre><code>##    user  system elapsed 
@@ -688,11 +699,12 @@ topn_lean[[<span class="st">&quot;fast&quot;</span>]] <span class="co"># with pr
 </div>
 
 <hr>
-    <p>Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>
-        Hosted on <a href = "https://pages.github.com/">Github</a>.
-            Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-            Copyright &copy; 2017.
-            </p>
+<p>
+    Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
+    Hosted on <a href = "https://pages.github.com/">Github</a>.
+        Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
+        Copyright &copy; 2017.
+</p>
 
 
 </div>
@@ -718,7 +730,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
