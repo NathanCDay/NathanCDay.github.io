@@ -391,6 +391,24 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wrench"></span>
+     
+    Tech Docs
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cloudflare.html">
+        <span class="fa fa-cloud"></span>
+         
+        HTTPS via CloudFlare
+      </a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -601,7 +619,7 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a scatter plot with a trend smooth</span>
 <span class="co"># defaults to loess (Localy weighted polynomial regression)</span></code></pre></div>
 <p><a href="https://en.wikipedia.org/wiki/Local_regression#Definition_of_a_LOESS_model">Local regression - Wikipedia</a></p>
@@ -610,7 +628,7 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">show.legend =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># removes legend for a specific layer</span>
 <span class="co"># avoid/make confustion?</span></code></pre></div>
 <p>3b. Why do you think I used it earlier in the chapter?</p>
@@ -622,18 +640,18 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>() <span class="co"># shows a confidence interval, .95 default</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>Will these two graphs look different? Why/why not?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> cyl, <span class="dt">group =</span> cyl)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>()</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># no, every sub-layer tries to inherit from the top layer, unless &quot;inherit.aes = F&quot;</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>Recreate the R code necessary to generate the following graphs.</li>
@@ -644,31 +662,31 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">group =</span> drv)) +<span class="st"> </span><span class="co"># establish a grouping var</span>
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +<span class="st"> </span><span class="co"># color var does grouping by default</span>
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="ot">NULL</span>), <span class="dt">se =</span> F) <span class="co"># turn off color group for this layer</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-4.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-4.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="ot">NULL</span>, <span class="dt">linetype =</span> drv), <span class="dt">se =</span> F) <span class="co"># turn on linetype aes for this layer</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-5.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-5.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">fill =</span> drv)) +
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">stroke =</span> <span class="dv">3</span>, <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) +
 <span class="st">    </span><span class="kw">theme_grey</span>()</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-21-6.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-6.png" width="672" /></p>
 </div>
 </div>
 <div id="intro-to-dplyr" class="section level1">
@@ -1463,7 +1481,7 @@ cancelled %&gt;%
 <span class="st">    </span><span class="kw">geom_density</span>() +
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">360</span>, <span class="dv">30</span>),
                        <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="dv">1</span>:<span class="dv">12</span>)) <span class="co"># crude month markers, but good enough</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># better built-in fxns exist...?scale_x_datetime</span></code></pre></div>
 <p>Looks like local maxima are found near major holidays: Valentine’s Day, July 4th and Christmas. I would have guess Thanksgiving would be a big cancel event, maybe if we looked at more data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">group_by</span>(month, day) %&gt;%
@@ -1474,7 +1492,7 @@ cancelled %&gt;%
 <span class="st">        </span><span class="kw">geom_point</span>() +
 <span class="st">        </span><span class="kw">stat_smooth</span>()</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>Looks like a weak positive correlation between the average departure delay and the proportional of flights canceled when grouped by day of year.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Which carrier has the worst delays?</li>
@@ -1510,7 +1528,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(origin, n, <span class="dt">fill =</span> carrier)) +
 <span class="st">    </span><span class="kw">geom_col</span>() +
 <span class="st">    </span>ggsci::<span class="kw">scale_fill_d3</span>(<span class="st">&quot;category20&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p>Newark Liberty Internation Airport is the most delayed NYC airport, and it looks like ExpressJet is the worst carrier in terms of total delays across the major airports of NYC.</p>
 <ol start="7" style="list-style-type: decimal">
 <li>What does the sort argument to count() do. When might you use it?</li>
@@ -1622,14 +1640,275 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(time, avg_dep_delay)) +
 <span class="st">    </span><span class="kw">geom_col</span>() +
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">vjust =</span> .<span class="dv">75</span>, <span class="dt">hjust =</span> .<span class="dv">75</span>))</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>For each destination, compute the total minutes of delay. For each, flight, compute the proportion of the total delay for its destination.</p></li>
-<li><p>Delays are typically temporally correlated: even once the problem that caused the initial delay has been resolved, later flights are delayed to allow earlier flights to leave. Using lag() explore how the delay of a flight is related to the delay of the immediately preceding flight.</p></li>
-<li><p>Look at each destination. Can you find flights that are suspiciously fast? (i.e. flights that represent a potential data entry error). Compute the air time a flight relative to the shortest flight to that destination. Which flights were most delayed in the air?</p></li>
-<li><p>Find all destinations that are flown by at least two carriers. Use that information to rank the carriers.</p></li>
-<li><p>For each plane, count the number of flights before the first delay of greater than 1 hour.</p></li>
+<li>For each destination, compute the total minutes of delay. For each, flight, compute the proportion of the total delay for its destination.</li>
 </ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest) %&gt;%
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">total_delay =</span> <span class="kw">sum</span>(dep_delay),
+              <span class="dt">avg_delay =</span> <span class="kw">mean</span>(dep_delay)) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(-total_delay)</code></pre></div>
+<pre><code>## # A tibble: 104 x 3
+##     dest total_delay avg_delay
+##    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+##  1   ORD      222528 13.432814
+##  2   ATL      209202 12.425135
+##  3   SFO      167807 12.738708
+##  4   MCO      157343 11.265340
+##  5   FLL      150899 12.683786
+##  6   LAX      149863  9.351242
+##  7   BOS      130121  8.662029
+##  8   CLT      125752  9.196431
+##  9   DEN      107855 15.044637
+## 10   DTW      105821 11.717529
+## # ... with 94 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">total_delay =</span> <span class="kw">sum</span>(dep_delay)) %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(flight, <span class="dt">add =</span> T) %&gt;%<span class="st"> </span><span class="co"># by default group_by() ungroups previous groupings, add = TRUE overrides this</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">pct_total =</span> <span class="kw">sum</span>(dep_delay) /<span class="st"> </span><span class="kw">unique</span>(total_delay))</code></pre></div>
+<pre><code>## # A tibble: 11,421 x 3
+## # Groups:   dest [?]
+##     dest flight    pct_total
+##    &lt;chr&gt;  &lt;int&gt;        &lt;dbl&gt;
+##  1   ABQ     65 0.3550143266
+##  2   ABQ   1505 0.6449856734
+##  3   ACK   1191 0.3554641598
+##  4   ACK   1195 0.0193889542
+##  5   ACK   1291 0.1468860165
+##  6   ACK   1491 0.4782608696
+##  7   ALB   3256 0.0006121824
+##  8   ALB   3260 0.0121416182
+##  9   ALB   3264 0.0001020304
+## 10   ALB   3811 0.0581573309
+## # ... with 11,411 more rows</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Delays are typically temporally correlated: even once the problem that caused the initial delay has been resolved, later flights are delayed to allow earlier flights to leave. Using lag() explore how the delay of a flight is related to the delay of the immediately preceding flight.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled %&gt;%<span class="st"> </span><span class="kw">unite</span>(date, month, day) %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(origin, date) %&gt;%
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">n</span>() &gt;<span class="st"> </span><span class="dv">1</span>) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(sched_dep_time) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">delay_lag =</span> <span class="kw">lag</span>(dep_delay))</code></pre></div>
+<pre><code>## # A tibble: 327,346 x 19
+## # Groups:   origin, date [1,095]
+##     year  date dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##    &lt;int&gt; &lt;chr&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013   1_2      458            500        -2      703            650
+##  2  2013   1_3      458            500        -2      650            650
+##  3  2013   1_4      456            500        -4      631            650
+##  4  2013   1_5      458            500        -2      640            650
+##  5  2013   1_6      458            500        -2      718            650
+##  6  2013   1_7      454            500        -6      637            648
+##  7  2013   1_8      454            500        -6      625            648
+##  8  2013   1_9      457            500        -3      647            648
+##  9  2013  1_10      450            500       -10      634            648
+## 10  2013  1_11      453            500        -7      643            648
+## # ... with 327,336 more rows, and 12 more variables: arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;, delay_lag &lt;dbl&gt;</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Look at each destination. Can you find flights that are suspiciously fast? (i.e. flights that represent a potential data entry error). Compute the air time a flight relative to the shortest flight to that destination. Which flights were most delayed in the air?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># super fast</span>
+not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">speed =</span> distance /<span class="st"> </span>air_time) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(-speed)</code></pre></div>
+<pre><code>## # A tibble: 327,346 x 20
+## # Groups:   dest [104]
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     5    25     1709           1700         9     1923
+##  2  2013     7     2     1558           1513        45     1745
+##  3  2013     5    13     2040           2025        15     2225
+##  4  2013     3    23     1914           1910         4     2045
+##  5  2013     1    12     1559           1600        -1     1849
+##  6  2013    11    17      650            655        -5     1059
+##  7  2013     2    21     2355           2358        -3      412
+##  8  2013    11    17      759            800        -1     1212
+##  9  2013    11    16     2003           1925        38       17
+## 10  2013    11    16     2349           2359       -10      402
+## # ... with 327,336 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, speed &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># shortest flight per destination</span>
+not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest) %&gt;%
+<span class="st">    </span><span class="kw">filter</span>(air_time ==<span class="st"> </span><span class="kw">min</span>(air_time)) %&gt;%
+<span class="st">    </span><span class="kw">select</span>(dest, <span class="dt">min_air =</span> air_time) %&gt;%
+<span class="st">    </span><span class="kw">inner_join</span>(flights, <span class="dt">by =</span> <span class="st">&quot;dest&quot;</span>) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">relative_air =</span> air_time /<span class="st"> </span>min_air) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(-relative_air)</code></pre></div>
+<pre><code>## # A tibble: 549,643 x 21
+## # Groups:   dest [104]
+##     dest min_air  year month   day dep_time sched_dep_time dep_delay
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
+##  1   BOS      21  2013     6    24     1932           1920        12
+##  2   BOS      21  2013     6    17     1652           1700        -8
+##  3   BOS      21  2013     7    23     1605           1400       125
+##  4   BOS      21  2013     7    23     1617           1605        12
+##  5   BOS      21  2013     7    23     1242           1237         5
+##  6   BOS      21  2013     7    23     1200           1200         0
+##  7   BOS      21  2013     2    17      841            840         1
+##  8   BOS      21  2013     7    23     1242           1245        -3
+##  9   DCA      32  2013     6    10     1356           1300        56
+## 10   DCA      32  2013     6    10     1356           1300        56
+## # ... with 549,633 more rows, and 13 more variables: arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, relative_air &lt;dbl&gt;</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Find all destinations that are flown by at least two carriers. Use that information to rank the carriers.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">num_carriers =</span> <span class="kw">length</span>(<span class="kw">unique</span>(carrier))) %&gt;%
+<span class="st">    </span><span class="kw">filter</span>(num_carriers &gt;<span class="st"> </span><span class="dv">1</span>) %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(carrier, <span class="dt">add =</span> T) %&gt;%
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">avg_dep_delay =</span> <span class="kw">mean</span>(dep_delay)) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">rank =</span> <span class="kw">dense_rank</span>(avg_dep_delay)) %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(carrier) %&gt;%
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">avg_rank =</span> <span class="kw">mean</span>(rank)) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(avg_rank)</code></pre></div>
+<pre><code>## # A tibble: 16 x 2
+##    carrier avg_rank
+##      &lt;chr&gt;    &lt;dbl&gt;
+##  1      AS 1.000000
+##  2      HA 1.000000
+##  3      DL 2.000000
+##  4      US 2.000000
+##  5      MQ 2.421053
+##  6      AA 2.526316
+##  7      UA 2.666667
+##  8      9E 2.744681
+##  9      VX 2.750000
+## 10      WN 2.800000
+## 11      B6 3.000000
+## 12      EV 3.220000
+## 13      FL 3.500000
+## 14      OO 3.600000
+## 15      F9 4.000000
+## 16      YV 4.000000</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>For each plane, count the number of flights before the first delay of greater than 1 hour.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(tailnum) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(time_hour) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">num_before_big_delay =</span> <span class="kw">sum</span>(<span class="kw">cumall</span>(dep_delay &lt;<span class="dv">60</span>)))</code></pre></div>
+<pre><code>## # A tibble: 327,346 x 20
+## # Groups:   tailnum [4,037]
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            558        -4      740
+##  6  2013     1     1      559            559         0      702
+##  7  2013     1     1      554            600        -6      812
+##  8  2013     1     1      555            600        -5      913
+##  9  2013     1     1      557            600        -3      709
+## 10  2013     1     1      557            600        -3      838
+## # ... with 327,336 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, num_before_big_delay &lt;int&gt;</code></pre>
+</div>
+</div>
+<div id="eda" class="section level1">
+<h1>7 EDA</h1>
+<div id="variation" class="section level3">
+<h3>7.3 Variation</h3>
+<ol style="list-style-type: decimal">
+<li>Explore the distribution of each of the x, y, and z variables in diamonds. What do you learn? Think about a diamond and how you might decide which dimension is the length, width, and depth.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(diamonds)
+<span class="kw">gather</span>(diamonds, k, v, x:z) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(v)) +
+<span class="st">    </span><span class="kw">geom_histogram</span>() +
+<span class="st">    </span><span class="kw">facet_wrap</span>(~k) +
+<span class="st">    </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">10</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/7.3.1-1.png" width="672" /> Z always seems the thinnest, and that makes sense if the diamond is set, it would likely be oriented to show with the thinnest dimension in the z-axis show the largest sides a presented in profile in the x and y dimensions.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Explore the distribution of price. Do you discover anything unusual or surprising? (Hint: Carefully think about the binwidth and make sure you try a wide range of values.)</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(price)) +
+<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">1000</span>) +
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">15000</span>, <span class="dv">1000</span>))</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-61-1.png" width="672" /> Why are there no diamonds being sold for $1500???</p>
+<ol start="3" style="list-style-type: decimal">
+<li>How many diamonds are 0.99 carat? How many are 1 carat? What do you think is the cause of the difference?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diamonds %&gt;%<span class="st"> </span><span class="kw">filter</span>(carat %in%<span class="st"> </span><span class="kw">c</span>(.<span class="dv">99</span>, <span class="dv">1</span>)) %&gt;%
+<span class="st">    </span><span class="kw">with</span>(., <span class="kw">table</span>(carat))</code></pre></div>
+<pre><code>## carat
+## 0.99    1 
+##   23 1558</code></pre>
+<p>When raw diamonds are being cut, it makes sense that jewlers would strive to keep diamonds as a whole carats. It is a better marketing piece to say 1,2 or 3 carat than .99, 1.99, 2.99, no one wants an almost.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Compare and contrast coord_cartesian() vs xlim() or ylim() when zooming in on a histogram. What happens if you leave binwidth unset? What happens if you try and zoom so only half a bar shows?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat)) +
+<span class="st">    </span><span class="kw">geom_histogram</span>() +
+<span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">3</span>)) +<span class="st"> </span><span class="co">#visual zoom, all data stays</span>
+<span class="st">    </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10000</span>)) <span class="co"># data outside range is converted to NA, dropped</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+</div>
+<div id="missing-values" class="section level3">
+<h3>7.4 Missing values</h3>
+<p>What happens to missing values in a histogram? What happens to missing values in a bar chart? Why is there a difference?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(flights, <span class="kw">aes</span>(dep_delay)) +
+<span class="st">    </span><span class="kw">geom_bar</span>()</code></pre></div>
+<pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_count).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/7.4.1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(flights, <span class="kw">aes</span>(dep_delay)) +
+<span class="st">    </span><span class="kw">geom_histogram</span>()</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/7.4.1-2.png" width="672" /> It seems like they handle the missing values the same, by giving a “Warning” and dropping them. Setting <code>na.rm = TRUE</code> would skip the warning and do the dropping silently.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>What does na.rm = TRUE do in mean() and sum()?</li>
+</ol>
+<p>Saves you from getting the result of NA is NAs are present in your input vector. Remember NAs are “contagious” so any numeric summary would also be unknown because the NA values could be any number from -Inf to inf</p>
+</div>
+<div id="covariation" class="section level3">
+<h3>7.5 Covariation</h3>
+</div>
+<div id="continuous---categorical" class="section level3">
+<h3>7.5.1 Continuous - Categorical</h3>
+<ol style="list-style-type: decimal">
+<li>Use what you’ve learned to improve the visualisation of the departure times of cancelled vs. non-cancelled flights.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">is_cancelled =</span> <span class="kw">is.na</span>(dep_time)) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(sched_dep_time)) +
+<span class="st">    </span><span class="kw">geom_density</span>() +
+<span class="st">    </span><span class="kw">facet_wrap</span>(~is_cancelled)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.1-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>What variable in the diamonds dataset is most important for predicting the price of a diamond? How is that variable correlated with cut? Why does the combination of those two relationships lead to lower quality diamonds being more expensive?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GGally)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;GGally&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     nasa</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggpairs</span>(diamonds[<span class="dv">1</span>:<span class="dv">500</span>,],
+        <span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">7</span>))</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p>Install the ggstance package, and create a horizontal boxplot. How does this compare to using coord_flip()?</p>
+<p>One problem with boxplots is that they were developed in an era of much smaller datasets and tend to display a prohibitively large number of “outlying values”. One approach to remedy this problem is the letter value plot. Install the lvplot package, and try using geom_lv() to display the distribution of price vs cut. What do you learn? How do you interpret the plots?</p>
+<p>Compare and contrast geom_violin() with a facetted geom_histogram(), or a coloured geom_freqpoly(). What are the pros and cons of each method?</p>
+<p>If you have a small dataset, it’s sometimes useful to use geom_jitter() to see the relationship between a continuous and categorical variable. The ggbeeswarm package provides a number of methods similar to geom_jitter(). List them and briefly describe what each one does.</p>
 </div>
 </div>
 <div id="advanced-ggplot2" class="section level1">
@@ -1650,7 +1929,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
        <span class="dt">colour =</span> <span class="st">&quot;Car type&quot;</span>
 )</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/28.2.1-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>The geom_smooth() is somewhat misleading because the hwy for large engines is skewed upwards due to the inclusion of lightweight sports cars with big engines. Use your modelling tools to fit and display a better model.</li>
 </ol>
@@ -1660,7 +1939,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) +
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> <span class="kw">filter</span>(mpg, class !=<span class="st"> &quot;2seater&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just adjust the data going into the geom_smooth() layer</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Take an exploratory graphic that you’ve created in the last month, and add informative titles to make it easier for others to understand.</li>
@@ -1672,7 +1951,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
          <span class="dt">y =</span> <span class="st">&quot;Weight (grams)&quot;</span>,
          <span class="dt">x =</span> <span class="st">&quot;Time (days)&quot;</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
 </div>
 <div id="annotations" class="section level3">
 <h3>28.3 Annotations</h3>
@@ -1686,14 +1965,14 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;top_right&quot;</span>, <span class="dt">x =</span> <span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>) +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;bot_left&quot;</span>, <span class="dt">x =</span> -<span class="ot">Inf</span>, <span class="dt">y =</span> -<span class="ot">Inf</span>) +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">label =</span> <span class="st">&quot;top_left&quot;</span>, <span class="dt">x =</span> -<span class="ot">Inf</span>, <span class="dt">y =</span> <span class="ot">Inf</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/28.3.1-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Read the documentation for annotate(). How can you use it to add a text label to a plot without having to create a tibble?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?annotate
 <span class="kw">ggplot</span>(corners, <span class="kw">aes</span>(x,y)) +
 <span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> .<span class="dv">5</span>, <span class="dt">y =</span> .<span class="dv">5</span>, <span class="dt">label =</span> <span class="st">&quot;Middle&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>How do labels with geom_text() interact with faceting? How can you add a label to a single facet? How can you put a different label in each facet? (Hint: think about the underlying data.)</li>
 </ol>
@@ -1702,7 +1981,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># delete unwanted labels for facets</span>
 mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mpg$cyl ==<span class="st"> </span><span class="dv">6</span>, ., <span class="ot">NA</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
@@ -1710,7 +1989,7 @@ mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mp
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
 <pre><code>## Warning: Removed 155 rows containing missing values (geom_text).</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># really the best thing to do is use a seperate tibble</span>
 <span class="kw">data</span>(mpg)
 avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span class="kw">group_by</span>(cyl) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg_cty =</span> <span class="kw">round</span>(<span class="kw">mean</span>(cty), <span class="dv">1</span>))
@@ -1718,7 +1997,7 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-3.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-3.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>What arguments to geom_label() control the appearance of the background box?</li>
 </ol>
@@ -1726,7 +2005,7 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_label</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty, <span class="dt">fill =</span> <span class="kw">as.factor</span>(cyl)), <span class="dt">y =</span> <span class="dv">30</span>, <span class="dt">x =</span> <span class="dv">15</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>What are the four arguments to arrow()? How do they work? Create a series of plots that demonstrate the most important options.</li>
 </ol>
@@ -1763,7 +2042,7 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">geom_hex</span>() +
 <span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) +<span class="st"> </span><span class="co"># now it works</span>
 <span class="st">  </span><span class="kw">coord_fixed</span>()</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/28.4.1-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>What is the first argument to every scale? How does it compare to labs()? <code>aesthetics</code>, which is defining the names of the aesthetics a scale works with. This is similar to <code>labs()</code> that takes a name-value pairs first and can also be used to label legends/aesthetics.</p></li>
 <li>Change the display of the presidential terms by:</li>
