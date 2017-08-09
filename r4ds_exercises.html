@@ -458,20 +458,29 @@ div.tocify {
 <li>Run ggplot(data = mpg). What do you see?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg) <span class="co"># grey square</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/3.2.4-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/3.2.4.1-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is the initialized plotting area</span></code></pre></div>
-<p>How many rows are in mpg? How many columns?</p>
+<ol start="2" style="list-style-type: decimal">
+<li>How many rows are in mpg? How many columns?</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(mpg)</code></pre></div>
 <pre><code>## [1] 234  11</code></pre>
-<p>What does the drv variable describe? Read the help for ?mpg to find out.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>What does the drv variable describe? Read the help for ?mpg to find out.</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?mpg </code></pre></div>
-<p>Make a scatterplot of hwy vs cyl.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Make a scatterplot of hwy vs cyl.</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg) +
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hwy, <span class="dt">y =</span> cyl))</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-3-1.png" width="672" /> What happens if you make a scatterplot of class vs drv? Why is the plot not useful?</p>
+<p><img src="r4ds_exercises_files/figure-html/3.2.4.4-1.png" width="672" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>What happens if you make a scatterplot of class vs drv? Why is the plot not useful?</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg) +
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> class, <span class="dt">y =</span> drv))<span class="co"># factor vs factor points</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/3.2.4.5-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need some sort of density/count viz instead</span></code></pre></div>
 </div>
 <div id="aesthetics" class="section level3">
@@ -511,11 +520,11 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">color =</span> hwy)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="co"># continuous graident</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Color&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">size =</span> hwy)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="co"># continuous gradient</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Size&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Error: A continuous variable can not be mapped to shape</span>
 <span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">shape =</span> hwy)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="co"># can&#39;t map continuous to shape</span>
@@ -525,14 +534,14 @@ div.tocify {
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">fill =</span> trans)) +
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you waste resolution</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, cty, <span class="dt">fill =</span> trans)) +
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">stroke =</span> <span class="dv">2</span>, <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># stroke is the outline thickness of shapes 21:25</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ &lt; 5)?</li>
@@ -540,7 +549,7 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) +
 <span class="st">    </span><span class="kw">geom_bar</span>() +
 <span class="st">    </span><span class="kw">facet_wrap</span>(~hwy) <span class="co"># bins it</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="facetting" class="section level3">
 <h3>3.5 Facetting</h3>
@@ -553,23 +562,23 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> drv, <span class="dt">y =</span> cyl)) +
 <span class="st">    </span><span class="kw">facet_wrap</span>(drv ~<span class="st"> </span>cyl) <span class="co"># combinations do not exist</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># facet_wrap() will drop them </span></code></pre></div>
 <p>What plots does the following code make? What does . do?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +
 <span class="st">    </span><span class="kw">facet_grid</span>(drv ~<span class="st"> </span>.) <span class="co"># compares against nothing if var is first (facets on y)</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~<span class="st"> </span>cyl) <span class="co"># don&#39;t need a dot if var is second (facets on x)</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <p>Take the first faceted plot in this section:</p>
 <p>What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>class, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds) <span class="co"># a larger dataset</span></code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:
 ##  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
@@ -588,7 +597,7 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cut)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># depends on the trends/comparisons</span>
 <span class="co"># acts as another resolution dim</span></code></pre></div>
 <p>Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol argument?</p>
@@ -619,7 +628,7 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a scatter plot with a trend smooth</span>
 <span class="co"># defaults to loess (Localy weighted polynomial regression)</span></code></pre></div>
 <p><a href="https://en.wikipedia.org/wiki/Local_regression#Definition_of_a_LOESS_model">Local regression - Wikipedia</a></p>
@@ -628,7 +637,7 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">show.legend =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># removes legend for a specific layer</span>
 <span class="co"># avoid/make confustion?</span></code></pre></div>
 <p>3b. Why do you think I used it earlier in the chapter?</p>
@@ -640,18 +649,18 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>() <span class="co"># shows a confidence interval, .95 default</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Will these two graphs look different? Why/why not?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy, <span class="dt">color =</span> cyl, <span class="dt">group =</span> cyl)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>()</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy)) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> hwy))</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># no, every sub-layer tries to inherit from the top layer, unless &quot;inherit.aes = F&quot;</span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
 <li>Recreate the R code necessary to generate the following graphs.</li>
@@ -662,31 +671,31 @@ div.tocify {
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">group =</span> drv)) +<span class="st"> </span><span class="co"># establish a grouping var</span>
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +<span class="st"> </span><span class="co"># color var does grouping by default</span>
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> F)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="ot">NULL</span>), <span class="dt">se =</span> F) <span class="co"># turn off color group for this layer</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-4.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-4.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">color =</span> drv)) +
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="ot">NULL</span>, <span class="dt">linetype =</span> drv), <span class="dt">se =</span> F) <span class="co"># turn on linetype aes for this layer</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-5.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-5.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(displ, hwy, <span class="dt">fill =</span> drv)) +
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">stroke =</span> <span class="dv">3</span>, <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>) +
 <span class="st">    </span><span class="kw">theme_grey</span>()</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-20-6.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-16-6.png" width="672" /></p>
 </div>
 </div>
 <div id="intro-to-dplyr" class="section level1">
@@ -1481,7 +1490,7 @@ cancelled %&gt;%
 <span class="st">    </span><span class="kw">geom_density</span>() +
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">360</span>, <span class="dv">30</span>),
                        <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="dv">1</span>:<span class="dv">12</span>)) <span class="co"># crude month markers, but good enough</span></code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># better built-in fxns exist...?scale_x_datetime</span></code></pre></div>
 <p>Looks like local maxima are found near major holidays: Valentine’s Day, July 4th and Christmas. I would have guess Thanksgiving would be a big cancel event, maybe if we looked at more data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%<span class="st"> </span><span class="kw">group_by</span>(month, day) %&gt;%
@@ -1492,7 +1501,7 @@ cancelled %&gt;%
 <span class="st">        </span><span class="kw">geom_point</span>() +
 <span class="st">        </span><span class="kw">stat_smooth</span>()</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>Looks like a weak positive correlation between the average departure delay and the proportional of flights canceled when grouped by day of year.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Which carrier has the worst delays?</li>
@@ -1528,7 +1537,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(origin, n, <span class="dt">fill =</span> carrier)) +
 <span class="st">    </span><span class="kw">geom_col</span>() +
 <span class="st">    </span>ggsci::<span class="kw">scale_fill_d3</span>(<span class="st">&quot;category20&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 <p>Newark Liberty Internation Airport is the most delayed NYC airport, and it looks like ExpressJet is the worst carrier in terms of total delays across the major airports of NYC.</p>
 <ol start="7" style="list-style-type: decimal">
 <li>What does the sort argument to count() do. When might you use it?</li>
@@ -1640,7 +1649,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(ca
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(time, avg_dep_delay)) +
 <span class="st">    </span><span class="kw">geom_col</span>() +
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">vjust =</span> .<span class="dv">75</span>, <span class="dt">hjust =</span> .<span class="dv">75</span>))</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>For each destination, compute the total minutes of delay. For each, flight, compute the proportion of the total delay for its destination.</li>
 </ol>
@@ -1836,7 +1845,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(price)) +
 <span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">1000</span>) +
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">15000</span>, <span class="dv">1000</span>))</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-61-1.png" width="672" /> Why are there no diamonds being sold for $1500???</p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-57-1.png" width="672" /> Why are there no diamonds being sold for $1500???</p>
 <ol start="3" style="list-style-type: decimal">
 <li>How many diamonds are 0.99 carat? How many are 1 carat? What do you think is the cause of the difference?</li>
 </ol>
@@ -1855,7 +1864,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <span class="st">    </span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10000</span>)) <span class="co"># data outside range is converted to NA, dropped</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
 </div>
 <div id="missing-values" class="section level3">
 <h3>7.4 Missing values</h3>
@@ -1868,7 +1877,8 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <span class="st">    </span><span class="kw">geom_histogram</span>()</code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/7.4.1-2.png" width="672" /> It seems like they handle the missing values the same, by giving a “Warning” and dropping them. Setting <code>na.rm = TRUE</code> would skip the warning and do the dropping silently.</p>
+<p><img src="r4ds_exercises_files/figure-html/7.4.1-2.png" width="672" /></p>
+<p>It seems like they handle the missing values the same, by giving a “Warning” and dropping them. Setting <code>na.rm = TRUE</code> would skip the warning and do the dropping silently.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>What does na.rm = TRUE do in mean() and sum()?</li>
 </ol>
@@ -1887,6 +1897,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <span class="st">    </span><span class="kw">geom_density</span>() +
 <span class="st">    </span><span class="kw">facet_wrap</span>(~is_cancelled)</code></pre></div>
 <p><img src="r4ds_exercises_files/figure-html/7.5.1-1.png" width="672" /></p>
+<p>Most cancelled flights happend later in the day. There is a period between midnight and 5 am were there are very few flights departing NYC airports, I guess even pilots and air traffic personel like the sleep. Also considering that each plan (<code>tailnum</code>) makes multiple flights per day, if one earlier flight is delayed every subsequent flight is also delayed increasing the risk of cancellation as the day progresses.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>What variable in the diamonds dataset is most important for predicting the price of a diamond? How is that variable correlated with cut? Why does the combination of those two relationships lead to lower quality diamonds being more expensive?</li>
 </ol>
@@ -1896,19 +1907,202 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     nasa</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggpairs</span>(diamonds[<span class="dv">1</span>:<span class="dv">500</span>,],
-        <span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>,<span class="dv">7</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">small_diamonds &lt;-<span class="st"> </span><span class="kw">sample_n</span>(diamonds, <span class="dv">1000</span>) <span class="co"># so it won&#39;t take forever</span>
+<span class="kw">ggpairs</span>(small_diamonds, <span class="dt">columns =</span> <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">6</span>)) <span class="co"># drop dimensions (table,x,y,z)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
-<p>Install the ggstance package, and create a horizontal boxplot. How does this compare to using coord_flip()?</p>
-<p>One problem with boxplots is that they were developed in an era of much smaller datasets and tend to display a prohibitively large number of “outlying values”. One approach to remedy this problem is the letter value plot. Install the lvplot package, and try using geom_lv() to display the distribution of price vs cut. What do you learn? How do you interpret the plots?</p>
-<p>Compare and contrast geom_violin() with a facetted geom_histogram(), or a coloured geom_freqpoly(). What are the pros and cons of each method?</p>
-<p>If you have a small dataset, it’s sometimes useful to use geom_jitter() to see the relationship between a continuous and categorical variable. The ggbeeswarm package provides a number of methods similar to geom_jitter(). List them and briefly describe what each one does.</p>
+<p><img src="r4ds_exercises_files/figure-html/7.5.1.2-1.png" width="672" /></p>
+<p><code>carat</code> looks like it has a strong linear correlation with <code>price</code>. Let’s look closer and see how it relates to <code>cut</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggbeeswarm)
+<span class="kw">library</span>(cowplot)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     ggsave</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cowplot::<span class="kw">plot_grid</span>(
+    <span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(carat, price, <span class="dt">color =</span> cut)) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> .<span class="dv">5</span>),
+    <span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(cut, price)) +
+<span class="st">    </span><span class="kw">geom_quasirandom</span>(<span class="dt">alpha =</span> .<span class="dv">1</span>)
+)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.1.2b-1.png" width="672" /></p>
+<p>It looks like the biggest diamonds available are not “ideal” in their cut, but despite that people are still willing to pay a premium. However it looks like <code>cut</code> is does have a positive correlation with <code>price</code>. Overall there a lot more diamonds being classified as “ideal” and that makes sense because diamonds are an artificial market driven entirely by mining company supply restrictions and advertising. Lower quality diamonds make there way into industrial applications, for their strength properties and the better cuts are left for the premiums in the jewlery market.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Install the ggstance package, and create a horizontal boxplot. How does this compare to using coord_flip()?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;ggstance&quot;)</span>
+<span class="kw">library</span>(ggstance)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ggstance&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> price, <span class="dt">y =</span> cut)) +
+<span class="st">    </span><span class="kw">stat_boxploth</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># you just have to change the axis assignments</span>
+<span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price)) +
+<span class="st">    </span><span class="kw">geom_boxplot</span>() +
+<span class="st">    </span><span class="kw">coord_flip</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-60-2.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>One problem with boxplots is that they were developed in an era of much smaller datasets and tend to display a prohibitively large number of “outlying values”. One approach to remedy this problem is the letter value plot. Install the lvplot package, and try using geom_lv() to display the distribution of price vs cut. What do you learn? How do you interpret the plots?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># need github version, not CRAN</span>
+<span class="co"># devtools::install_github(&quot;hadley/lvplot&quot;)</span>
+<span class="kw">library</span>(lvplot)
+
+<span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price)) +
+<span class="st">    </span><span class="kw">geom_lv</span>() <span class="co"># ewwwwwy</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p>The idea behind letter value plots was to reduce the over calling of outliers in larger (n &gt; 1000) data sets. and reduce the number of points marked as outliers.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Compare and contrast geom_violin() with a facetted geom_histogram(), or a coloured geom_freqpoly(). What are the pros and cons of each method?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(cut, carat)) +
+<span class="st">    </span><span class="kw">geom_violin</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># shows the distribution in a mirrored density curve</span>
+<span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(carat)) +
+<span class="st">    </span><span class="kw">geom_histogram</span>() +
+<span class="st">    </span><span class="kw">facet_wrap</span>(~cut, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-62-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hard to make distribution comparisons since histogram uses count to determin bar height</span>
+<span class="co"># geom_density() is what I prefer</span>
+<span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(carat)) +
+<span class="st">    </span><span class="kw">geom_density</span>() +
+<span class="st">    </span><span class="kw">facet_wrap</span>(~cut)</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-62-3.png" width="672" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>If you have a small dataset, it’s sometimes useful to use geom_jitter() to see the relationship between a continuous and categorical variable. The ggbeeswarm package provides a number of methods similar to geom_jitter(). List them and briefly describe what each one does.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggbeeswarm)
+<span class="kw">ggplot</span>(small_diamonds, <span class="kw">aes</span>(cut, carat)) +
+<span class="st">    </span><span class="kw">geom_quasirandom</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p>This is similar to geom_violin, in that it attempts show the density via width and similar to jitter in that overalpping points are dodged. The alternate function is <code>geom_beeswarm()</code> which just uses a slightly different positioning algorithim to re-located overlapping points.</p>
+</div>
+<div id="two-categorical-variables" class="section level3">
+<h3>7.5.2 Two categorical variables</h3>
+<ol style="list-style-type: decimal">
+<li>How could you rescale the count dataset above to more clearly show the distribution of cut within colour, or colour within cut?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">counts &lt;-<span class="st"> </span>diamonds %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(color, cut)
+
+<span class="kw">library</span>(viridis)</code></pre></div>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(counts, <span class="kw">aes</span>(color, <span class="dt">y =</span> cut, <span class="dt">fill =</span> n)) +
+<span class="st">    </span><span class="kw">geom_tile</span>() +
+<span class="st">    </span><span class="kw">scale_fill_viridis</span>() <span class="co"># use a better color palette is one option for better viz</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.2.1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># or add a new proportional summary value</span>
+
+counts2 &lt;-<span class="st"> </span>counts %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(color) %&gt;%
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">total =</span> <span class="kw">sum</span>(n),
+           <span class="dt">prop =</span> n /<span class="st"> </span>total)
+    
+<span class="kw">ggplot</span>(counts2, <span class="kw">aes</span>(color, cut, <span class="dt">fill =</span> prop)) +
+<span class="st">    </span><span class="kw">geom_tile</span>() +
+<span class="st">    </span><span class="kw">scale_fill_viridis</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.2.1-2.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Use geom_tile() together with dplyr to explore how average flight delays vary by destination and month of year. What makes the plot difficult to read? How could you improve it?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest, month) %&gt;%
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">avg_delay =</span> <span class="kw">mean</span>(dep_delay)) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(month, dest, <span class="dt">fill =</span> avg_delay)) +
+<span class="st">    </span><span class="kw">geom_tile</span>()</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.2.2-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># there are too many desinations (and blue pallete is bad)</span>
+
+<span class="co"># lets filter to only very common destimations</span>
+top_dests &lt;-<span class="st"> </span>not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(dest) %&gt;%
+<span class="st">    </span><span class="kw">count</span>(<span class="dt">sort =</span> T) %&gt;%<span class="st"> </span>.[<span class="dv">1</span>:<span class="dv">10</span>,] <span class="co"># top10</span>
+
+not_cancelled %&gt;%<span class="st"> </span><span class="kw">filter</span>(dest %in%<span class="st"> </span>top_dests$dest) %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(dest, month) %&gt;%
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">avg_delay =</span> <span class="kw">mean</span>(dep_delay)) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(month, dest, <span class="dt">fill =</span> avg_delay)) +
+<span class="st">    </span><span class="kw">geom_tile</span>() +
+<span class="st">    </span><span class="kw">scale_fill_viridis</span>() <span class="co"># ftw</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.2.2-2.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Why is it slightly better to use aes(x = color, y = cut) rather than aes(x = cut, y = color) in the example above?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(counts2, <span class="kw">aes</span>(cut, color, <span class="dt">fill =</span> prop)) +
+<span class="st">    </span><span class="kw">geom_tile</span>() +
+<span class="st">    </span><span class="kw">scale_fill_viridis</span>() <span class="co"># hmmm</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.2.3-1.png" width="672" /></p>
+<p>Crystal Passmore: There are more levels in <code>diamonds$color</code> so it makes more sense to put the <code>factor</code> with more levels on the x-axis.</p>
+</div>
+<div id="two-continuous-variables" class="section level3">
+<h3>7.5.3 Two continuous variables</h3>
+<ol style="list-style-type: decimal">
+<li>Instead of summarising the conditional distribution with a boxplot, you could use a <code>geom_freqpoly()</code>. What do you need to consider when using the arguments <code>binwidth =</code> and <code>bins =</code>? How does that impact a visualisation of the 2d distribution of carat and price?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># bins() vs bin_width() is a matter of preference</span>
+<span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(price, <span class="dt">colour =</span> cut)) +
+<span class="st">  </span><span class="kw">geom_freqpoly</span>(<span class="dt">bins =</span> <span class="dv">5000</span>) <span class="co"># dont want to over-fit </span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.3.1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(price, <span class="dt">colour =</span> cut)) +
+<span class="st">  </span><span class="kw">geom_freqpoly</span>(<span class="dt">bins =</span> <span class="dv">5</span>) <span class="co"># or lose trends</span></code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.3.1-2.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Visualise the distribution of carat, partitioned by price.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diamonds %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">facets =</span> <span class="kw">cut_number</span>(price, <span class="dv">3</span>)) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(carat)) +
+<span class="st">    </span><span class="kw">geom_freqpoly</span>(<span class="kw">aes</span>(<span class="dt">color =</span> facets)) +
+<span class="st">    </span>ggsci::<span class="kw">scale_color_d3</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>)) +
+<span class="st">    </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="fl">2.5</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 126 rows containing non-finite values (stat_bin).</code></pre>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_path).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/7.5.3.2-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>How does the price distribution of very large diamonds compare to small diamonds. Is it as you expect, or does it surprise you?</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check range</span>
+<span class="kw">range</span>(diamonds$carat)</code></pre></div>
+<pre><code>## [1] 0.20 5.01</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(diamonds$carat)</code></pre></div>
+<pre><code>##   0%  25%  50%  75% 100% 
+## 0.20 0.40 0.70 1.04 5.01</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use probs arg to cut out small and large diamonds</span>
+c1 &lt;-<span class="st"> </span><span class="kw">quantile</span>(diamonds$carat, <span class="dt">probs =</span> .<span class="dv">1</span>) <span class="co"># bottom 10%</span>
+c2 &lt;-<span class="st"> </span><span class="kw">quantile</span>(diamonds$carat, .<span class="dv">9</span>) <span class="co"># top 10%</span>
+
+<span class="co"># now for real</span>
+diamonds %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">size_cut =</span> Hmisc::<span class="kw">cut2</span>( diamonds$carat, <span class="dt">cuts =</span> <span class="kw">c</span>(c1, c2) ) ) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(price)) +
+<span class="st">    </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">color =</span> size_cut)) +
+<span class="st">    </span>ggsci::<span class="kw">scale_color_d3</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;bottom10&quot;</span>, <span class="st">&quot;middle80&quot;</span>, <span class="st">&quot;top10&quot;</span>) )</code></pre></div>
+<p><img src="r4ds_exercises_files/figure-html/7.5.3.3-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Combine two of the techniques you’ve learned to visualise the combined distribution of cut, carat, and price.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diamonds %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">facets =</span> <span class="kw">cut_number</span>(price, <span class="dv">3</span>),
+                    <span class="dt">size_cut =</span> Hmisc::<span class="kw">cut2</span>( diamonds$carat, <span class="dt">cuts =</span> <span class="kw">quantile</span>(diamonds$carat)[<span class="dv">2</span>:<span class="dv">4</span>] )) %&gt;%
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(carat, <span class="dt">color =</span> size_cut)) +
+<span class="st">    </span><span class="kw">geom_freqpoly</span>() +
+<span class="st">    </span><span class="kw">facet_grid</span>(~facets) +
+<span class="st">    </span>ggsci::<span class="kw">scale_color_d3</span>(<span class="dt">labels =</span> <span class="kw">paste0</span>(<span class="st">&quot;Q&quot;</span>, <span class="dv">1</span>:<span class="dv">4</span>)) +
+<span class="st">    </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="fl">2.5</span>) <span class="co"># ???</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 126 rows containing non-finite values (stat_bin).</code></pre>
+<pre><code>## Warning: Removed 8 rows containing missing values (geom_path).</code></pre>
+<p><img src="r4ds_exercises_files/figure-html/7.5.3.4-1.png" width="672" /></p>
 </div>
 </div>
 <div id="advanced-ggplot2" class="section level1">
@@ -1939,7 +2133,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) +
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> <span class="kw">filter</span>(mpg, class !=<span class="st"> &quot;2seater&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just adjust the data going into the geom_smooth() layer</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Take an exploratory graphic that you’ve created in the last month, and add informative titles to make it easier for others to understand.</li>
@@ -1951,7 +2145,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
          <span class="dt">y =</span> <span class="st">&quot;Weight (grams)&quot;</span>,
          <span class="dt">x =</span> <span class="st">&quot;Time (days)&quot;</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 </div>
 <div id="annotations" class="section level3">
 <h3>28.3 Annotations</h3>
@@ -1972,7 +2166,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?annotate
 <span class="kw">ggplot</span>(corners, <span class="kw">aes</span>(x,y)) +
 <span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> .<span class="dv">5</span>, <span class="dt">y =</span> .<span class="dv">5</span>, <span class="dt">label =</span> <span class="st">&quot;Middle&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>How do labels with geom_text() interact with faceting? How can you add a label to a single facet? How can you put a different label in each facet? (Hint: think about the underlying data.)</li>
 </ol>
@@ -1981,7 +2175,7 @@ not_cancelled %&gt;%<span class="st"> </span><span class="kw">group_by</span>(de
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># delete unwanted labels for facets</span>
 mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mpg$cyl ==<span class="st"> </span><span class="dv">6</span>, ., <span class="ot">NA</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="kw">aes</span>(cty, hwy)) +
@@ -1989,7 +2183,7 @@ mpg$avg_cty %&lt;&gt;%<span class="st"> </span><span class="kw">ifelse</span>(mp
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
 <pre><code>## Warning: Removed 155 rows containing missing values (geom_text).</code></pre>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># really the best thing to do is use a seperate tibble</span>
 <span class="kw">data</span>(mpg)
 avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span class="kw">group_by</span>(cyl) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg_cty =</span> <span class="kw">round</span>(<span class="kw">mean</span>(cty), <span class="dv">1</span>))
@@ -1997,7 +2191,7 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty), <span class="dt">y =</span> <span class="dv">40</span>, <span class="dt">x =</span> <span class="dv">15</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-3.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-67-3.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>What arguments to geom_label() control the appearance of the background box?</li>
 </ol>
@@ -2005,7 +2199,7 @@ avgs &lt;-<span class="st"> </span>mpg %&gt;%<span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_point</span>() +
 <span class="st">    </span><span class="kw">geom_label</span>(<span class="dt">data =</span> avgs, <span class="kw">aes</span>(<span class="dt">label =</span> avg_cty, <span class="dt">fill =</span> <span class="kw">as.factor</span>(cyl)), <span class="dt">y =</span> <span class="dv">30</span>, <span class="dt">x =</span> <span class="dv">15</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
 <span class="st">    </span><span class="kw">facet_grid</span>(~cyl)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>What are the four arguments to arrow()? How do they work? Create a series of plots that demonstrate the most important options.</li>
 </ol>
@@ -2055,7 +2249,7 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> end, <span class="dt">yend =</span> id)) +
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Improving the display of the y-axis.</li>
 </ol>
@@ -2067,7 +2261,7 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="ot">NULL</span>, <span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>) +
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">34</span>:<span class="dv">44</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Labelling each term with the name of the president.</li>
 </ol>
@@ -2080,7 +2274,7 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> presidential$start, <span class="dt">date_labels =</span> <span class="st">&quot;&#39;%y&quot;</span>, <span class="dt">date_breaks =</span> <span class="st">&quot;4 years&quot;</span>) +
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">34</span>:<span class="dv">44</span>, <span class="dt">labels =</span> presidential$name) +
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Is it there?&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Adding informative plot labels.</li>
 </ol>
@@ -2093,7 +2287,7 @@ presidential %&gt;%
 <span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">Republican =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">Democratic =</span> <span class="st">&quot;blue&quot;</span>)) +
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">34</span>, <span class="dv">44</span>, <span class="dt">by =</span> <span class="dv">1</span>), <span class="dt">labels =</span> presidential$name) +
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;President&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Presidentail Terms&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>Placing breaks every 4 years (this is trickier than it seems!).</li>
 </ol>
@@ -2106,14 +2300,14 @@ presidential %&gt;%
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">34</span>, <span class="dv">44</span>, <span class="dt">by =</span> <span class="dv">1</span>), <span class="dt">labels =</span> presidential$name) +
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;President&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Presidentail Terms&quot;</span>) +
 <span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">date_breaks =</span> <span class="st">&quot;4 years&quot;</span>, <span class="dt">date_labels =</span> <span class="st">&quot;%y&quot;</span>)</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Use override.aes to make the legend on the following plot easier to see.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(carat, price)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> cut), <span class="dt">alpha =</span> <span class="dv">1</span>/<span class="dv">20</span>) +
 <span class="st">    </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Because&quot;</span>,<span class="dt">override.aes =</span> <span class="kw">list</span>(<span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">shape =</span> <span class="dv">24</span>, <span class="dt">size =</span> <span class="dv">4</span>)))</code></pre></div>
-<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p><img src="r4ds_exercises_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
 </div>
 </div>
 
