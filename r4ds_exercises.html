@@ -24,7 +24,16 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="shortcut icon" type="image/png" href="www/favicon_dark.png">
+<link rel="apple-touch-icon" sizes="180x180" href="www/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="www/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="www/favicon-16x16.png">
+<link rel="manifest" href="www/manifest.json">
+<link rel="mask-icon" href="www/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="www/favicon.ico">
+<meta name="msapplication-config" content="www/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<! link rel="shortcut icon" type="image/png" href="www/favicon_dark.png">
 
 <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto|Ubuntu">
@@ -2305,16 +2314,16 @@ annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##      `1`       `2`      `3`
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  2.220781 2.220781
-##  2     2  5.117949 2.558975
-##  3     3  6.330377 2.110126
-##  4     4  7.269529 1.817382
-##  5     5 11.078522 2.215704
-##  6     6 12.542311 2.090385
-##  7     7 15.484426 2.212061
-##  8     8 16.955457 2.119432
-##  9     9 19.850998 2.205666
-## 10    10 19.126650 1.912665</code></pre>
+##  1     1  1.995901 1.995901
+##  2     2  4.502024 2.251012
+##  3     3  3.728923 1.242974
+##  4     4  8.706979 2.176745
+##  5     5 10.373540 2.074708
+##  6     6 13.071076 2.178513
+##  7     7 14.737210 2.105316
+##  8     8 15.743384 1.967923
+##  9     9 17.905947 1.989550
+## 10    10 21.495306 2.149531</code></pre>
 <p>4d. Renaming the columns to one, two and three.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>,
                     <span class="dt">two =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>,
@@ -2322,16 +2331,16 @@ annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##      one       two    three
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  2.220781 2.220781
-##  2     2  5.117949 2.558975
-##  3     3  6.330377 2.110126
-##  4     4  7.269529 1.817382
-##  5     5 11.078522 2.215704
-##  6     6 12.542311 2.090385
-##  7     7 15.484426 2.212061
-##  8     8 16.955457 2.119432
-##  9     9 19.850998 2.205666
-## 10    10 19.126650 1.912665</code></pre>
+##  1     1  1.995901 1.995901
+##  2     2  4.502024 2.251012
+##  3     3  3.728923 1.242974
+##  4     4  8.706979 2.176745
+##  5     5 10.373540 2.074708
+##  6     6 13.071076 2.178513
+##  7     7 14.737210 2.105316
+##  8     8 15.743384 1.967923
+##  9     9 17.905947 1.989550
+## 10    10 21.495306 2.149531</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># or</span>
 annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">&quot;1&quot;</span>,
                     <span class="dt">two =</span> <span class="st">&quot;2&quot;</span>,
@@ -2339,16 +2348,16 @@ annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
 <pre><code>## # A tibble: 10 x 3
 ##      one       two    three
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  2.220781 2.220781
-##  2     2  5.117949 2.558975
-##  3     3  6.330377 2.110126
-##  4     4  7.269529 1.817382
-##  5     5 11.078522 2.215704
-##  6     6 12.542311 2.090385
-##  7     7 15.484426 2.212061
-##  8     8 16.955457 2.119432
-##  9     9 19.850998 2.205666
-## 10    10 19.126650 1.912665</code></pre>
+##  1     1  1.995901 1.995901
+##  2     2  4.502024 2.251012
+##  3     3  3.728923 1.242974
+##  4     4  8.706979 2.176745
+##  5     5 10.373540 2.074708
+##  6     6 13.071076 2.178513
+##  7     7 14.737210 2.105316
+##  8     8 15.743384 1.967923
+##  9     9 17.905947 1.989550
+## 10    10 21.495306 2.149531</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>What does tibble::enframe() do? When might you use it?</li>
 </ol>
