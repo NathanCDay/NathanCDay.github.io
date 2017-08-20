@@ -24,27 +24,26 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="shortcut icon" type="image/png" href="www/favicon2.png">
+<link rel="shortcut icon" type="image/png" href="www/favicon_dark.png">
 
 <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-          
-<link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto">
+          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto|Ubuntu">
           
 <style>
-    .navbar {
-        font-family: 'Atomic Age';
-    }
-    .tocify {
-        font-family: 'Atomic Age';
-    }
-    h1 {
-        font-family: 'Atomic Age';
-    }
-    p {
-        font-family: 'Roboto';
-    }
+.navbar-brand {
+    font-family:"Atomic Age";
+    font-size:1.5em;
+}
+
+body {
+    font-family:"Ubuntu";
+}
+p {
+    font-size:1.1em;
+}
+p ~ ul {
+    font-size:1.1em;
+}
 
 </style>
 
@@ -439,17 +438,17 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Piping with Purrr</h1>
-<h4 class="date"><em>3/24/2017</em></h4>
+<h4 class="date"><em>2017/03/24/</em></h4>
 
 </div>
 
 
 <div class="container">
-<p><img src="https://s-media-cache-ak0.pinimg.com/564x/66/ce/ae/66ceae51164293aa6ba0d6379685873a.jpg" alt="Drawing" style="width: 200px;"/> <img src="http://myfunnymemes.com/wp-content/uploads/2015/04/Billionaire-Cat-Explores-Its-Billion-Dollar-Estate-Wearing-a-Top-Hat-Monocle-While-Smoking-a-Pipe_408x408.jpg" alt="Drawing" style="width: 200px;"/> <img src="http://i.ebayimg.com/images/g/H0wAAOSwll1Wt483/s-l300.jpg" alt="Drawing" style="width: 200px;"/></p>
+<p><img src="https://s-media-cache-ak0.pinimg.com/564x/66/ce/ae/66ceae51164293aa6ba0d6379685873a.jpg" alt="Drawing" style="width: 200px;"/> <img src="http://myfunnymemes.com/wp-content/uploads/2015/04/Billionaire-Cat-Explores-Its-Billion-Dollar-Estate-Wearing-a-Top-Hat-Monocle-While-Smoking-a-Pipe_408x408.jpg" alt="Drawing" style="width: 200px;"/></p>
 </div>
 <div id="intro" class="section level2">
 <h2>Intro</h2>
-<p>Piping <code>%&gt;%</code> in R has been around since the debute of the <code>magrittr</code> library in 2014 and has been adopted by some of the most popular packages on CRAN. <code>Purrr</code> is a relavily new package, released in 2016, that tries to build on the popularity of piping and build more functional programming tools to R. This quick <code>data(mtcars)</code> run through aims to show the potential of pairing these two packages.</p>
+<p>Piping <code>%&gt;%</code> in R has been around since the debute of the <code>magrittr</code> library (2014) and has been adopted by some of the most popular packages on CRAN including <a href="https://www.tidyverse.org/"><code>library(tidyvers)</code></a>. <code>Purrr</code> is a relavily new package, released in 2016, that tries to build on the popularity of piping and build more functional programming tools to R. This quick <code>data(mtcars)</code> run through aims to show the potential of pairing these two packages.</p>
 <hr />
 </div>
 <div id="the-packages" class="section level2">
@@ -469,28 +468,28 @@ div.tocify {
 <div id="six-rules" class="section level4">
 <h4>Six Rules:</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 1. By default the left-hand side (LHS) will be piped in as the first argument of the function appearing on the right-hand side (RHS).</span>
-LHS %&gt;%<span class="st"> </span><span class="kw">some_fxn</span>(...) =<span class="st"> </span><span class="kw">some_fxn</span>(LHS, ...)
+LHS <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">some_fxn</span>(...) =<span class="st"> </span><span class="kw">some_fxn</span>(LHS, ...)
 
 <span class="co"># 2. `%&gt;%` may be used in a nested fashion, e.g. it may appear in expressions within arguments.</span>
-<span class="kw">summarise</span>(mtcars %&gt;%<span class="st"> </span><span class="kw">filter</span>(cyl ==<span class="st"> </span><span class="dv">4</span>), <span class="dt">avg_mpg =</span> <span class="kw">mean</span>(mpg))
+<span class="kw">summarise</span>(mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(cyl <span class="op">==</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">avg_mpg =</span> <span class="kw">mean</span>(mpg))
 
 <span class="co"># 3. When the LHS is needed at a position other than the first, one can use the dot,&#39;.&#39;, as placeholder.</span>
-some_chr_vector %&gt;%<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;find&quot;</span>, <span class="st">&quot;replace&quot;</span>, .)
+some_chr_vector <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;find&quot;</span>, <span class="st">&quot;replace&quot;</span>, .)
 
 <span class="co"># 4. The dot in a formula is not confused with a placeholder.</span>
-list_of_dataframes %&gt;%<span class="st"> </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>., <span class="dt">data =</span> .))
+list_of_dataframes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(response <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> .))
 
 <span class="co"># 5. Whenever only one argument is needed, the LHS, then one can omit the empty parentheses.</span>
-some_object %&gt;%<span class="st"> </span>class
+some_object <span class="op">%&gt;%</span><span class="st"> </span>class
 
 <span class="co"># 6. A pipeline with a dot (.) as LHS will create a unary function.</span>
-mean_rm &lt;-<span class="st"> </span>. %&gt;%<span class="st"> </span><span class="kw">mean</span>(<span class="dt">na.rm =</span> T)</code></pre></div>
+mean_rm &lt;-<span class="st"> </span>. <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>(<span class="dt">na.rm =</span> T)</code></pre></div>
 </div>
 <div id="the-reciprocal-pipe" class="section level4">
 <h4>The reciprocal pipe <code>%&lt;&gt;%</code></h4>
 <p>Used for storing the result from the RHS evalution by overwriting the original LHS value. This is very useful with certain functions and especially in data cleaning scenarios.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">some_chr_vector %&lt;&gt;%<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;find&quot;</span>, <span class="st">&quot;replace&quot;</span>, .) <span class="co"># now its saved</span>
-some_chr_vector %&lt;&gt;%<span class="st"> </span><span class="kw">factor</span>(<span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>)) <span class="co"># ready for ggplot()</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">some_chr_vector <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;find&quot;</span>, <span class="st">&quot;replace&quot;</span>, .) <span class="co"># now its saved</span>
+some_chr_vector <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">factor</span>(<span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>)) <span class="co"># ready for ggplot()</span></code></pre></div>
 <p>Hadley <a href="http://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr">doesn’t like</a> these <code>%&lt;&gt;%</code>, due to principles of explicit definition, so thats why they don’t load with tidyverse. I think they are beyond swell and hope you do too.</p>
 </div>
 <div id="trend-setting" class="section level4">
@@ -509,12 +508,12 @@ some_chr_vector %&lt;&gt;%<span class="st"> </span><span class="kw">factor</span
 <h4>Introduces <code>map()</code> as tidyverse version of <code>lapply()</code></h4>
 <p>Since annonymous functions are everywhere in R, <code>lapply(..., function(x){ anything custom } )</code>, purrr’s <code>map(.x, .f, ...)</code> is aimed at improving their syntax. This makes for code that is easier to understand and easie to type. <code>map()</code> is the major workhorse function. Let looks at its shorthand syntax features.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># no need for () if args &lt; 2</span>
-mtcars %&gt;%<span class="st"> </span><span class="kw">split</span>(.$cyl) %&gt;%
+mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>cyl) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">map</span>(class)
 
 <span class="co"># if args &gt; 1 use ~ and magrittr&#39;s . syntax</span>
-mtcars %&gt;%<span class="st"> </span><span class="kw">split</span>(.$cyl) %&gt;%
-<span class="st">    </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>gear, <span class="dt">data =</span> .)) <span class="co"># same rules for flexible positioning</span></code></pre></div>
+mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">split</span>(.<span class="op">$</span>cyl) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>gear, <span class="dt">data =</span> .)) <span class="co"># same rules for flexible positioning</span></code></pre></div>
 </div>
 <div id="varients-like-map_df-make-for-easily-formatted-output" class="section level4">
 <h4>Varients like <code>map_df()</code> make for easily formatted output</h4>
@@ -534,59 +533,62 @@ mtcars %&gt;%<span class="st"> </span><span class="kw">split</span>(.$cyl) %&gt;
 <h4>Syntatic sugar</h4>
 <p>Pipes make code chunks easier to digest.</p>
 <p>Let look at the first 6 rows of <code>mtcars</code> sorted by <code>mpg</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mtcars)
-mtcars %&lt;&gt;%<span class="st"> </span><span class="kw">rownames_to_column</span>() <span class="co"># bc this should be the default</span>
-mtcars$cyl %&lt;&gt;%<span class="st"> </span>as.factor <span class="co"># useful later on for group_by() and split()</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># prep data</span>
+<span class="kw">data</span>(mtcars)
+mtcars <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>() <span class="co"># bc this should be the default</span>
+mtcars<span class="op">$</span>cyl <span class="op">%&lt;&gt;%</span><span class="st"> </span>as.factor <span class="co"># useful later on for group_by() and split()</span>
 
-<span class="co"># both do the same thing, which one do you like better?</span>
+<span class="co"># equivilant code</span>
 <span class="kw">head</span>(<span class="kw">arrange</span>(mtcars, mpg))
-mtcars %&gt;%<span class="st"> </span><span class="kw">arrange</span>(mpg) %&gt;%<span class="st"> </span>head</code></pre></div>
+mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(mpg) <span class="op">%&gt;%</span><span class="st"> </span>head</code></pre></div>
+<p>While both of the lines above will return identical results, the pipelive version offers serval syntactic advantages over the traditional version.</p>
 <ul>
-<li>Alleviaes the need for nested functions.</li>
-<li>Pipelines make following the logical progression easy.</li>
-<li>Complex procedures are presented in a linear order.</li>
+<li>Alleviates the need for nested functions.</li>
+<li>Pipelines make following logic easier.</li>
+<li>Complex procedures are presented in steps.</li>
 </ul>
-<p>This also means pipes are not good for expressing multiple inputs or complex relationships, as they focus on the manipulating a single object.</p>
 <hr />
 </div>
 <div id="more-advantage-with-more-steps" class="section level4">
 <h4>More advantage with more steps</h4>
-<p>Now lets group <code>mtcars</code> by number of <code>cyl</code> and get the top 4 cars for <code>mpg</code> from each group, then take the average of each numeric column.</p>
+<p>As the number of steps increases and the manipulation task become more complex, pipelines become even better.</p>
+<p>For example let’s group <code>mtcars</code> by number of <code>cyl</code> and then pull out the top 4 cars for <code>mpg</code> from each <code>cyl</code> group, then take the average of each numeric column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this ?</span>
 <span class="kw">summarise_if</span>(<span class="kw">top_n</span>(<span class="kw">group_by</span>(mtcars, cyl), <span class="dv">4</span>, mpg),is.numeric, mean)
 <span class="co"># or this ?</span>
-mtcars %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(cyl) %&gt;%
-<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">4</span>, mpg) %&gt;%<span class="st"> </span><span class="co"># doing `arrange %&gt;% head` from above </span>
+mtcars <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(cyl) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">4</span>, mpg) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># doing `arrange %&gt;% head` from above </span>
 <span class="st">    </span><span class="kw">summarise_if</span>(is.numeric, mean)</code></pre></div>
+<p>Again both code chunks are execution identical, but we can really start to see the benefits how pipes help break code down into single digestible operations. Instead of looking at a single confusing line of nested function calls, we have a line by line break down of each step in sequential order.</p>
 </div>
 <div id="model-fitting" class="section level3">
 <h3>Model fitting</h3>
 <p>Now lets run through the <code>?map</code> example and see these two packages playing nicely.</p>
 <p>The linear model of the relationship between <code>disp</code> and <code>mpg</code> for each <code>cyl</code> level. Thanks to <code>ggplot2::stat_summary()</code>, maybe the best plotting function ever.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(disp, mpg, <span class="dt">color =</span> cyl)) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>) +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(disp, mpg, <span class="dt">color =</span> cyl)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F)</code></pre></div>
 <p><img src="Cats_with_Pipes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Suppose we want to make the same linear models ourselves. Perhaps for hypothesis testing or coefficient extraction.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars %&gt;%
-<span class="st">    </span><span class="kw">split</span>(.$cyl) %&gt;%
-<span class="st">    </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> .)) -&gt;<span class="st"> </span>lm_fits <span class="co"># not my fav but useful</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">split</span>(.<span class="op">$</span>cyl) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp, <span class="dt">data =</span> .)) -&gt;<span class="st"> </span>lm_fits <span class="co"># not my fav but useful</span></code></pre></div>
 <p>Now we have a nice litte list, which is the best, because we could continue on applying functions with <code>map( fun(x) )</code>. This template is nice for confidence intervals, predicting or just about anything you do in R.</p>
 </div>
 <div id="model-extraction" class="section level3">
 <h3>Model Extraction</h3>
 <p>Grabbing the data from any R object can be a pain, but <code>library(broom)</code> added <code>tidy()</code> which has methods for doing just that to most classes in R!</p>
 <p>We want to extract the coefs from each model and replot the <code>lm</code>s with <code>geom_abline()</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_fits %&lt;&gt;%
-<span class="st">    </span><span class="kw">map_df</span>(broom::tidy, <span class="dt">.id =</span> <span class="st">&quot;cyl&quot;</span>) %&gt;%<span class="st"> </span><span class="co"># love this map_df(tidy) combo!!!</span>
-<span class="st">    </span><span class="kw">select</span>(cyl, term, estimate) %&gt;%
-<span class="st">    </span><span class="kw">spread</span>(term, estimate) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm_fits <span class="op">%&lt;&gt;%</span>
+<span class="st">    </span><span class="kw">map_df</span>(broom<span class="op">::</span>tidy, <span class="dt">.id =</span> <span class="st">&quot;cyl&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># love this map_df(tidy) combo!!!</span>
+<span class="st">    </span><span class="kw">select</span>(cyl, term, estimate) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">spread</span>(term, estimate) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cyl =</span> <span class="kw">as.factor</span>(cyl)) <span class="co"># a reciprocal pipe wont work inside mutate()</span>
 
 <span class="co"># now plot</span>
-<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(disp, mpg, <span class="dt">color =</span> cyl)) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>) +
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(disp, mpg, <span class="dt">color =</span> cyl)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> lm_fits, <span class="kw">aes</span>(<span class="dt">slope =</span> disp, <span class="dt">intercept =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>, <span class="dt">color =</span> cyl))</code></pre></div>
 <p><img src="Cats_with_Pipes_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Thats all for this quick walk through.</p>

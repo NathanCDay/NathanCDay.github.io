@@ -24,27 +24,26 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="shortcut icon" type="image/png" href="www/favicon2.png">
+<link rel="shortcut icon" type="image/png" href="www/favicon_dark.png">
 
 <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-          
-<link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto">
+          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto|Ubuntu">
           
 <style>
-    .navbar {
-        font-family: 'Atomic Age';
-    }
-    .tocify {
-        font-family: 'Atomic Age';
-    }
-    h1 {
-        font-family: 'Atomic Age';
-    }
-    p {
-        font-family: 'Roboto';
-    }
+.navbar-brand {
+    font-family:"Atomic Age";
+    font-size:1.5em;
+}
+
+body {
+    font-family:"Ubuntu";
+}
+p {
+    font-size:1.1em;
+}
+p ~ ul {
+    font-size:1.1em;
+}
 
 </style>
 
@@ -439,7 +438,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Sports Sentiment</h1>
-<h4 class="date"><em>6/1/2017</em></h4>
+<h4 class="date"><em>2017/06/01</em></h4>
 
 </div>
 
@@ -464,34 +463,34 @@ div.tocify {
 <span class="co"># scrapes from any event link_page URL, like this one:</span>
 <span class="co"># http://www.asapsports.com/show_event.php?category=5&amp;date=2017-5-30&amp;title=NHL+STANLEY+CUP+FINAL%3A+PREDATORS+VS+PENGUINS</span>
 
-asap_scraper &lt;-<span class="st"> </span>function(link_page) {
+asap_scraper &lt;-<span class="st"> </span><span class="cf">function</span>(link_page) {
     pages &lt;-<span class="st"> </span><span class="kw">read_html</span>(link_page)
     
-    pages %&lt;&gt;%<span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;td a&quot;</span>) %&gt;%<span class="st"> </span><span class="co"># selector gadget</span>
-<span class="st">        </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>) %&gt;%<span class="st"> </span><span class="co"># get links out</span>
-<span class="st">        </span><span class="kw">Filter</span>(function(x) { <span class="kw">grepl</span>(<span class="st">&quot;id=</span><span class="ch">\\</span><span class="st">d*&quot;</span>, x) }, .) <span class="co"># filter for interviews</span>
+    pages <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;td a&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># selector gadget</span>
+<span class="st">        </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get links out</span>
+<span class="st">        </span><span class="kw">Filter</span>(<span class="cf">function</span>(x) { <span class="kw">grepl</span>(<span class="st">&quot;id=</span><span class="ch">\\</span><span class="st">d*&quot;</span>, x) }, .) <span class="co"># filter for interviews</span>
     
     <span class="co"># web-scraping is always gross</span>
-    sport &lt;-<span class="st"> </span><span class="kw">map_df</span>(pages, ~<span class="st"> </span><span class="kw">read_html</span>(.) %&gt;%
-<span class="st">                        </span><span class="kw">html_nodes</span>(<span class="st">&quot;td&quot;</span>) %&gt;%
-<span class="st">                        </span><span class="kw">html_text</span>() %&gt;%<span class="st"> </span>
-<span class="st">                        </span>.[<span class="dv">14</span>] %&gt;%
-<span class="st">                        </span><span class="kw">gsub</span>(<span class="st">&quot;.*</span><span class="ch">\n\t\t</span><span class="st">&quot;</span>, <span class="st">&quot;&quot;</span>, .) %&gt;%
-<span class="st">                        </span><span class="kw">str_split</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) %&gt;%
-<span class="st">                        </span><span class="kw">unlist</span>() %&gt;%
-<span class="st">                        </span><span class="kw">tibble</span>(<span class="dt">text =</span> .) %&gt;%
+    sport &lt;-<span class="st"> </span><span class="kw">map_df</span>(pages, <span class="op">~</span><span class="st"> </span><span class="kw">read_html</span>(.) <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">html_nodes</span>(<span class="st">&quot;td&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                        </span>.[<span class="dv">14</span>] <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">gsub</span>(<span class="st">&quot;.*</span><span class="ch">\n\t\t</span><span class="st">&quot;</span>, <span class="st">&quot;&quot;</span>, .) <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">str_split</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">tibble</span>(<span class="dt">text =</span> .) <span class="op">%&gt;%</span>
 <span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">text =</span> <span class="kw">trimws</span>(text),
                                <span class="dt">text =</span> <span class="kw">gsub</span>(<span class="st">&quot;Q</span><span class="ch">\\</span><span class="st">..*&quot;</span>, <span class="st">&quot;&quot;</span>, text),
                                <span class="dt">text =</span> <span class="kw">gsub</span>(<span class="st">&quot;FastScripts.*&quot;</span>, <span class="st">&quot;&quot;</span>, text),
                                <span class="dt">speaker =</span> <span class="kw">gsub</span>(<span class="st">&quot;(^.*): .*&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">1&quot;</span>, text),
                                <span class="dt">text =</span> <span class="kw">gsub</span>(<span class="st">&quot;^.*: &quot;</span>, <span class="st">&quot;&quot;</span>, text),
-                               <span class="dt">speaker =</span> <span class="kw">ifelse</span>(speaker ==<span class="st"> </span>text, <span class="ot">NA</span>, speaker),
-                               <span class="dt">text =</span> <span class="kw">ifelse</span>(<span class="kw">str_count</span>(speaker, <span class="st">&quot; &quot;</span>) &gt;<span class="st"> </span><span class="dv">3</span>, <span class="kw">paste</span>(speaker, text), text),
-                               <span class="dt">speaker =</span> <span class="kw">ifelse</span>(<span class="kw">str_count</span>(speaker, <span class="st">&quot; &quot;</span>) &gt;<span class="st"> </span><span class="dv">3</span>, <span class="ot">NA</span>, speaker)) %&gt;%
-<span class="st">                        </span>.[-<span class="dv">1</span>,] %&gt;%
-<span class="st">                        </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(text)))
+                               <span class="dt">speaker =</span> <span class="kw">ifelse</span>(speaker <span class="op">==</span><span class="st"> </span>text, <span class="ot">NA</span>, speaker),
+                               <span class="dt">text =</span> <span class="kw">ifelse</span>(<span class="kw">str_count</span>(speaker, <span class="st">&quot; &quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="kw">paste</span>(speaker, text), text),
+                               <span class="dt">speaker =</span> <span class="kw">ifelse</span>(<span class="kw">str_count</span>(speaker, <span class="st">&quot; &quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="ot">NA</span>, speaker)) <span class="op">%&gt;%</span>
+<span class="st">                        </span>.[<span class="op">-</span><span class="dv">1</span>,] <span class="op">%&gt;%</span>
+<span class="st">                        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(text)))
     
-    sport$speaker %&lt;&gt;%<span class="st"> </span><span class="kw">na_filler</span>()   
+    sport<span class="op">$</span>speaker <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">na_filler</span>()   
     
     <span class="kw">return</span>(sport)
     
@@ -503,7 +502,7 @@ asap_scraper &lt;-<span class="st"> </span>function(link_page) {
 pages &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;http://www.asapsports.com/show_event.php?category=5&amp;date=2017-5-30&amp;title=NHL+STANLEY+CUP+FINAL%3A+PREDATORS+VS+PENGUINS&quot;</span>,
               <span class="st">&quot;http://www.asapsports.com/show_event.php?category=11&amp;date=2017-5-25&amp;title=NBA+EASTERN+CONFERENCE+FINALS%3A+CELTICS+VS+CAVALIERS&quot;</span>,
               <span class="st">&quot;http://www.asapsports.com/show_event.php?category=4&amp;date=2017-5-28&amp;title=BMW+PGA+CHAMPIONSHIP&quot;</span>,
-              <span class="st">&quot;http://www.asapsports.com/show_event.php?category=3&amp;date=2017-5-28&amp;title=MONSTER+ENERGY+NASCAR+CUP+SERIES%3A+COCA-COLA+600&quot;</span> ) %&gt;%
+              <span class="st">&quot;http://www.asapsports.com/show_event.php?category=3&amp;date=2017-5-28&amp;title=MONSTER+ENERGY+NASCAR+CUP+SERIES%3A+COCA-COLA+600&quot;</span> ) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="st">&quot;NHL&quot;</span>, <span class="st">&quot;NBA&quot;</span>, <span class="st">&quot;PGA&quot;</span>, <span class="st">&quot;NASCAR&quot;</span>))
 
 <span class="co"># and ...</span>
@@ -511,7 +510,7 @@ sports &lt;-<span class="st"> </span><span class="kw">map_df</span>(pages, asap_
 <span class="co"># tah-dah its a tidy tibble !!!</span></code></pre></div>
 <p>Doesn’t that feel nice and clean? Don’t you worry about that nasty pipe-chain no more:)</p>
 <p>Let’s enjoy all of our hard work.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(sports$speaker, <span class="dt">useNA =</span> <span class="st">&quot;always&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(sports<span class="op">$</span>speaker, <span class="dt">useNA =</span> <span class="st">&quot;always&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##         ALEX NOREN      AUSTIN DILLON      AVERY BRADLEY 
 ##                 25                 32                  6 
@@ -536,7 +535,7 @@ sports &lt;-<span class="st"> </span><span class="kw">map_df</span>(pages, asap_
 ##               &lt;NA&gt; 
 ##                  0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get that non-athlete outa&#39; here</span>
-sports %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(speaker !=<span class="st"> &quot;THE MODERATOR&quot;</span>)</code></pre></div>
+sports <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">filter</span>(speaker <span class="op">!=</span><span class="st"> &quot;THE MODERATOR&quot;</span>)</code></pre></div>
 </div>
 <div id="read-ability" class="section level1">
 <h1>Read-ability</h1>
@@ -544,19 +543,19 @@ sports %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(speaker
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(syllable)
 <span class="kw">library</span>(readability)
 
-read_scores &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <span class="kw">readability</span>(text, <span class="kw">list</span>(sport, speaker))) %&gt;%
-<span class="st">    </span><span class="kw">gather</span>(method, score, -(sport:speaker))
+read_scores &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <span class="kw">readability</span>(text, <span class="kw">list</span>(sport, speaker))) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather</span>(method, score, <span class="op">-</span>(sport<span class="op">:</span>speaker))
     
-<span class="kw">ggplot</span>(read_scores, <span class="kw">aes</span>(sport, score, <span class="dt">color =</span> sport)) +
-<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>, <span class="dt">width =</span> .<span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>method) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +<span class="st"> </span>
-<span class="st">    </span><span class="kw">scale_color_d3</span>() +
+<span class="kw">ggplot</span>(read_scores, <span class="kw">aes</span>(sport, score, <span class="dt">color =</span> sport)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>, <span class="dt">width =</span> .<span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>method) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Those two outliers are: Kyle Bush (NASCAR) and J.R. Smith (NBA). Let’s see why…</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sports, speaker %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;J.R. SMITH&quot;</span>, <span class="st">&quot;KYLE BUSCH&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sports, speaker <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;J.R. SMITH&quot;</span>, <span class="st">&quot;KYLE BUSCH&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##    sport                                               text    speaker
 ##    &lt;chr&gt;                                              &lt;chr&gt;      &lt;chr&gt;
@@ -565,15 +564,15 @@ read_scores &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ahhh just sentences with some high &amp; low syllable words</span>
 
 <span class="co"># get &#39;em outta here</span>
-read_scores %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(!(speaker %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;J.R. SMITH&quot;</span>, <span class="st">&quot;KYLE BUSCH&quot;</span>)))
+read_scores <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span>(speaker <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;J.R. SMITH&quot;</span>, <span class="st">&quot;KYLE BUSCH&quot;</span>)))
 
 <span class="co"># re-investigate</span>
-<span class="kw">ggplot</span>(read_scores, <span class="kw">aes</span>(sport, score, <span class="dt">color =</span> sport)) +
-<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>, <span class="dt">width =</span> .<span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>method) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +<span class="st"> </span>
-<span class="st">    </span><span class="kw">scale_color_d3</span>() +
+<span class="kw">ggplot</span>(read_scores, <span class="kw">aes</span>(sport, score, <span class="dt">color =</span> sport)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>, <span class="dt">width =</span> .<span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>method) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>After we kick out those outliers, we can see that NBA athletes are consistently rated the highest in terms of reading level. And that NASCAR athletes are consistently the lowest. It also looks like the gaps between NASCAR-NBA and NHL-NBA might be statistically significant. Remember, non-overlapping 95% mean confidence intervals indicate significant difference at p = .05, before multiple test corrections ;)</p>
@@ -582,41 +581,41 @@ read_scores %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(!(
 <h1>Sentiment</h1>
 <p>Okay so we measured readability and it seems like not all athletes speak at similar reading levels. But really we wanted to find out if NHL players are nicer than their peers. So we are going to use another great Tyler Rinker package and the fantastic <a href="https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html"><code>library(tidytext)</code></a> from the Stack Overflow data team, Julia Silge and David Robinson.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sentimentr)
-sents &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <span class="kw">sentiment_by</span>(text) ) %&gt;%
+sents &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <span class="kw">sentiment_by</span>(text) ) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">select</span>(<span class="dt">words =</span> word_count,
-           <span class="dt">sent =</span> ave_sentiment) %&gt;%
+           <span class="dt">sent =</span> ave_sentiment) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">bind_cols</span>(sports, .)
     
 <span class="co"># make initials to de-clutter axis</span>
-sents %&lt;&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">initials =</span> <span class="kw">gsub</span>(<span class="st">&quot;(^</span><span class="ch">\\</span><span class="st">D).* (</span><span class="ch">\\</span><span class="st">D).*&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">1</span><span class="ch">\\</span><span class="st">2&quot;</span>, speaker))
+sents <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">initials =</span> <span class="kw">gsub</span>(<span class="st">&quot;(^</span><span class="ch">\\</span><span class="st">D).* (</span><span class="ch">\\</span><span class="st">D).*&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">1</span><span class="ch">\\</span><span class="st">2&quot;</span>, speaker))
 
-<span class="kw">ggplot</span>(sents,<span class="kw">aes</span>(initials, sent, <span class="dt">color =</span> sport)) +
-<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_se, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>sport, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +
-<span class="st">    </span><span class="kw">scale_color_d3</span>() +
+<span class="kw">ggplot</span>(sents,<span class="kw">aes</span>(initials, sent, <span class="dt">color =</span> sport)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_se, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sport, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Ah man, why is Nicolar Colserats having such a bad day in that one quote?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sents, sent &lt;<span class="st"> </span>-<span class="fl">0.5</span>) %&gt;%
-<span class="st">    </span><span class="kw">select</span>(text) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sents, sent <span class="op">&lt;</span><span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(text) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">unlist</span>()</code></pre></div>
 <pre><code>##                                                                                                                                                                                                                                    text 
 ## &quot;Yeah, yesterday was pretty tough.  I didn&#39;t play 18 holes into the tough bit.  But yeah, I felt that if I played the same way, in a way where it wasn&#39;t really blowing that much, you could all of a sudden be a bit more aggressive.&quot;</code></pre>
 <p>That makes sense, it does sound like he had a bad day. Golf can do that to anyone, even professionals.</p>
 <p>Let’s drop that statement as an outlier and drop any athletes with just a single sentiment value and re-investigate by sports</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sents %&lt;&gt;%<span class="st"> </span><span class="kw">filter</span>(sent &gt;<span class="st"> </span>-<span class="fl">0.5</span>) %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(initials) %&gt;%
-<span class="st">    </span><span class="kw">filter</span>(<span class="kw">n</span>() !=<span class="st"> </span><span class="dv">1</span>) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sents <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">filter</span>(sent <span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(initials) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">n</span>() <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">ungroup</span>()
 
 <span class="kw">library</span>(ggbeeswarm)
-<span class="kw">ggplot</span>(sents, <span class="kw">aes</span>(sport, sent, <span class="dt">color =</span> sport)) +
-<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_se, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>) +
-<span class="st">    </span><span class="kw">geom_quasirandom</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +
-<span class="st">    </span><span class="kw">scale_color_d3</span>() +
+<span class="kw">ggplot</span>(sents, <span class="kw">aes</span>(sport, sent, <span class="dt">color =</span> sport)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_se, <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_quasirandom</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>From the looks of this plot it seems like hockey players are the lowest (in this case least positive) sentiment athletes, but this scoring system is based on word score summation, lets try binning words based on associated sentiment.</p>
@@ -627,28 +626,28 @@ sents %&lt;&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span cl
 nrc &lt;-<span class="st"> </span><span class="kw">get_sentiments</span>(<span class="st">&quot;nrc&quot;</span>)
 
 <span class="co"># unnest_tokens to words</span>
-words &lt;-<span class="st"> </span><span class="kw">unnest_tokens</span>( <span class="kw">select</span>(sents, sport:speaker, initials), word, text) %&gt;%
-<span class="st">    </span><span class="kw">inner_join</span>(nrc) %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(sport, speaker, initials) %&gt;%
+words &lt;-<span class="st"> </span><span class="kw">unnest_tokens</span>( <span class="kw">select</span>(sents, sport<span class="op">:</span>speaker, initials), word, text) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">inner_join</span>(nrc) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(sport, speaker, initials) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">count</span>(sentiment)</code></pre></div>
 <pre><code>## Joining, by = &quot;word&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># collapse to sport level and use proportions</span>
-sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words, sport, sentiment) %&gt;%
-<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">sum</span>(n)) %&gt;%
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n /<span class="st"> </span><span class="kw">sum</span>(n))
+sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words, sport, sentiment) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))
 
-<span class="kw">ggplot</span>(sport_words, <span class="kw">aes</span>(sentiment, prop, <span class="dt">fill =</span> sentiment)) +
-<span class="st">    </span><span class="kw">geom_col</span>() +
-<span class="st">    </span><span class="kw">facet_grid</span>(~<span class="st"> </span>sport) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +
+<span class="kw">ggplot</span>(sport_words, <span class="kw">aes</span>(sentiment, prop, <span class="dt">fill =</span> sentiment)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(<span class="op">~</span><span class="st"> </span>sport) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Well now it looks like all athletes have a similar sentiment distribution with high levels of ‘positive’, ‘anticipation’ and ‘trust’ sentiments across sports. Maybe all of that sports psychology is onto something after all. (Bob Rotella is a golf-genius)</p>
 <p>But to truly see whether hockey players are nice, lets do side by side comparisons for each sport, only paneled by sentiments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sport_words, <span class="kw">aes</span>(sport, prop, <span class="dt">fill =</span> sport)) +
-<span class="st">    </span><span class="kw">geom_col</span>() +
-<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>sentiment, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sport_words, <span class="kw">aes</span>(sport, prop, <span class="dt">fill =</span> sport)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sentiment, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_rickandmorty</span>() <span class="co"># it really exists like that szechuan sauce</span></code></pre></div>
 <p><img src="sports_senti_files/figure-html/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Now we can see golfers are the angriest, racers have the most anticipation, basketball players have the least fear and hockey players are the most positive and least negative (at least in this small sample). Maybe hockey players really are nicer than other professional athletes. More tests are in order and more scraping is required to power them, off we go.</p>

@@ -24,27 +24,26 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="shortcut icon" type="image/png" href="www/favicon2.png">
+<link rel="shortcut icon" type="image/png" href="www/favicon_dark.png">
 
 <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-          
-<link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto">
+          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto|Ubuntu">
           
 <style>
-    .navbar {
-        font-family: 'Atomic Age';
-    }
-    .tocify {
-        font-family: 'Atomic Age';
-    }
-    h1 {
-        font-family: 'Atomic Age';
-    }
-    p {
-        font-family: 'Roboto';
-    }
+.navbar-brand {
+    font-family:"Atomic Age";
+    font-size:1.5em;
+}
+
+body {
+    font-family:"Ubuntu";
+}
+p {
+    font-size:1.1em;
+}
+p ~ ul {
+    font-size:1.1em;
+}
 
 </style>
 
@@ -2306,16 +2305,16 @@ annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##      `1`       `2`      `3`
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  3.751278 3.751278
-##  2     2  5.228234 2.614117
-##  3     3  7.224010 2.408003
-##  4     4  5.993219 1.498305
-##  5     5 12.284038 2.456808
-##  6     6 12.628630 2.104772
-##  7     7 13.456741 1.922392
-##  8     8 15.322801 1.915350
-##  9     9 18.145079 2.016120
-## 10    10 20.368497 2.036850</code></pre>
+##  1     1  2.220781 2.220781
+##  2     2  5.117949 2.558975
+##  3     3  6.330377 2.110126
+##  4     4  7.269529 1.817382
+##  5     5 11.078522 2.215704
+##  6     6 12.542311 2.090385
+##  7     7 15.484426 2.212061
+##  8     8 16.955457 2.119432
+##  9     9 19.850998 2.205666
+## 10    10 19.126650 1.912665</code></pre>
 <p>4d. Renaming the columns to one, two and three.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>,
                     <span class="dt">two =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>,
@@ -2323,16 +2322,16 @@ annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##      one       two    three
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  3.751278 3.751278
-##  2     2  5.228234 2.614117
-##  3     3  7.224010 2.408003
-##  4     4  5.993219 1.498305
-##  5     5 12.284038 2.456808
-##  6     6 12.628630 2.104772
-##  7     7 13.456741 1.922392
-##  8     8 15.322801 1.915350
-##  9     9 18.145079 2.016120
-## 10    10 20.368497 2.036850</code></pre>
+##  1     1  2.220781 2.220781
+##  2     2  5.117949 2.558975
+##  3     3  6.330377 2.110126
+##  4     4  7.269529 1.817382
+##  5     5 11.078522 2.215704
+##  6     6 12.542311 2.090385
+##  7     7 15.484426 2.212061
+##  8     8 16.955457 2.119432
+##  9     9 19.850998 2.205666
+## 10    10 19.126650 1.912665</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># or</span>
 annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">&quot;1&quot;</span>,
                     <span class="dt">two =</span> <span class="st">&quot;2&quot;</span>,
@@ -2340,16 +2339,16 @@ annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
 <pre><code>## # A tibble: 10 x 3
 ##      one       two    three
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  3.751278 3.751278
-##  2     2  5.228234 2.614117
-##  3     3  7.224010 2.408003
-##  4     4  5.993219 1.498305
-##  5     5 12.284038 2.456808
-##  6     6 12.628630 2.104772
-##  7     7 13.456741 1.922392
-##  8     8 15.322801 1.915350
-##  9     9 18.145079 2.016120
-## 10    10 20.368497 2.036850</code></pre>
+##  1     1  2.220781 2.220781
+##  2     2  5.117949 2.558975
+##  3     3  6.330377 2.110126
+##  4     4  7.269529 1.817382
+##  5     5 11.078522 2.215704
+##  6     6 12.542311 2.090385
+##  7     7 15.484426 2.212061
+##  8     8 16.955457 2.119432
+##  9     9 19.850998 2.205666
+## 10    10 19.126650 1.912665</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>What does tibble::enframe() do? When might you use it?</li>
 </ol>
@@ -2492,9 +2491,6 @@ df &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">geom_hex</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># now it works</span>
 <span class="st">  </span><span class="kw">coord_fixed</span>()</code></pre></div>
-<pre><code>## Warning: Computation failed in `stat_binhex()`:
-## Package `hexbin` required for `stat_binhex`.
-## Please install and try again.</code></pre>
 <p><img src="r4ds_exercises_files/figure-html/28.4.1-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>What is the first argument to every scale? How does it compare to labs()? <code>aesthetics</code>, which is defining the names of the aesthetics a scale works with. This is similar to <code>labs()</code> that takes a name-value pairs first and can also be used to label legends/aesthetics.</p></li>
