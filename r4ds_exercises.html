@@ -354,13 +354,6 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="sports_senti.html">
-    <span class="fa fa-futbol-o"></span>
-     
-    Sports Sentiment
-  </a>
-</li>
-<li>
   <a href="shiny.html">
     <span class="fa fa-flask"></span>
      
@@ -376,6 +369,20 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="tow_forecast.html">
+        <span class="fa fa-key"></span>
+         
+        Cville Open Data
+      </a>
+    </li>
+    <li>
+      <a href="sports_senti.html">
+        <span class="fa fa-futbol-o"></span>
+         
+        Sports Sentiment
+      </a>
+    </li>
     <li>
       <a href="state_park_viz.html">
         <span class="fa fa-globe"></span>
@@ -451,6 +458,10 @@ div.tocify {
 </div>
 
 
+<div class="figure">
+<img src="www/learning.gif" alt="Ralph can and you can too" />
+<p class="caption">Ralph can and you can too</p>
+</div>
 <div id="overview" class="section level1">
 <h1>Overview</h1>
 <p>I’m guiding a group walkthrough of Garrett Grolemund and Hadley Wickam’s great book <a href="http://r4ds.had.co.nz/">R for Data Science</a>. We are trying to cover a chapter of material per week and have a one-hour weekly code review to sit together and discuss the Excersises. If you live around Charlottesville and are interested in joining, ping me.</p>
@@ -2314,16 +2325,16 @@ annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##      `1`       `2`      `3`
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  1.995901 1.995901
-##  2     2  4.502024 2.251012
-##  3     3  3.728923 1.242974
-##  4     4  8.706979 2.176745
-##  5     5 10.373540 2.074708
-##  6     6 13.071076 2.178513
-##  7     7 14.737210 2.105316
-##  8     8 15.743384 1.967923
-##  9     9 17.905947 1.989550
-## 10    10 21.495306 2.149531</code></pre>
+##  1     1  2.810106 2.810106
+##  2     2  4.283793 2.141897
+##  3     3  6.046051 2.015350
+##  4     4  7.837780 1.959445
+##  5     5 10.488253 2.097651
+##  6     6 11.269462 1.878244
+##  7     7 16.249812 2.321402
+##  8     8 17.343528 2.167941
+##  9     9 18.655378 2.072820
+## 10    10 21.993847 2.199385</code></pre>
 <p>4d. Renaming the columns to one, two and three.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>,
                     <span class="dt">two =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>,
@@ -2331,16 +2342,16 @@ annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##      one       two    three
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  1.995901 1.995901
-##  2     2  4.502024 2.251012
-##  3     3  3.728923 1.242974
-##  4     4  8.706979 2.176745
-##  5     5 10.373540 2.074708
-##  6     6 13.071076 2.178513
-##  7     7 14.737210 2.105316
-##  8     8 15.743384 1.967923
-##  9     9 17.905947 1.989550
-## 10    10 21.495306 2.149531</code></pre>
+##  1     1  2.810106 2.810106
+##  2     2  4.283793 2.141897
+##  3     3  6.046051 2.015350
+##  4     4  7.837780 1.959445
+##  5     5 10.488253 2.097651
+##  6     6 11.269462 1.878244
+##  7     7 16.249812 2.321402
+##  8     8 17.343528 2.167941
+##  9     9 18.655378 2.072820
+## 10    10 21.993847 2.199385</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># or</span>
 annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">&quot;1&quot;</span>,
                     <span class="dt">two =</span> <span class="st">&quot;2&quot;</span>,
@@ -2348,16 +2359,16 @@ annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"
 <pre><code>## # A tibble: 10 x 3
 ##      one       two    three
 ##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  1.995901 1.995901
-##  2     2  4.502024 2.251012
-##  3     3  3.728923 1.242974
-##  4     4  8.706979 2.176745
-##  5     5 10.373540 2.074708
-##  6     6 13.071076 2.178513
-##  7     7 14.737210 2.105316
-##  8     8 15.743384 1.967923
-##  9     9 17.905947 1.989550
-## 10    10 21.495306 2.149531</code></pre>
+##  1     1  2.810106 2.810106
+##  2     2  4.283793 2.141897
+##  3     3  6.046051 2.015350
+##  4     4  7.837780 1.959445
+##  5     5 10.488253 2.097651
+##  6     6 11.269462 1.878244
+##  7     7 16.249812 2.321402
+##  8     8 17.343528 2.167941
+##  9     9 18.655378 2.072820
+## 10    10 21.993847 2.199385</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>What does tibble::enframe() do? When might you use it?</li>
 </ol>
