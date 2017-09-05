@@ -454,8 +454,8 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Opening the Charlottesville Open Data Portal with R</h1>
-<h3 class="subtitle"><em>A seasonsal model for future towing</em></h3>
-<h4 class="date"><em>2017 September 4</em></h4>
+<h3 class="subtitle"><em>Time series modeling with the tidyverse</em></h3>
+<h4 class="date"><em>2017/09/04</em></h4>
 
 </div>
 
@@ -464,8 +464,8 @@ div.tocify {
 <div id="intro" class="section level1">
 <h1>Intro</h1>
 <p>I attended my first <a href="%22https://www.meetup.com/CharlottesvilleDataScience/events/242006576/%22">Charlottesville Data Science Meetup</a> last month, for the launch of the city’s <a href="%22http://opendata.charlottesville.org/%22">Open Data Portal</a>. The meeting unveiled the new ODP, which consolidates a bunch of Charlottesville city records in one place, including Census, asesssement, development, traffic and public safety data. The meetup featured a nice introduction to the portal and <a href="http://opensourceconnections.com/">OpenSource Connections</a> provided free craft beer and free Papa Johns!!!</p>
-<p>I think the OPD can be a positive change for the city and I really hope that data community steps up and drives better decisions for Charlottesville. So I used my long Labor day weekend to markdown up a quick analysis for using the portal data to do time-series forecasting with <code>R</code>.</p>
-<p>Overall I think the portal is cleanly designed and easy to navigate (big shout out to the team of talent that made it a reality, thank you!). And most importantly the data is nicely formatted and there is even an API (that I have yet to use) if you want to access programatically! Let’s dive into the analysis and I semi-apoligize for that bad pun in the title.</p>
+<p>I think the OPD can be a positive change for the city and I really hope that data community steps up and drives better decisions for Charlottesville. So I used my long Labor day weekend to write up an analysis, using the ODP to do some time-series forecasting with <code>R</code>.</p>
+<p>Overall I think the portal is cleanly designed and easy to navigate (big shout out to the team of talent that made it a reality, thank you!). And most importantly the data is nicely formatted and there is even an API (that I have yet to use) if you want to access programatically! Let’s dive into the analysis and I apoligize for the typos, but not for the bad puns.</p>
 </div>
 <div id="import" class="section level1">
 <h1>Import</h1>
@@ -742,9 +742,9 @@ next_tib<span class="op">$</span>year &lt;-<span class="st"> </span><span class=
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-16:2017-08-31]; Projections[2017-09-01:2018-10-31]&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/fin_plot-1.png" width="672" /></p>
-<p>You can see the mean trend moving back toward the historical average in the projections, while the combined seasonal-trend model keeps climbing. Since time-series models are relatively new to me, I am still learning the best strategies and hope to have some more details to provide at the data introduction session.</p>
-<p>I hope this was a mildly-compelling narative for not parking illegally with some pretty plots sprinkled in. Really I hope this outline is a useful template for jumping into the ODP with R and a nice use case for the <code>tidyverse</code> and some its accessory packages in a time-series analysis.</p>
-<p>I know there a lot of trends in the Crime Data set that deserve more exploration, so let’s get busy. Hopefully we can use this portal to have fun and build a better, more informed community. See you at the next Meetup!</p>
+<p>We see the mean trend moving back toward the historical average in the projections, while the combined seasonal-trend model keeps climbing. Since time-series models are relatively new to me, I am still learning the best strategies and hope to have some more details to provide at the ODP data bootcamp session.</p>
+<p>I hope this was a mildly-compelling narative for not parking illegally, but more importantly I hope this outline is a useful template for jumping into the ODP Crime Data with R.</p>
+<p>I know there a lot of trends in the Crime Data set that deserve more exploration, so time to get busy. Hopefully this portal can be used to have fun and build a more informed and engaged community. See you at the next Meetup!</p>
 </div>
 </div>
 
