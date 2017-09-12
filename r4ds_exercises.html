@@ -243,7 +243,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = false;
+    options.showAndHide = true;
     options.smoothScroll = true;
 
     // tocify
@@ -306,12 +306,6 @@ div.tocify {
   border-radius: 0px;
 }
 
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
 
 </style>
 
@@ -2323,52 +2317,52 @@ mt_tib[var] <span class="co"># mt_tib$var fails</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">annoying <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">3</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">2</span><span class="st">`</span> <span class="op">/</span><span class="st"> `</span><span class="dt">1</span><span class="st">`</span>)
 annoying</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
-##      `1`       `2`      `3`
-##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  2.810106 2.810106
-##  2     2  4.283793 2.141897
-##  3     3  6.046051 2.015350
-##  4     4  7.837780 1.959445
-##  5     5 10.488253 2.097651
-##  6     6 11.269462 1.878244
-##  7     7 16.249812 2.321402
-##  8     8 17.343528 2.167941
-##  9     9 18.655378 2.072820
-## 10    10 21.993847 2.199385</code></pre>
+##      `1`        `2`       `3`
+##    &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1  0.8098312 0.8098312
+##  2     2  5.6539499 2.8269749
+##  3     3  4.9305919 1.6435306
+##  4     4  8.3908638 2.0977160
+##  5     5 10.2030659 2.0406132
+##  6     6 12.0321384 2.0053564
+##  7     7 14.8327877 2.1189697
+##  8     8 15.4151563 1.9268945
+##  9     9 17.0081136 1.8897904
+## 10    10 20.6010352 2.0601035</code></pre>
 <p>4d. Renaming the columns to one, two and three.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">`</span><span class="dt">1</span><span class="st">`</span>,
                     <span class="dt">two =</span> <span class="st">`</span><span class="dt">2</span><span class="st">`</span>,
                     <span class="dt">three =</span> <span class="st">`</span><span class="dt">3</span><span class="st">`</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
-##      one       two    three
-##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  2.810106 2.810106
-##  2     2  4.283793 2.141897
-##  3     3  6.046051 2.015350
-##  4     4  7.837780 1.959445
-##  5     5 10.488253 2.097651
-##  6     6 11.269462 1.878244
-##  7     7 16.249812 2.321402
-##  8     8 17.343528 2.167941
-##  9     9 18.655378 2.072820
-## 10    10 21.993847 2.199385</code></pre>
+##      one        two     three
+##    &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1  0.8098312 0.8098312
+##  2     2  5.6539499 2.8269749
+##  3     3  4.9305919 1.6435306
+##  4     4  8.3908638 2.0977160
+##  5     5 10.2030659 2.0406132
+##  6     6 12.0321384 2.0053564
+##  7     7 14.8327877 2.1189697
+##  8     8 15.4151563 1.9268945
+##  9     9 17.0081136 1.8897904
+## 10    10 20.6010352 2.0601035</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># or</span>
 annoying <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">one =</span> <span class="st">&quot;1&quot;</span>,
                     <span class="dt">two =</span> <span class="st">&quot;2&quot;</span>,
                     <span class="dt">three =</span> <span class="st">&quot;3&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
-##      one       two    three
-##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1  2.810106 2.810106
-##  2     2  4.283793 2.141897
-##  3     3  6.046051 2.015350
-##  4     4  7.837780 1.959445
-##  5     5 10.488253 2.097651
-##  6     6 11.269462 1.878244
-##  7     7 16.249812 2.321402
-##  8     8 17.343528 2.167941
-##  9     9 18.655378 2.072820
-## 10    10 21.993847 2.199385</code></pre>
+##      one        two     three
+##    &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1  0.8098312 0.8098312
+##  2     2  5.6539499 2.8269749
+##  3     3  4.9305919 1.6435306
+##  4     4  8.3908638 2.0977160
+##  5     5 10.2030659 2.0406132
+##  6     6 12.0321384 2.0053564
+##  7     7 14.8327877 2.1189697
+##  8     8 15.4151563 1.9268945
+##  9     9 17.0081136 1.8897904
+## 10    10 20.6010352 2.0601035</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>What does tibble::enframe() do? When might you use it?</li>
 </ol>
@@ -2591,7 +2585,7 @@ presidential <span class="op">%&gt;%</span>
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        Copyright &copy; 2017.
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 </p>
 
 

@@ -11,7 +11,7 @@
 
 
 
-<title>State Parks Viz</title>
+<title>State Park Popularity</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="180x180" href="www/apple-touch-icon.png">
@@ -221,6 +224,107 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
@@ -349,19 +453,18 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">State Parks Viz</h1>
+<h1 class="title toc-ignore">State Park Popularity</h1>
 <h4 class="date"><em>2017/05/17/</em></h4>
 
 </div>
 
 
-<div id="state-park-popularity-via-libraryggmap" class="section level2">
-<h2>State Park Popularity via <code>library(ggmap)</code></h2>
-<p>This project is from the UVA UseR Meetup on May 17, 2017. This meetup was focused on a quick exploratory analysis of a previously unknown dataset in collaborative groups.</p>
-<p>In this analysis we used the grammer of graphics to combine public data about National Park visitor volume and the great Google Maps API to visualize popular parks.</p>
-</div>
-<div id="globals" class="section level2">
-<h2>Globals</h2>
+<p><img src="www/smokey.gif" alt="Smokey the Bear likes State Parks" />.</p>
+<hr />
+<p>This project is from the UVA UseR Meetup on May 17, 2017. This meetup was hack-a-thon-ish, with the goal of quickly constructing some exploratory analysis.</p>
+<p>In this analysis I use <code>library(ggmap)</code> to utilize Google’s awesome map tools within the familiar framework of R’s <code>library(ggplot2)</code>. My goal is to overlay public data about visitor volume to see just where people like to get outside and enjoy nature in the good ol’ USA.</p>
+<div id="globals" class="section level3">
+<h3>Globals</h3>
 <p>I am a huge believer in the <a href="http://tidyverse.org/"><code>library(tidyverse)</code></a> and this project would not have been possible without the great <a href="https://cran.r-project.org/web/packages/ggmap/ggmap.pdf"><code>library(ggmaps)</code></a> that makes working with Google Maps way too easy.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">echo =</span> <span class="ot">TRUE</span>, <span class="dt">message =</span> <span class="ot">FALSE</span>)
 <span class="kw">library</span>(ggmap)
@@ -370,14 +473,14 @@ $(document).ready(function () {
 <span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(magrittr) <span class="co"># for `%&lt;&gt;%`</span></code></pre></div>
 </div>
-<div id="get-the-data" class="section level2">
-<h2>Get the data</h2>
+<div id="read-in" class="section level3">
+<h3>Read in</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#  2016 data from: https://irma.nps.gov/Stats/SSRSReports/National%20Reports/Annual%20Park%20Ranking%20Report%20(1979%20-%20Last%20Calendar%20Year)</span>
 datf &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Downloads/Annual Park Ranking Report %281979 - Last Calendar Year%29.csv&quot;</span>)[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>),] <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;park&quot;</span>)</code></pre></div>
 </div>
-<div id="clean-it-up" class="section level2">
-<h2>Clean it up</h2>
+<div id="geo-code-it" class="section level3">
+<h3><code>geo-code</code> it</h3>
 <p>Nothing to see here but the workhorse, <code>ggmap::geo_code()</code>, which will interpret a wide range of character inputs into latitude and longitude coordinates. I really like the <code>magrittr::%&lt;&gt;%</code>, because I feel it makes most common data cleaning steps type easier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Guess lat-lon via ggmaps::geo_codes()</span>
 <span class="co"># message: this takes a while, you are limited to 2000 queries per day on Google</span>
@@ -388,20 +491,20 @@ datf<span class="op">$</span>Bookmark <span class="op">%&lt;&gt;%</span><span cl
 <span class="st">    </span><span class="kw">as.numeric</span>()
 datf<span class="op">$</span>ParkType <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;,&quot;</span>, <span class="st">&quot;&quot;</span>, .) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>()</code></pre></div>
 </div>
-<div id="map-it" class="section level2">
-<h2>Map it</h2>
-<p>Just using the Google Maps API to select a base layer so we can initialize a ggplot graphic with a latitide and longitude grid where we can overlay our geo coded National Parks data.</p>
+<div id="plot-on-a-map" class="section level3">
+<h3>Plot on a map</h3>
+<p>Just using the Google Maps API to select a base layer so we can initialize a ggplot graphic with a latitude and longitude grid where we can overlay our geo coded National Parks data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get map object from Google API</span>
 usa &lt;-<span class="kw">get_map</span>(<span class="dt">location=</span><span class="st">&#39;united states&#39;</span>, <span class="dt">zoom=</span><span class="dv">4</span>)
 
-<span class="co"># Use map layer as base</span>
+<span class="co"># Use map layer as base layer</span>
 <span class="kw">ggmap</span>(usa, <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># then resume normal geoms on a lat lon coord system</span>
 <span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> datf, <span class="kw">aes</span>(lon, lat, <span class="dt">size =</span> ParkType, <span class="dt">fill =</span> <span class="kw">log10</span>(ParkType)),
                <span class="dt">alpha =</span> .<span class="dv">5</span>, <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">show.legend =</span> F) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_size_continuous</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">15</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_viridis</span>()</code></pre></div>
 <p><img src="state_park_viz_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>That’s a lot of parks along the East Coast, which you’d expect with the dense costal population and the Appalaicain Mountians running from Georgia to Maine. Looks like the most vistited parks seem to cluster around the San Fancisco, California and Washington DC.</p>
+<p>That’s a lot of parks along the East Coast, which you’d expect with the dense coastal population and the Appalachian Mountains running from Georgia to Maine. Looks like the most visited parks seem to cluster around the San Francisco, California and Washington DC.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cp &lt;-<span class="st"> </span><span class="kw">list</span>()
 
 <span class="co"># DC</span>
@@ -423,10 +526,10 @@ cp[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">g
 <span class="kw">plot_grid</span>(cp[[<span class="dv">1</span>]], cp[[<span class="dv">2</span>]])</code></pre></div>
 <p><img src="state_park_viz_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
-<p>I can highly recconment that big yellow dot in SouthWest VA, it’s the Blue Ridge Parkway! Maybe I’m biased because I live in Charllottesville, but the Parkway way stretchs all the way along the mountians in Virginia, making for one of the most scenic drives and one of the most popular parks in the USA.</p>
-<p>Thanks for reading, and check out the <a href="https://www.meetup.com/UVa-R-Users-Group/">UVA UseR Group</a> on MeetUp. It’s a great group of really nice and nerdy people that do a bunch of differnt things with R, plus they usually have free food and give away Amazon gift cards as door prizes!!!</p>
+<div id="wrap-up" class="section level3">
+<h3>Wrap up</h3>
+<p>I can highly recommend that big yellow dot in South West Virginia, it’s the Blue Ridge Parkway! Maybe I’m biased because I live in Charllottesville, but the Blue Ridge Parkway way stretches all the way along the mountains in Virginia, making for super scenic drives and overlooks. With its easy access and proximity to Washington DC, no wonder it is one of the most popular parks in the whole country.</p>
+<p>Thanks for reading, and check out the <a href="https://www.meetup.com/UVa-R-Users-Group/">UVA UseR Group</a> on MeetUp. It’s a great group of really nice and nerdy people that do a bunch of different things with R, plus they usually have free food and give away Amazon gift cards as door prizes!!!</p>
 </div>
 
 <hr>
@@ -438,6 +541,8 @@ cp[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">g
 </p>
 
 
+</div>
+</div>
 
 </div>
 

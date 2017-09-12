@@ -243,7 +243,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = false;
+    options.showAndHide = true;
     options.smoothScroll = true;
 
     // tocify
@@ -306,12 +306,6 @@ div.tocify {
   border-radius: 0px;
 }
 
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
 
 </style>
 
@@ -463,13 +457,13 @@ div.tocify {
 <p><img src="www/cvilletow/open_up.gif" alt="Open up already!" />.</p>
 <div id="intro" class="section level1">
 <h1>Intro</h1>
-<p>I attended my first <a href="%22https://www.meetup.com/CharlottesvilleDataScience/events/242006576/%22">Charlottesville Data Science Meetup</a> last month, for the launch of the city’s <a href="%22http://opendata.charlottesville.org/%22">Open Data Portal</a>. The meeting unveiled the new ODP, which consolidates a bunch of Charlottesville city records in one place, including Census, asesssement, development, traffic and public safety data. The meetup featured a nice introduction to the portal and <a href="http://opensourceconnections.com/">OpenSource Connections</a> provided free craft beer and free Papa Johns!!!</p>
+<p>I attended my first <a href="%22https://www.meetup.com/CharlottesvilleDataScience/events/242006576/%22">Charlottesville Data Science Meetup</a> last month, for the launch of the city’s <a href="%22http://opendata.charlottesville.org/%22">Open Data Portal</a>. The meeting unveiled the new ODP, which consolidates a bunch of Charlottesville city records in one place, including Census, assessment, development, traffic and public safety data. The meetup featured a nice introduction to the portal and <a href="http://opensourceconnections.com/">OpenSource Connections</a> provided free craft beer and free Papa Johns!!!</p>
 <p>I think the OPD can be a positive change for the city and I really hope that data community steps up and drives better decisions for Charlottesville. So I used my long Labor day weekend to write up an analysis, using the ODP to do some time-series forecasting with <code>R</code>.</p>
-<p>Overall I think the portal is cleanly designed and easy to navigate (big shout out to the team of talent that made it a reality, thank you!). And most importantly the data is nicely formatted and there is even an API (that I have yet to use) if you want to access programatically! Let’s dive into the analysis and I apoligize for the typos, but not for the bad puns.</p>
+<p>Overall I think the portal is cleanly designed and easy to navigate (big shout out to the team of talent that made it a reality, thank you!). And most importantly the data is nicely formatted and there is even an API (that I have yet to use) if you want to access programatically! Let’s dive into the analysis and I apologize for the typos, but not for the bad puns.</p>
 </div>
 <div id="import" class="section level1">
 <h1>Import</h1>
-<p>I am a big user/believer of the R packages <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>magrittr</code></a> and <a href="https://www.tidyverse.org/"><code>tidyverse</code></a>, so fair warning, this analysis is unabashadly pipe-heavy.</p>
+<p>I am a big user/believer of the R packages <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>magrittr</code></a> and <a href="https://www.tidyverse.org/"><code>tidyverse</code></a>, so fair warning, this analysis is unabashedly pipe-heavy.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(forecast) <span class="co"># time-series modeling</span>
 <span class="kw">library</span>(ggsci) <span class="co"># d3 color pallettes</span>
 <span class="kw">library</span>(forcats) <span class="co"># fct tools</span>
@@ -486,7 +480,7 @@ nicely &lt;-<span class="st"> </span><span class="cf">function</span>(breaks) {
     labels &lt;-<span class="st"> </span><span class="kw">map2</span>(m, y, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">ifelse</span>(. <span class="op">==</span><span class="st"> &quot;Jan&quot;</span>, .y, <span class="st">&quot;&quot;</span>)))
     <span class="kw">return</span>(labels) } 
 brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">date</span>(<span class="st">&quot;2012-07-01&quot;</span>), <span class="kw">date</span>(<span class="st">&quot;2018-10-01&quot;</span>), <span class="st">&quot;3 months&quot;</span>)</code></pre></div>
-<p>I decided to start my OPD journey exploring the <a href="http://opendata.charlottesville.org/datasets/crime-data">Public Safety &gt; Crime Data</a>, mainly because I’ve worked with crime data in the <a href="./dc_crime.html">past</a>. So I manually downloaded the csv from the link above and started a GitHub repo. I have yet to use the API, perhaps another day.</p>
+<p>I decided to start my OPD journey exploring the <a href="http://opendata.charlottesville.org/datasets/crime-data">Public Safety &gt; Crime Data</a>, mainly because I’ve worked with crime data in the <a href="./dc_crime.html">past</a>. So I manually downloaded the csv from the link above and started a GitHub repository. I have yet to use the API, perhaps another day.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tib &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;~/future/CvilleTowing/Crime_Data.csv&quot;</span>)
 <span class="kw">names</span>(tib) <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">tolower</span>()
 
@@ -505,7 +499,7 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
 ##  - attr(*, &quot;problems&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 1 obs. of  5 variables:
 ##  - attr(*, &quot;spec&quot;)=List of 2
 ##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
-<p>The function <code>read_csv</code> imputes the column types from the first 1000 rows and never coherces characters to factors, which are both nice upgrades from the baseR <code>read.csv</code>. We can see in this case it correctly guessed <code>datereported</code> as <code>POSIXct</code>, but it didn’t call <code>hourreported</code> as <code>POSIXct</code>, so it’s not magic but the <code>read_file</code> family of functions definatly save some tidying time.</p>
+<p>The function <code>read_csv</code> imputes the column types from the first 1000 rows and never coheres characters to factors, which are both nice upgrades from the base R <code>read.csv</code>. We can see in this case it correctly guessed <code>datereported</code> as <code>POSIXct</code>, but it didn’t call <code>hourreported</code> as <code>POSIXct</code>, so it’s not magic but the <code>read_file</code> family of functions definitely save some tidying time.</p>
 <p>While the data comes off the shelf nicely formatted (thank you, thank you and thank you) I still wanted to make some minor adjustments before I got into exploring.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tib <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>recordid) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">unite</span>(address, blocknumber, streetname) <span class="op">%&gt;%</span>
@@ -517,7 +511,7 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
 </div>
 <div id="explore" class="section level1">
 <h1>Explore</h1>
-<p>Now that our data has been shaped up into something nice and plottable, let start looking at exactly how much data we have here.</p>
+<p>Now that our data has been shaped up into something nice and plotable, let start looking at exactly how much data we have here.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tib, <span class="kw">aes</span>(date)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_freqpoly</span>(<span class="dt">bins =</span> <span class="dv">60</span>) <span class="op">+</span><span class="st"> </span><span class="co"># 60 months in 5 years</span>
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> brks, <span class="dt">date_minor_breaks =</span> <span class="st">&quot;1 month&quot;</span>,
@@ -527,10 +521,10 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
          <span class="dt">x =</span> <span class="ot">NULL</span>,
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-30:2017-08-27] &quot;</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/range-1.png" width="672" /></p>
-<p>Looks like we have five years of continuous report data going back to September 2012, not too shabby for a single csv. And the total number of cases reported has been steady, maybe even decreasing slightly each year, which is good news for any community. It also looks like there is a consistant spike in the number of police reports each year around September and October, I wonder if we can figure out hoo/what is responsible for that autumn jump?</p>
+<p>Looks like we have five years of continuous report data going back to September 2012, not too shabby for a single csv. And the total number of cases reported has been steady, maybe even decreasing slightly each year, which is good news for any community. It also looks like there is a consistent spike in the number of police reports each year around September and October, I wonder if we can figure out hoo/what is responsible for that autumn jump?</p>
 <div id="hoo-dunnit" class="section level2">
 <h2>Hoo dunnit?</h2>
-<p>I don’t work with date or time data very often but when I do I always use the <a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html"><code>lubridate</code></a> package. It maintains the tidy syntax and allows for easy manipulation (adding, subtracting, building sequence) of date and time period objects. Let’s use it here to build an series of annually reoccuring date ranges from mid-August to the end of October to feed in to <code>geom_rect()</code> highlight our window of interest.</p>
+<p>I don’t work with date or time data very often but when I do I always use the <a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html"><code>lubridate</code></a> package. It maintains the tidy syntax and allows for easy manipulation (adding, subtracting, building sequence) of date and time period objects. Let’s use it here to build an series of annually reoccurring date ranges from mid-August to the end of October to feed in to <code>geom_rect()</code> highlight our window of interest.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">students_back &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">date =</span> <span class="kw">seq</span>(<span class="kw">as.Date</span>(<span class="st">&quot;2012-09-01&quot;</span>), <span class="kw">as.Date</span>(<span class="st">&quot;2017-9-01&quot;</span>), <span class="dt">length.out =</span> <span class="dv">6</span>),
                         <span class="dt">date_min =</span> date <span class="op">-</span><span class="st"> </span><span class="kw">ddays</span>(<span class="dv">16</span>), <span class="co"># ~ Aug16</span>
                         <span class="dt">date_max =</span> date <span class="op">%m+%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">2</span>) ) <span class="co"># add to month</span>
@@ -547,12 +541,12 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
          <span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>,
          <span class="dt">caption =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="kw">italic</span>(<span class="st">&quot;Hoo&quot;</span>), <span class="st">&quot;&#39;s causing that uptick?&quot;</span>, <span class="st">&quot; Data[2012-08-16:2017-07-31]&quot;</span>)))</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/students-1.png" width="672" /></p>
-<p>We all know correlation does not equal causation. But I would wager that this pattern is real and common for any community with a college (or transient population). Especially for Cville, where the population swells by roughly 25% percent when the undergrads are in town, you would expect bump in all civic activity, inlcuding unfortunately crime too.</p>
+<p>We all know correlation does not equal causation. But I would wager that this pattern is real and common for any community with a college (or transient population). Especially for Cville, where the population swells by roughly 25% percent when the undergrads are in town, you would expect bump in all civic activity, including unfortunately crime too.</p>
 <p>While this annual pattern is interesting, looking at the total counts doesn’t really tell us anything specific. Perhaps we can pull apart the total values and find some specific trends within single offense tags.</p>
 </div>
 <div id="offense-frequency" class="section level2">
 <h2>Offense frequency</h2>
-<p>I’m happy to report that this data is tagged very well, there are a few inconsistant spellings but I can live with that for 32k rows. Lets dive into the tags now, using the factor focused <a href="http://forcats.tidyverse.org/"><code>library(forcats)</code></a> to help us arrange the offenses based on frequency and which really helps in plot preparation.</p>
+<p>I’m happy to report that this data is tagged very well, there are a few inconsistent spellings but I can live with that for 32k rows. Lets dive into the tags now, using the factor focused <a href="http://forcats.tidyverse.org/"><code>library(forcats)</code></a> to help us arrange the offenses based on frequency and which really helps in plot preparation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># there is a single incident (# 201404995) that is NA for offense</span>
 tib <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(offense))
 
@@ -582,15 +576,15 @@ forcats<span class="op">::</span><span class="kw">fct_inorder</span>(tib<span cl
 ## [23] &quot;FRAUD-FALSE PRETENSES/SWINDLE/CONFIDENCE GAME&quot;    
 ## [24] &quot;ASSAULT-INTIMIDATION&quot;                             
 ## [25] &quot;MISC CRIMINAL/STALKING&quot;</code></pre>
-<p>The list of the top 25 most frequent offense tags looks pretty consistant, all uppercase, with the “-” being consistantly used to show sub-groups and the “/” being used to show aliases. To get a macro view of the type of crimes being commited I am going to collapse the subgroups moving forward. However I want to point out, this detailed naming system give us the ability to easily investigate subgroup differences, it’s a really nice suprise that it is formatted so well!</p>
-<p>Probably my favorite functions out of <code>library(forcats)</code> are <code>fct_infreq()</code> and <code>fct_inorder()</code> The first does the equivilant of <code>table() %&gt;% sort(descreasing = T) %&gt;% unique()</code> to define the the levels of a factor, with the most frequent assigned lowest levels by default. It’s counter-part <code>fct_inorder()</code> assigns levels based on current tibble order, and this can be equally useful when piped after <code>arrange()</code>. <code>arrange(mtcars, -cyl) %&gt;% mutate(cyl = fct_inorder(cyl))</code>. If you take one thing away from this write up hopefully these two are it, they are nice additions to R and big time savers for me.</p>
+<p>The list of the top 25 most frequent offense tags looks pretty consistent, all uppercase, with the “-” being consistently used to show sub-groups and the “/” being used to show aliases. To get a macro view of the type of crimes being committed I am going to collapse the subgroups moving forward. However I want to point out, this detailed naming system give us the ability to easily investigate subgroup differences, it’s a really nice surprise that it is formatted so well!</p>
+<p>Probably my favorite functions out of <code>library(forcats)</code> are <code>fct_infreq()</code> and <code>fct_inorder()</code> The first does the equivalent of <code>table() %&gt;% sort(descreasing = T) %&gt;% unique()</code> to define the the levels of a factor, with the most frequent assigned lowest levels by default. It’s counter-part <code>fct_inorder()</code> assigns levels based on current tibble order, and this can be equally useful when piped after <code>arrange()</code>. <code>arrange(mtcars, -cyl) %&gt;% mutate(cyl = fct_inorder(cyl))</code>. If you take one thing away from this write up hopefully these two are it, they are nice additions to R and big time savers for me.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tib<span class="op">$</span>offense <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;-.*&quot;</span>, <span class="st">&quot;&quot;</span>, .) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">gsub</span>(<span class="st">&quot;/.*&quot;</span>, <span class="st">&quot;&quot;</span>, .)
 
 <span class="co"># reset levels</span>
 tib<span class="op">$</span>offense <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">as.factor</span>() <span class="op">%&gt;%</span>
 <span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_infreq</span>()</code></pre></div>
-<p>Now we have our tags collapsed and ordered by frequency, let’s look at the distribution of reports across offenses. I’m using a little <code>as.numeric(any_factor)</code> hack here to help avoid too much axis text. Also since most time-series data follows an exponential distribution, I went ahead and simulated a random draw from an expoential distribution with a mean of 6. This distribution comparison serves as a visualize sanity check to make sure we’re on the right path.</p>
+<p>Now we have our tags collapsed and ordered by frequency, let’s look at the distribution of reports across offenses. I’m using a little <code>as.numeric(any_factor)</code> hack here to help avoid too much axis text. Also since most time-series data follows an exponential distribution, I went ahead and simulated a random draw from an exponential distribution with a mean of 6. This distribution comparison serves as a visualize sanity check to make sure we’re on the right path.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulated data</span>
 sims_tib &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">offense =</span> <span class="kw">round</span>(<span class="kw">rexp</span>(<span class="dt">n =</span> <span class="kw">nrow</span>(tib), <span class="dt">rate =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>)))
 <span class="co"># rate is defined as 1 / mu for exponential distributions</span>
@@ -634,11 +628,11 @@ top16<span class="op">$</span>offense <span class="op">%&lt;&gt;%</span><span cl
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-15:2017-08-01]&quot;</span>,
          <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">x =</span> <span class="ot">NULL</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/top16-1.png" width="672" /></p>
-<p>It looks like “Assult”, “Towing”, “Vandalism” and “Disorderly” all have yearly spikes during our interval of interest. “Towing” is the only one of those that looks like it has been increasing steadily over the last five years. I will be focusing on “Towing” only in the time-series modeling next, but remeber that “Assult”, had sub-categories that we collapsed earlier, so that might be an interesting area to look into more…</p>
+<p>It looks like “Assault”, “Towing”, “Vandalism” and “Disorderly” all have yearly spikes during our interval of interest. “Towing” is the only one of those that looks like it has been increasing steadily over the last five years. I will be focusing on “Towing” only in the time-series modeling next, but remember that “Assault”, had sub-categories that we collapsed earlier, so that might be an interesting area to look into more…</p>
 </div>
 <div id="towing-forecast" class="section level2">
 <h2>Towing forecast</h2>
-<p>To get start with towing lets connfirm that year over year increase, we saw in the sparklines and get a better handle on the seasonal distribution with a nice stacked histogram.</p>
+<p>To get start with towing lets confirm that year over year increase, we saw in the spark lines and get a better handle on the seasonal distribution with a nice stacked histogram.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tow &lt;-<span class="st"> </span><span class="kw">filter</span>(top16, offense <span class="op">==</span><span class="st"> &quot;Towing&quot;</span>)
 
 <span class="co"># drop 2012 and 2017 bc partial years</span>
@@ -655,7 +649,7 @@ tow <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">95</span>, .<span class="dv">9</span>))</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/tow-1.png" width="672" /></p>
 <p>We can see clearly that the big annual spike is focused in Sept-Oct. Perhaps there is another variable, besides undergrads being on grounds, that can explain this? I wonder if home football games have anything to do with it…</p>
-<p>Since it is clear that this data set has repeated annual patterns, if we want to model it, a simple <code>lm()</code> won’t do for accurately projecting future monthly towing totals. The wonderful <code>library(forecast)</code> is on version 8.1 as of this typing. It is the project of <a href="https://github.com/robjhyndman">Rob Hyndman</a>, proffesor of Statistics at Monash University (Aus), and have been in development since 2012 and is a standard tool for time-series analysis with <code>R</code>. It comes loaded with a bunch of customizable functions for smoothing and decomposing, but here we will stick to a few basic functions and use most of the default parameters just to show how easy to use it is.</p>
+<p>Since it is clear that this data set has repeated annual patterns, if we want to model it, a simple <code>lm()</code> won’t do for accurately projecting future monthly towing totals. The wonderful <code>library(forecast)</code> is on version 8.1 as of this typing. It is the project of <a href="https://github.com/robjhyndman">Rob Hyndman</a>, professor of Statistics at Monash University (Aus), and have been in development since 2012 and is a standard tool for time-series analysis with <code>R</code>. It comes loaded with a bunch of customization functions for smoothing and decomposing, but here we will stick to a few basic functions and use most of the default parameters just to show how easy to use it is.</p>
 <p>The first step is to create a <code>time.series</code> object, essentially the response values labelled by period.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reset to all data</span>
 tow &lt;-<span class="st"> </span><span class="kw">filter</span>(top16, offense <span class="op">==</span><span class="st"> &quot;Towing&quot;</span>)
@@ -679,12 +673,12 @@ myts</code></pre></div>
 ## 2015  31  31  48  67  39  23  36  68  85  67  53  36
 ## 2016  71  50  70  51  49  49  45  54  82 104  53  28
 ## 2017  60  65  76  81  56  44  46  48</code></pre>
-<p>Now that we have resructed our data for <code>library(forecast)</code> we can take advantage of its really nice modeling tools. To start we can peak at the underlying trends with the decomposition function <code>stl()</code>.</p>
+<p>Now that we have restructured our data for <code>library(forecast)</code> we can take advantage of its really nice modeling tools. To start we can peak at the underlying trends with the decomposition function <code>stl()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">decomp_fit &lt;-<span class="st"> </span><span class="kw">stl</span>(myts, <span class="dt">s.window=</span> <span class="st">&quot;periodic&quot;</span>)
 
 <span class="kw">plot</span>(decomp_fit)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/stl-1.png" width="672" /></p>
-<p>That was dangerously easy to do and look at this nice panel we get returned. It shows the raw data, seasonal model, trend model and a resiual plot for the trend model. Let’s now build a model that combine the seasonal and trend components via <code>HoltWinters()</code> to project the next years worth of towing reports.</p>
+<p>That was dangerously easy to do and look at this nice panel we get returned. It shows the raw data, seasonal model, trend model and a residual plot for the trend model. Let’s now build a model that combine the seasonal and trend components via <code>HoltWinters()</code> to project the next years worth of towing reports.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hw_fit &lt;-<span class="st"> </span><span class="kw">HoltWinters</span>(myts)
 <span class="co"># plot(hw_fit)</span>
 
@@ -742,8 +736,8 @@ next_tib<span class="op">$</span>year &lt;-<span class="st"> </span><span class=
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-16:2017-08-31]; Projections[2017-09-01:2018-10-31]&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/fin_plot-1.png" width="672" /></p>
-<p>We see the mean trend moving back toward the historical average in the projections, while the combined seasonal-trend model keeps climbing. Since time-series models are relatively new to me, I am still learning the best strategies and hope to have some more details to provide at the ODP data bootcamp session.</p>
-<p>I hope this was a mildly-compelling narative for not parking illegally, but more importantly I hope this outline is a useful template for jumping into the ODP Crime Data with R.</p>
+<p>We see the mean trend moving back toward the historical average in the projections, while the combined seasonal-trend model keeps climbing. Since time-series models are relatively new to me, I am still learning the best strategies and hope to have some more details to provide at the ODP data boot camp session.</p>
+<p>I hope this was a mildly-compelling narrative for not parking illegally, but more importantly I hope this outline is a useful template for jumping into the ODP Crime Data with R.</p>
 <p>I know there a lot of trends in the Crime Data set that deserve more exploration, so time to get busy. Hopefully this portal can be used to have fun and build a more informed and engaged community. See you at the next Meetup!</p>
 </div>
 </div>
@@ -753,7 +747,7 @@ next_tib<span class="op">$</span>year &lt;-<span class="st"> </span><span class=
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        Copyright &copy; 2017.
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
 </p>
 
 
