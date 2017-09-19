@@ -244,7 +244,7 @@ $(document).ready(function ()  {
       scrollTo: 0
     };
     options.showAndHide = false;
-    options.smoothScroll = true;
+    options.smoothScroll = false;
 
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");
@@ -459,25 +459,36 @@ div.tocify {
 </div>
 
 
-<p><img src="www/practice.gif" alt="Iverson the poet" />.</p>
-<div id="intro" class="section level1">
-<h1>Intro</h1>
+<div id="sports-fan-baby" class="section level4">
+<h4><img src="www/sports_fan.gif" alt="Sports fan baby" /></h4>
 <p>With the season finals for the NBA and NHL dominating the sports-cast schedule, I decided to build a quick text analysis of athletes from the NBA, NHL, NASCAR, and PGA. I’ve always thought of hockey players as nicer than normal athletes and wanted to compare them against other sporting professionals. Let’s see how nice they actually are … eh?</p>
 <hr />
+</div>
+<div id="setup" class="section level1">
+<h1>Setup</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># packages</span>
+<span class="kw">library</span>(rvest) <span class="co"># the R scraping tool</span>
+<span class="kw">library</span>(ggsci) <span class="co"># pretty colors</span>
+<span class="kw">library</span>(stringr) <span class="co"># text wrangling</span>
+<span class="kw">library</span>(tidyverse) <span class="co"># tibble wrangling</span>
+<span class="kw">library</span>(magrittr) <span class="co"># %&lt;&gt;% is not a pipe</span>
+
+<span class="kw">theme_set</span>(<span class="kw">theme_minimal</span>()) <span class="co"># set the gglot theme once</span>
+
+<span class="co"># cust fxns</span>
+na_filler &lt;-<span class="st"> </span><span class="cf">function</span>(vector, <span class="dt">reverse =</span> F) {
+    <span class="cf">if</span> (reverse) {seq &lt;-<span class="st"> </span><span class="kw">length</span>(vector)<span class="op">:</span><span class="dv">1</span>}
+    <span class="cf">if</span> (<span class="op">!</span>reverse) {seq &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(vector)}
+    <span class="cf">for</span> (i <span class="cf">in</span> seq) {
+        <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.na</span>(vector[i])) {j &lt;-<span class="st"> </span>vector[i]}
+        <span class="cf">if</span> (<span class="kw">is.na</span>(vector[i])) {vector[i] &lt;-<span class="st"> </span>j} }
+    <span class="kw">return</span>(vector) }</code></pre></div>
 <p>This analysis would not be possible with out the <a href="http://tidyverse.org/"><code>tidyverse</code></a> or the fantastic packages of <a href="https://github.com/trinker">Tyler Rinker</a>, <a href="https://github.com/juliasilge">Julia Silge</a> and <a href="https://github.com/dgrtwo">David Robinson</a>. Thank you all for your inspiration and contribution to the text analysis tool chest of <code>R</code>.</p>
 </div>
 <div id="scrape" class="section level1">
 <h1>Scrape</h1>
 <p>Because of <a href="http://www.asapsports.com/">ASAPSports</a> we can access transcripts from a wide-range of professional and amateur athlete interviews. Unfortunately this data is not immediately available in “tidy” format, or even as a .csv, but have no fear our web-scraping bff <a href="https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en">Selector Gadget</a> and <a href="https://cran.r-project.org/web/packages/rvest/rvest.pdf"><code>library(rvest)</code></a> are here!!!!!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
-
-<span class="co"># my favorites</span>
-<span class="kw">library</span>(stringr) <span class="co"># text-mining</span>
-<span class="kw">library</span>(tidyverse) <span class="co"># team</span>
-<span class="kw">library</span>(magrittr) <span class="co"># this is not a %&lt;&gt;% </span>
-<span class="kw">library</span>(ggsci) <span class="co"># colors</span>
-
-<span class="co"># scrapes from any event link_page URL, like this one:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scrapes from any event link_page URL, like this one:</span>
 <span class="co"># http://www.asapsports.com/show_event.php?category=5&amp;date=2017-5-30&amp;title=NHL+STANLEY+CUP+FINAL%3A+PREDATORS+VS+PENGUINS</span>
 
 asap_scraper &lt;-<span class="st"> </span><span class="cf">function</span>(link_page) {
@@ -509,10 +520,8 @@ asap_scraper &lt;-<span class="st"> </span><span class="cf">function</span>(link
     
     sport<span class="op">$</span>speaker <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">na_filler</span>()   
     
-    <span class="kw">return</span>(sport)
-    
-}</code></pre></div>
-<p>Yea sorry about that, web scrapping is always a little dirty … eh?</p>
+    <span class="kw">return</span>(sport) }</code></pre></div>
+<p>Yea sorry web scrapping is always a little messy. We also accomplished the bulk of our data cleaning in the above function too. But now that we have our data tidied up, we can start plotting and leave that raw <code>html</code> behind.</p>
 <hr />
 <p>Let’s looks at some recent test cases…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># here is a list of 4 sport&#39;s test cases</span>
@@ -676,7 +685,7 @@ sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />
 </p>
 
 

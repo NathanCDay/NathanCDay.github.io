@@ -244,7 +244,7 @@ $(document).ready(function ()  {
       scrollTo: 0
     };
     options.showAndHide = true;
-    options.smoothScroll = true;
+    options.smoothScroll = false;
 
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");
@@ -454,16 +454,19 @@ div.tocify {
 </div>
 
 
-<p><img src="www/cvilletow/open_up.gif" alt="Open up already!" />.</p>
+<div class="figure">
+<img src="www/cvilletow/open_up.gif" alt="Open up already!" />
+<p class="caption">Open up already!</p>
+</div>
 <div id="intro" class="section level1">
 <h1>Intro</h1>
 <p>I attended my first <a href="%22https://www.meetup.com/CharlottesvilleDataScience/events/242006576/%22">Charlottesville Data Science Meetup</a> last month, for the launch of the city’s <a href="%22http://opendata.charlottesville.org/%22">Open Data Portal</a>. The meeting unveiled the new ODP, which consolidates a bunch of Charlottesville city records in one place, including Census, assessment, development, traffic and public safety data. The meetup featured a nice introduction to the portal and <a href="http://opensourceconnections.com/">OpenSource Connections</a> provided free craft beer and free Papa Johns!!!</p>
-<p>I think the OPD can be a positive change for the city and I really hope that data community steps up and drives better decisions for Charlottesville. So I used my long Labor day weekend to write up an analysis, using the ODP to do some time-series forecasting with <code>R</code>.</p>
-<p>Overall I think the portal is cleanly designed and easy to navigate (big shout out to the team of talent that made it a reality, thank you!). And most importantly the data is nicely formatted and there is even an API (that I have yet to use) if you want to access programatically! Let’s dive into the analysis and I apologize for the typos, but not for the bad puns.</p>
+<p>I love the OPD concept and believe that data can help drive better decisions for Charlottesville. So I used my long Labor day weekend to write up an analysis, using the ODP to do some time-series forecasting with <code>R</code>.</p>
+<p>The portal had a good layout and all of the data I have touched has been well formatted (thank you so much). So let’s dive into the analysis and I apologize for the typos, but not for the bad puns.</p>
 </div>
 <div id="import" class="section level1">
 <h1>Import</h1>
-<p>I am a big user/believer of the R packages <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>magrittr</code></a> and <a href="https://www.tidyverse.org/"><code>tidyverse</code></a>, so fair warning, this analysis is unabashedly pipe-heavy.</p>
+<p>I am a big user/believer of the R packages <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>magrittr</code></a> and <a href="https://www.tidyverse.org/"><code>tidyverse</code></a>, so fair warning, this analysis is pipe-heavy. I think this is a better way to code</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(forecast) <span class="co"># time-series modeling</span>
 <span class="kw">library</span>(ggsci) <span class="co"># d3 color pallettes</span>
 <span class="kw">library</span>(forcats) <span class="co"># fct tools</span>
@@ -471,15 +474,20 @@ div.tocify {
 <span class="kw">library</span>(magrittr) <span class="co"># piping</span>
 <span class="kw">library</span>(tidyverse) <span class="co"># data wranglin&#39;</span>
 
-<span class="co"># ggplot set up</span>
+## ggplot set up block
+
+<span class="co"># only theme once</span>
 <span class="kw">theme_set</span>(<span class="kw">theme_minimal</span>())
+
+<span class="co"># custom fxns to aid with axis over-plotting and assist consistant intervals</span>
+brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">date</span>(<span class="st">&quot;2012-07-01&quot;</span>), <span class="kw">date</span>(<span class="st">&quot;2018-10-01&quot;</span>), <span class="st">&quot;3 months&quot;</span>)
+
 nicely &lt;-<span class="st"> </span><span class="cf">function</span>(breaks) {
     values &lt;-<span class="st"> </span><span class="kw">as.character</span>(breaks) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">strsplit</span>(<span class="st">&quot;-&quot;</span>)
     m &lt;-<span class="st"> </span><span class="kw">map</span>(values, <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(.[<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span>month.abb[.])
     y &lt;-<span class="st"> </span><span class="kw">map</span>(values, <span class="op">~</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;20&quot;</span>, <span class="st">&quot;&quot;</span>, .[<span class="dv">1</span>]))
     labels &lt;-<span class="st"> </span><span class="kw">map2</span>(m, y, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="kw">ifelse</span>(. <span class="op">==</span><span class="st"> &quot;Jan&quot;</span>, .y, <span class="st">&quot;&quot;</span>)))
-    <span class="kw">return</span>(labels) } 
-brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">date</span>(<span class="st">&quot;2012-07-01&quot;</span>), <span class="kw">date</span>(<span class="st">&quot;2018-10-01&quot;</span>), <span class="st">&quot;3 months&quot;</span>)</code></pre></div>
+    <span class="kw">return</span>(labels) }</code></pre></div>
 <p>I decided to start my OPD journey exploring the <a href="http://opendata.charlottesville.org/datasets/crime-data">Public Safety &gt; Crime Data</a>, mainly because I’ve worked with crime data in the <a href="./dc_crime.html">past</a>. So I manually downloaded the csv from the link above and started a GitHub repository. I have yet to use the API, perhaps another day.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tib &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;~/future/CvilleTowing/Crime_Data.csv&quot;</span>)
 <span class="kw">names</span>(tib) <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">tolower</span>()
@@ -499,8 +507,8 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
 ##  - attr(*, &quot;problems&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 1 obs. of  5 variables:
 ##  - attr(*, &quot;spec&quot;)=List of 2
 ##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
-<p>The function <code>read_csv</code> imputes the column types from the first 1000 rows and never coheres characters to factors, which are both nice upgrades from the base R <code>read.csv</code>. We can see in this case it correctly guessed <code>datereported</code> as <code>POSIXct</code>, but it didn’t call <code>hourreported</code> as <code>POSIXct</code>, so it’s not magic but the <code>read_file</code> family of functions definitely save some tidying time.</p>
-<p>While the data comes off the shelf nicely formatted (thank you, thank you and thank you) I still wanted to make some minor adjustments before I got into exploring.</p>
+<p>The function <code>read_csv</code> imputes the column types from the first 1000 rows and never coherces <code>chr</code>s as <code>fct</code>s, both are nice upgrades from the base R <code>read.csv</code>. We can see in this case it correctly guessed <code>datereported</code> as <code>POSIXct</code>, but it didn’t call <code>hourreported</code> as <code>POSIXct</code>, so it’s not magic but the <code>read_file</code> family of functions definitely save some tidying time.</p>
+<p>While the data comes off the shelf nicely formatted I still wanted to make some minor adjustments before I got into exploring.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tib <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>recordid) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">unite</span>(address, blocknumber, streetname) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">rename_at</span>(<span class="kw">vars</span>(<span class="kw">contains</span>(<span class="st">&quot;reported&quot;</span>)), <span class="kw">funs</span>(<span class="kw">gsub</span>(<span class="st">&quot;reported&quot;</span>, <span class="st">&quot;&quot;</span>, .))) <span class="op">%&gt;%</span>
@@ -511,7 +519,7 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
 </div>
 <div id="explore" class="section level1">
 <h1>Explore</h1>
-<p>Now that our data has been shaped up into something nice and plotable, let start looking at exactly how much data we have here.</p>
+<p>Now that our data has been shaped up into something tidy, let’s start looking at the data visually and see juse what we have here.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tib, <span class="kw">aes</span>(date)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_freqpoly</span>(<span class="dt">bins =</span> <span class="dv">60</span>) <span class="op">+</span><span class="st"> </span><span class="co"># 60 months in 5 years</span>
 <span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> brks, <span class="dt">date_minor_breaks =</span> <span class="st">&quot;1 month&quot;</span>,
@@ -521,7 +529,7 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
          <span class="dt">x =</span> <span class="ot">NULL</span>,
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-30:2017-08-27] &quot;</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/range-1.png" width="672" /></p>
-<p>Looks like we have five years of continuous report data going back to September 2012, not too shabby for a single csv. And the total number of cases reported has been steady, maybe even decreasing slightly each year, which is good news for any community. It also looks like there is a consistent spike in the number of police reports each year around September and October, I wonder if we can figure out hoo/what is responsible for that autumn jump?</p>
+<p>Looks like we have five years of continuous police reporting data going back to September 2012, not too shabby for a single csv. First glance tells us the total number of cases reported has been steady, maybe even decreasing slightly each year, which is good news for any community. It also looks like there is a consistent spike in the number of police reports each year around September and October, I wonder if we can figure out hoo/what is responsible for that fall spike in crime reports?</p>
 <div id="hoo-dunnit" class="section level2">
 <h2>Hoo dunnit?</h2>
 <p>I don’t work with date or time data very often but when I do I always use the <a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html"><code>lubridate</code></a> package. It maintains the tidy syntax and allows for easy manipulation (adding, subtracting, building sequence) of date and time period objects. Let’s use it here to build an series of annually reoccurring date ranges from mid-August to the end of October to feed in to <code>geom_rect()</code> highlight our window of interest.</p>
@@ -541,12 +549,12 @@ brks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
          <span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>,
          <span class="dt">caption =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="kw">italic</span>(<span class="st">&quot;Hoo&quot;</span>), <span class="st">&quot;&#39;s causing that uptick?&quot;</span>, <span class="st">&quot; Data[2012-08-16:2017-07-31]&quot;</span>)))</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/students-1.png" width="672" /></p>
-<p>We all know correlation does not equal causation. But I would wager that this pattern is real and common for any community with a college (or transient population). Especially for Cville, where the population swells by roughly 25% percent when the undergrads are in town, you would expect bump in all civic activity, including unfortunately crime too.</p>
+<p>We all know correlation does not equal causation. But I would wager that this pattern is real and common for any community with a college (or transient population). Especially for Charlottesville, where the population swells by roughly 25% percent when the undergrads are in town, you would expect bump in all civic activity, including crime.</p>
 <p>While this annual pattern is interesting, looking at the total counts doesn’t really tell us anything specific. Perhaps we can pull apart the total values and find some specific trends within single offense tags.</p>
 </div>
 <div id="offense-frequency" class="section level2">
 <h2>Offense frequency</h2>
-<p>I’m happy to report that this data is tagged very well, there are a few inconsistent spellings but I can live with that for 32k rows. Lets dive into the tags now, using the factor focused <a href="http://forcats.tidyverse.org/"><code>library(forcats)</code></a> to help us arrange the offenses based on frequency and which really helps in plot preparation.</p>
+<p>This data is tagged quite well, of course there are a few inconsistent spellings but I can live with that for 32K rows. Let’s dive into the tags now, using the factor focused <a href="http://forcats.tidyverse.org/"><code>library(forcats)</code></a> to help us arrange the offenses based on frequency. PS It really helps plot preparation :)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># there is a single incident (# 201404995) that is NA for offense</span>
 tib <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(offense))
 
@@ -599,7 +607,7 @@ sims_tib &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span clas
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">85</span>, .<span class="dv">85</span>))</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/distribution-1.png" width="672" /></p>
 <p>The real data and the simulated data line up really well! I like doing these checks early on in an analysis, just to make sure I’m not missing any unexpected features or I’m not wasting my time on noise.</p>
-<p>Since we are starting to feel pretty good about out data now, let’s take a closer look at the top 16 tags and see if we can detect any interesting patterns that might help explain the overall spikes we were seeing in total cases in September and October.</p>
+<p>Now we are starting to feel pretty good about our dataset…let’s take a closer look at the top 16 tags and see if we can detect any interesting patterns that might help explain the overall spikes we were seeing in total cases in September and October.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top16 &lt;-<span class="st"> </span><span class="kw">mutate</span>(tib, <span class="dt">offense =</span> forcats<span class="op">::</span><span class="kw">fct_infreq</span>(offense)) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">filter</span>(offense <span class="op">%in%</span><span class="st"> </span><span class="kw">levels</span>(offense)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>]) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">droplevels</span>()
@@ -628,11 +636,11 @@ top16<span class="op">$</span>offense <span class="op">%&lt;&gt;%</span><span cl
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-15:2017-08-01]&quot;</span>,
          <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">x =</span> <span class="ot">NULL</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/top16-1.png" width="672" /></p>
-<p>It looks like “Assault”, “Towing”, “Vandalism” and “Disorderly” all have yearly spikes during our interval of interest. “Towing” is the only one of those that looks like it has been increasing steadily over the last five years. I will be focusing on “Towing” only in the time-series modeling next, but remember that “Assault”, had sub-categories that we collapsed earlier, so that might be an interesting area to look into more…</p>
+<p>It looks like “Assault”, “Towing”, “Vandalism” and “Disorderly” all have yearly spikes during our August to November, interval of interest . “Towing” is the only one of those that looks like it has been increasing steadily over the last five years. I will be focusing on “Towing” only in the time-series modeling next, but remember that “Assault”, had sub-categories that we collapsed earlier, so that might be an interesting area to look into further if one where so inclined.</p>
 </div>
-<div id="towing-forecast" class="section level2">
-<h2>Towing forecast</h2>
-<p>To get start with towing lets confirm that year over year increase, we saw in the spark lines and get a better handle on the seasonal distribution with a nice stacked histogram.</p>
+<div id="forcast-calls-for-tow" class="section level2">
+<h2>Forcast calls for tow</h2>
+<p>To get start with “Towing”, first lets quantify that year over year increase, we saw in the spark lines and get a better handle on the seasonal distribution with a nice stacked histogram.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tow &lt;-<span class="st"> </span><span class="kw">filter</span>(top16, offense <span class="op">==</span><span class="st"> &quot;Towing&quot;</span>)
 
 <span class="co"># drop 2012 and 2017 bc partial years</span>
@@ -648,9 +656,10 @@ tow <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">
          <span class="dt">caption =</span> <span class="st">&quot;Data[2013-01-01:2016-12-31]&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(.<span class="dv">95</span>, .<span class="dv">9</span>))</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/tow-1.png" width="672" /></p>
-<p>We can see clearly that the big annual spike is focused in Sept-Oct. Perhaps there is another variable, besides undergrads being on grounds, that can explain this? I wonder if home football games have anything to do with it…</p>
-<p>Since it is clear that this data set has repeated annual patterns, if we want to model it, a simple <code>lm()</code> won’t do for accurately projecting future monthly towing totals. The wonderful <code>library(forecast)</code> is on version 8.1 as of this typing. It is the project of <a href="https://github.com/robjhyndman">Rob Hyndman</a>, professor of Statistics at Monash University (Aus), and have been in development since 2012 and is a standard tool for time-series analysis with <code>R</code>. It comes loaded with a bunch of customization functions for smoothing and decomposing, but here we will stick to a few basic functions and use most of the default parameters just to show how easy to use it is.</p>
-<p>The first step is to create a <code>time.series</code> object, essentially the response values labelled by period.</p>
+<p>We can see that the big annual spike is peaking in Sept-Oct. There also is a small bump in March and April, which also coincides with students returning for semester. Perhaps there is something else lurking to better explain our towing report spikes? Football maybe?</p>
+<p>Regardless it’s clear that this data set has repeated annual patterns. So if we want to model it, a simple <code>lm()</code> won’t do for accurately projecting future monthly towing totals.</p>
+<p>This ia where the <code>library(forecast)</code> comes in to define a syntax for time series modeling. This wonderful package, built by <a href="https://github.com/robjhyndman">Rob Hyndman</a>, is on version 8.1 as of this typing and has long been the standard tool for time-series analysis with <code>R</code>. It comes loaded with a bunch of customization functions for smoothing and decomposing, but for now let’s stick to the basics to get going.</p>
+<p>The first step to working with <code>forecast()</code> is to create a <code>time.series</code> object, which is just the response variable values grouped by time series period. Don’t worry they are easy to create and print very well in the console :)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reset to all data</span>
 tow &lt;-<span class="st"> </span><span class="kw">filter</span>(top16, offense <span class="op">==</span><span class="st"> &quot;Towing&quot;</span>)
 
@@ -673,20 +682,22 @@ myts</code></pre></div>
 ## 2015  31  31  48  67  39  23  36  68  85  67  53  36
 ## 2016  71  50  70  51  49  49  45  54  82 104  53  28
 ## 2017  60  65  76  81  56  44  46  48</code></pre>
-<p>Now that we have restructured our data for <code>library(forecast)</code> we can take advantage of its really nice modeling tools. To start we can peak at the underlying trends with the decomposition function <code>stl()</code>.</p>
+<p>Now that we have restructured our data for <code>forecast()</code>, we can take advantage of its really nice default model paramenters. To start with let’s peak at the underlying trends with the decomposition function <code>stl()</code>, which stands for Seasonal, Trend and Loess.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">decomp_fit &lt;-<span class="st"> </span><span class="kw">stl</span>(myts, <span class="dt">s.window=</span> <span class="st">&quot;periodic&quot;</span>)
 
 <span class="kw">plot</span>(decomp_fit)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/stl-1.png" width="672" /></p>
-<p>That was dangerously easy to do and look at this nice panel we get returned. It shows the raw data, seasonal model, trend model and a residual plot for the trend model. Let’s now build a model that combine the seasonal and trend components via <code>HoltWinters()</code> to project the next years worth of towing reports.</p>
+<p>That is a quick way to look at the model components. We can see our raw data, the seasonal model, the loess trend model, its residuals to the raw data. The model has detected the strong seasonal spike we saw in September and Octorber as well as the steady annual increase of tows reported.</p>
+<p>Next let’s build a model that can combine the seasonal and trend components via <code>HoltWinters()</code>. This will allow us to project future towing report rates using all of the seasonal pattern information we have in our model to help us make more accurate predictions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hw_fit &lt;-<span class="st"> </span><span class="kw">HoltWinters</span>(myts)
 <span class="co"># plot(hw_fit)</span>
 
 <span class="co"># make predictions </span>
-month_preds &lt;-<span class="st"> </span><span class="kw">forecast</span>(hw_fit, <span class="dv">15</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># returns Sep17 : Oct18</span>
+month_preds &lt;-<span class="st"> </span><span class="kw">forecast</span>(hw_fit, <span class="dv">15</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 15 periods ahead; returns Sep17 : Oct18</span>
 <span class="st">    </span>as.tibble <span class="op">%&gt;%</span>
-<span class="st">    </span>.[[<span class="dv">1</span>]]
-<span class="co"># and tidy results for plotting</span>
+<span class="st">    </span>.[[<span class="dv">1</span>]]</code></pre></div>
+<p>Using for the abilities of <code>forecast()</code> it is easy to use our model for future projections. The only thing we have to do now is tidy up those projections so we can plot them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># build a tidy tib for plotting</span>
 next_tib &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">date =</span> <span class="kw">seq</span>(<span class="kw">date</span>(<span class="st">&quot;2017-09-01&quot;</span>), <span class="kw">date</span>(<span class="st">&quot;2018-11-01&quot;</span>), <span class="st">&quot;1 month&quot;</span>),
                     <span class="dt">y =</span> month_preds)
 
@@ -697,8 +708,8 @@ month_tib <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class
 <span class="co"># bind on AUG17 info for smoothness</span>
 aug17 &lt;-<span class="st"> </span>month_tib[<span class="kw">nrow</span>(month_tib),]
 next_tib <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>(aug17, .)</code></pre></div>
-<p>That was a couple of steps all at once, sorry I’m not sure how to break it down better. Most of that code is just for extracting and tidying the <code>forecast()</code> values to get the data ready for trend plotting and there is more than one way to wrangle those, so use whatever tools you’re most comfortable with.</p>
-<p>Just to really drive home the difference of seasonal models, let’s build out an identical range of predictions for the trend model too.</p>
+<p>Now we have built a data source ready to plug into <code>ggplot()</code> to show our model predictions for the next year.</p>
+<p>Just to really drive home the difference of between the seasonal and loess trend component of our model, let’s build out the loess model for the identical interval, for co-plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trend_fit &lt;-<span class="st"> </span><span class="kw">HoltWinters</span>(decomp_fit<span class="op">$</span>time.series[,<span class="dv">2</span>])
 trend_preds &lt;-<span class="st"> </span><span class="kw">forecast</span>(trend_fit, <span class="dv">15</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span>as.tibble <span class="op">%&gt;%</span>
@@ -708,7 +719,7 @@ trend_preds &lt;-<span class="st"> </span><span class="kw">forecast</span>(trend
 trend_past &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(decomp_fit<span class="op">$</span>time.series[,<span class="dv">2</span>])
 trend_tib &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">date =</span> <span class="kw">seq</span>(<span class="kw">date</span>(<span class="st">&quot;2012-09-01&quot;</span>), <span class="kw">date</span>(<span class="st">&quot;2018-11-01&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;1 month&quot;</span>),
                      <span class="dt">y =</span> <span class="kw">c</span>(trend_past, trend_preds))</code></pre></div>
-<p>Now all we have left to do is plot. Bad news first, the forecast is calling for even more tow, this year and next.</p>
+<p>Now all we have to do is layer them together.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># expand students_back for future</span>
 students_back2 &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">date =</span> <span class="kw">seq</span>(<span class="kw">as.Date</span>(<span class="st">&quot;2012-09-01&quot;</span>), <span class="kw">as.Date</span>(<span class="st">&quot;2018-09-01&quot;</span>), <span class="st">&quot;1 year&quot;</span>),
                         <span class="dt">date_min =</span> date <span class="op">-</span><span class="st"> </span><span class="kw">ddays</span>(<span class="dv">16</span>), <span class="co"># ~ Aug16</span>
@@ -736,9 +747,8 @@ next_tib<span class="op">$</span>year &lt;-<span class="st"> </span><span class=
          <span class="dt">caption =</span> <span class="st">&quot;Data[2012-08-16:2017-08-31]; Projections[2017-09-01:2018-10-31]&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
 <p><img src="tow_forecast_files/figure-html/fin_plot-1.png" width="672" /></p>
-<p>We see the mean trend moving back toward the historical average in the projections, while the combined seasonal-trend model keeps climbing. Since time-series models are relatively new to me, I am still learning the best strategies and hope to have some more details to provide at the ODP data boot camp session.</p>
-<p>I hope this was a mildly-compelling narrative for not parking illegally, but more importantly I hope this outline is a useful template for jumping into the ODP Crime Data with R.</p>
-<p>I know there a lot of trends in the Crime Data set that deserve more exploration, so time to get busy. Hopefully this portal can be used to have fun and build a more informed and engaged community. See you at the next Meetup!</p>
+<p>We see the loess (dashed) trend moving back down towards the historical average in our projection, while the our total seasonal plus trend model is still climbing upward.</p>
+<p>I hope this outline is a useful template for jumping into the ODP Crime Data with R. I know there a lot of trends in the Crime Data set that deserve more exploration, so time to get busy. Hopefully this portal can be used to have fun and build a more informed and engaged community. See you at the next Meetup!</p>
 </div>
 </div>
 
@@ -747,7 +757,7 @@ next_tib<span class="op">$</span>year &lt;-<span class="st"> </span><span class=
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />
 </p>
 
 

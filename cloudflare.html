@@ -201,7 +201,7 @@ $(document).ready(function ()  {
       scrollTo: 0
     };
     options.showAndHide = true;
-    options.smoothScroll = true;
+    options.smoothScroll = false;
 
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");
@@ -405,14 +405,16 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">HTTPS via CloudFlare for GitHub Pages</h1>
-<h4 class="date"><em>2017 August 19</em></h4>
+<h4 class="date"><em>2017/08/19</em></h4>
 
 </div>
 
 
-<p><img src="www/cloudflare/gloves.gif" alt="Now its time to get to work" />.</p>
+<div id="time-to-get-secure" class="section level4">
+<h4><img src="www/cloudflare/gloves.gif" alt="Time to get secure" /></h4>
 <p>This tutorial assumes that you already have a GitHub site, but if you don’t, <a href="https://www.rstudio.com/">Rstudio</a> has published a getting started guide <a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html">here</a> (which ironically is not being served via <code>https</code> at present). I also want to point out that GitHub pages serves all of it’s content via <code>https</code> by default, as long as you use the stock URL <code>username.github.io</code>. But if you wanted to use a custom domain, you were left out of the security party, until Cloud Flare came to town.</p>
 <p>Besides buying the domain, everything you are about to see is free and fast!</p>
+</div>
 <div id="anchor" class="section level2">
 <h2>Custom domains</h2>
 <p>The first step (and only one that costs $$$) is to register a domain with a domain registrar service. There are a lot of companies that do this, I chose to use <a href="www/cloudflare.namecheap.com/Domain_Name">NameCheap</a>. While this is the first and only DNS I have ever registered, I am impressed with how easy to use NameCheap’s interface is.</p>
@@ -555,7 +557,7 @@ div.tocify {
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />
 </p>
 
 
