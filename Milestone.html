@@ -24,27 +24,35 @@
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="shortcut icon" type="image/png" href="www/favicon2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="www/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="www/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="www/favicon-16x16.png">
+<link rel="manifest" href="www/manifest.json">
+<link rel="mask-icon" href="www/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="www/favicon.ico">
+<meta name="msapplication-config" content="www/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<! link rel="shortcut icon" type="image/png" href="www/favicon_dark.png">
 
 <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-          
-<link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto">
+          href="https://fonts.googleapis.com/css?family=Atomic+Age|Roboto|Ubuntu">
           
 <style>
-    .navbar {
-        font-family: 'Atomic Age';
-    }
-    .tocify {
-        font-family: 'Atomic Age';
-    }
-    h1 {
-        font-family: 'Atomic Age';
-    }
-    p {
-        font-family: 'Roboto';
-    }
+.navbar-brand {
+    font-family:"Atomic Age";
+    font-size:1.5em;
+}
+
+body {
+    font-family:"Ubuntu";
+}
+p {
+    font-size:1.1em;
+}
+p ~ ul {
+    font-size:1.1em;
+}
 
 </style>
 
@@ -346,13 +354,6 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="sports_senti.html">
-    <span class="fa fa-futbol-o"></span>
-     
-    Sports Sentiment
-  </a>
-</li>
-<li>
   <a href="shiny.html">
     <span class="fa fa-flask"></span>
      
@@ -369,17 +370,31 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="tow_forecast.html">
+        <span class="fa fa-key"></span>
+         
+        Tow Forcast
+      </a>
+    </li>
+    <li>
+      <a href="sports_senti.html">
+        <span class="fa fa-futbol-o"></span>
+         
+        Sports Sentiment
+      </a>
+    </li>
+    <li>
+      <a href="Milestone.html">
+        <span class="fa fa-comment"></span>
+         
+        Text Prediction
+      </a>
+    </li>
+    <li>
       <a href="state_park_viz.html">
         <span class="fa fa-globe"></span>
          
         State Park Popularity
-      </a>
-    </li>
-    <li>
-      <a href="Cats_with_Pipes.html">
-        <span class="fa fa-puzzle-piece"></span>
-         
-        Piping with Purrr
       </a>
     </li>
     <li>
@@ -405,6 +420,13 @@ div.tocify {
         <span class="fa fa-cloud"></span>
          
         HTTPS via CloudFlare
+      </a>
+    </li>
+    <li>
+      <a href="Cats_with_Pipes.html">
+        <span class="fa fa-puzzle-piece"></span>
+         
+        Piping with Purrr
       </a>
     </li>
   </ul>
@@ -454,7 +476,6 @@ div.tocify {
 <span class="kw">library</span>(magrittr)
 
 <span class="kw">options</span>(<span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)
-<span class="kw">setwd</span>(<span class="st">&quot;~/future/Text/&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)</code></pre></div>
 <div id="foreword" class="section level3">
 <h3>Foreword</h3>
@@ -465,9 +486,9 @@ div.tocify {
 <h3>Read Ins</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># readLines() for chr_vectors and speed</span>
 <span class="kw">getwd</span>()
-news &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;~/future/Text/en_US.news.txt&quot;</span>)
-twitter &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;~/future/Text/en_US.twitter.txt&quot;</span>) <span class="co"># there are some non-essential warnings() here</span>
-blogs &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;~/future/Text/en_US.blogs.txt&quot;</span>)
+news &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;~/en_US.news.txt&quot;</span>)
+twitter &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;~/en_US.twitter.txt&quot;</span>) <span class="co"># there are some non-essential warnings() here</span>
+blogs &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="st">&quot;~/en_US.blogs.txt&quot;</span>)
 
 <span class="co"># store them in a named list</span>
 sources &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">news =</span> news, <span class="dt">twitter =</span> twitter, <span class="dt">blogs =</span> blogs)
@@ -477,14 +498,14 @@ sources &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="
 
 <span class="co"># sample down to 10%</span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
-small_sources &lt;-<span class="st"> </span><span class="kw">map</span>(sources, ~<span class="st"> </span><span class="kw">sample</span>(., <span class="kw">length</span>(.) *<span class="st"> </span>.<span class="dv">10</span>))</code></pre></div>
+small_sources &lt;-<span class="st"> </span><span class="kw">map</span>(sources, <span class="op">~</span><span class="st"> </span><span class="kw">sample</span>(., <span class="kw">length</span>(.) <span class="op">*</span><span class="st"> </span>.<span class="dv">10</span>))</code></pre></div>
 <p>Since each file is over 1 million lines, it makes sense that we’d sample to cut down on our processing time. Reducing down to 10% of the lines present in each of the 3 sources, shouldn’t negatively impact of prediction potential.</p>
 </div>
 <div id="tidy-up" class="section level3">
 <h3>Tidy Up</h3>
 <p>The core concept of <code>library(tidytext)</code> is to organize a courpus as a tidy data frame, meaning one observation per row. We will do this now.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert to a tibble structure from character; also let&#39;s index entries</span>
-tidy_sources &lt;-<span class="st"> </span><span class="kw">map</span>(small_sources, ~<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">text =</span> ., <span class="dt">entry =</span> <span class="dv">1</span>:<span class="kw">length</span>(.)))</code></pre></div>
+tidy_sources &lt;-<span class="st"> </span><span class="kw">map</span>(small_sources, <span class="op">~</span><span class="st"> </span><span class="kw">tibble</span>(<span class="dt">text =</span> ., <span class="dt">entry =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(.)))</code></pre></div>
 <p>I’ve used a <code>tibble</code> here instead of a traditional <code>data.frame</code>, because a <code>tibble</code> can do more things and I consider it a better more modern improvement on the <code>data.frame</code> as R’s central tabular storage object. If you don’t use <code>tibble</code>’s already its worth have a read <a href="https://cran.r-project.org/web/packages/tibble/README.html">here</a>, if you have ever wanted to store a list in a <code>data.frame</code>’s column.</p>
 <div id="unnest" class="section level4">
 <h4>Unnest</h4>
@@ -492,13 +513,13 @@ tidy_sources &lt;-<span class="st"> </span><span class="kw">map</span>(small_sou
 <p>At the same time I am going to handle the unknown encoding of the corpus, with a regular expression designed to only allow lower case letters A-Z and apostrophes. By default <code>unnest_tokens()</code> converts everything to lower case.</p>
 <p><em>Side Note</em> Unknown encoding of apostrophe’s, caused me serval stressful nights, loosing my mind doing failed equality comparrisons with characters that appeared the same on my screen.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># unnest_tokens as single words</span>
-word_sources &lt;-<span class="st"> </span><span class="kw">map</span>(tidy_sources, ~<span class="st"> </span><span class="kw">unnest_tokens</span>(., word, text))
+word_sources &lt;-<span class="st"> </span><span class="kw">map</span>(tidy_sources, <span class="op">~</span><span class="st"> </span><span class="kw">unnest_tokens</span>(., word, text))
 
 <span class="co"># method to catch &quot;foriegn&quot; characters</span>
-word_sources %&lt;&gt;%<span class="st"> </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">mutate</span>(., <span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z]+&#39;?[a-z]+&quot;</span>)))
+word_sources <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">mutate</span>(., <span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z]+&#39;?[a-z]+&quot;</span>)))
 
 <span class="co"># percent &quot;foriegn&quot; words, NAs now</span>
-<span class="kw">map</span>(word_sources, ~<span class="st"> </span><span class="kw">sum</span>(<span class="kw">is.na</span>(.$word)) /<span class="st"> </span><span class="kw">nrow</span>(.))</code></pre></div>
+<span class="kw">map</span>(word_sources, <span class="op">~</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">is.na</span>(.<span class="op">$</span>word)) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(.))</code></pre></div>
 <pre><code>## $news
 ## [1] 0.05982832
 ## 
@@ -508,7 +529,7 @@ word_sources %&lt;&gt;%<span class="st"> </span><span class="kw">map</span>(~<sp
 ## $blogs
 ## [1] 0.05923256</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># drop NAs</span>
-word_sources %&lt;&gt;%<span class="st"> </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">filter</span>(., !<span class="kw">is.na</span>(word)))</code></pre></div>
+word_sources <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">filter</span>(., <span class="op">!</span><span class="kw">is.na</span>(word)))</code></pre></div>
 <p>That is a crude method to determine if a word is from a “foriegn” language, but it is good in the sense it is extremely restictive. That makes doing proper filtering possible in later stage. In a scenario like this where we have an abundance of data, filtering out a corrupted ~ 5% is accetable.</p>
 </div>
 <div id="stop-words" class="section level4">
@@ -516,24 +537,24 @@ word_sources %&lt;&gt;%<span class="st"> </span><span class="kw">map</span>(~<sp
 <p>I also also want to drop “stop” words. These are hyper-common words with little to no impact in terms of text analysis. Words like “the”, “of”, and “a” all fall into this category and while these words make up the bulk of our corpus, they hold minimal predictive or sentimental value. I will show the top 20 words before and after removing “stop” words:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Before</span>
 <span class="co"># plot the top 20 raw</span>
-plot_df &lt;-<span class="st"> </span>word_sources %&gt;%
-<span class="st">    </span><span class="kw">map_df</span>(~<span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) %&gt;%
-<span class="st">               </span><span class="kw">top_n</span>(<span class="dv">20</span>), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) %&gt;%<span class="st"> </span>
+plot_df &lt;-<span class="st"> </span>word_sources <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map_df</span>(<span class="op">~</span><span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span>
+<span class="st">               </span><span class="kw">top_n</span>(<span class="dv">20</span>), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">reorder</span>(word, n))</code></pre></div>
 <pre><code>## Selecting by n
 ## Selecting by n
 ## Selecting by n</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(plot_df, <span class="kw">aes</span>(<span class="dt">x =</span> word, <span class="dt">y =</span> n, <span class="dt">fill =</span> source)) +
-<span class="st">    </span><span class="kw">geom_col</span>(<span class="dt">show.legend =</span> F) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +
-<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>source, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(plot_df, <span class="kw">aes</span>(<span class="dt">x =</span> word, <span class="dt">y =</span> n, <span class="dt">fill =</span> source)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_col</span>(<span class="dt">show.legend =</span> F) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>source, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
 <p><img src="Milestone_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># top 1000 make up 70 %</span>
-word_sources %&gt;%
-<span class="st">    </span><span class="kw">map_df</span>(~<span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) %&gt;%
-<span class="st">               </span><span class="kw">mutate</span>(<span class="dt">rel_freq =</span> n /<span class="st"> </span><span class="kw">sum</span>(n)), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(source) %&gt;%
-<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1000</span>) %&gt;%
+word_sources <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map_df</span>(<span class="op">~</span><span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span>
+<span class="st">               </span><span class="kw">mutate</span>(<span class="dt">rel_freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(source) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1000</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">percent_total =</span> <span class="kw">sum</span>(rel_freq))</code></pre></div>
 <pre><code>## Selecting by rel_freq</code></pre>
 <pre><code>## # A tibble: 3 x 2
@@ -546,35 +567,35 @@ word_sources %&gt;%
 <span class="kw">data</span>(stop_words)
 
 <span class="co"># clean stop_words just like sourcew above</span>
-stop_words %&lt;&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z]+&#39;?[a-z]+&quot;</span>)) %&gt;%
-<span class="st">      </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(word))
+stop_words <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z]+&#39;?[a-z]+&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(word))
 <span class="co"># add custom &quot;stop&quot; words</span>
-stop_words %&lt;&gt;%<span class="st"> </span><span class="kw">full_join</span>(<span class="kw">tibble</span>(<span class="dt">word =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;ve&quot;</span>, <span class="st">&quot;t&quot;</span>, <span class="st">&quot;don&quot;</span>, <span class="st">&quot;can&quot;</span>, <span class="st">&quot;st&quot;</span>), <span class="dt">lexicon =</span> <span class="st">&quot;cust&quot;</span>))</code></pre></div>
+stop_words <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(<span class="kw">tibble</span>(<span class="dt">word =</span> <span class="kw">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;ve&quot;</span>, <span class="st">&quot;t&quot;</span>, <span class="st">&quot;don&quot;</span>, <span class="st">&quot;can&quot;</span>, <span class="st">&quot;st&quot;</span>), <span class="dt">lexicon =</span> <span class="st">&quot;cust&quot;</span>))</code></pre></div>
 <pre><code>## Joining, by = c(&quot;word&quot;, &quot;lexicon&quot;)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">word_sources %&lt;&gt;%<span class="st"> </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">anti_join</span>(., stop_words))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">word_sources <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">anti_join</span>(., stop_words))</code></pre></div>
 <pre><code>## Joining, by = &quot;word&quot;</code></pre>
 <pre><code>## Joining, by = &quot;word&quot;
 ## Joining, by = &quot;word&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># After</span>
 <span class="co"># now re-plot the top 20</span>
-plot_df2 &lt;-<span class="st"> </span>word_sources %&gt;%
-<span class="st">    </span><span class="kw">map_df</span>(~<span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) %&gt;%
-<span class="st">               </span><span class="kw">top_n</span>(<span class="dv">20</span>), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) %&gt;%<span class="st"> </span>
+plot_df2 &lt;-<span class="st"> </span>word_sources <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map_df</span>(<span class="op">~</span><span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span>
+<span class="st">               </span><span class="kw">top_n</span>(<span class="dv">20</span>), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">reorder</span>(word, n))</code></pre></div>
 <pre><code>## Selecting by n</code></pre>
 <pre><code>## Selecting by n
 ## Selecting by n</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(plot_df2, <span class="kw">aes</span>(<span class="dt">x =</span> word, <span class="dt">y =</span> n, <span class="dt">fill =</span> source)) +
-<span class="st">    </span><span class="kw">geom_col</span>(<span class="dt">show.legend =</span> F) +
-<span class="st">    </span><span class="kw">coord_flip</span>() +
-<span class="st">    </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>source, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(plot_df2, <span class="kw">aes</span>(<span class="dt">x =</span> word, <span class="dt">y =</span> n, <span class="dt">fill =</span> source)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_col</span>(<span class="dt">show.legend =</span> F) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>source, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre></div>
 <p><img src="Milestone_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now top 1000 make up 40-50 %</span>
-word_sources %&gt;%
-<span class="st">    </span><span class="kw">map_df</span>(~<span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) %&gt;%
-<span class="st">               </span><span class="kw">mutate</span>(<span class="dt">rel_freq =</span> n /<span class="st"> </span><span class="kw">sum</span>(n)), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(source) %&gt;%
-<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1000</span>) %&gt;%
+word_sources <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map_df</span>(<span class="op">~</span><span class="st"> </span><span class="kw">count</span>(., word, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span>
+<span class="st">               </span><span class="kw">mutate</span>(<span class="dt">rel_freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)), <span class="dt">.id =</span> <span class="st">&quot;source&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(source) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(<span class="dv">1000</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">percent_total =</span> <span class="kw">sum</span>(rel_freq))</code></pre></div>
 <pre><code>## Selecting by rel_freq</code></pre>
 <pre><code>## # A tibble: 3 x 2
@@ -583,7 +604,7 @@ word_sources %&gt;%
 ## 1   blogs     0.4105591
 ## 2    news     0.4049446
 ## 3 twitter     0.5065281</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_words %&lt;&gt;%<span class="st"> </span><span class="kw">full_join</span>(<span class="kw">tibble</span>(<span class="dt">word =</span> <span class="kw">c</span>(<span class="st">&quot;rt&quot;</span>, <span class="st">&quot;im&quot;</span>, <span class="st">&quot;follow&quot;</span>), <span class="dt">lexicon =</span> <span class="st">&quot;cust&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_words <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(<span class="kw">tibble</span>(<span class="dt">word =</span> <span class="kw">c</span>(<span class="st">&quot;rt&quot;</span>, <span class="st">&quot;im&quot;</span>, <span class="st">&quot;follow&quot;</span>), <span class="dt">lexicon =</span> <span class="st">&quot;cust&quot;</span>))</code></pre></div>
 <pre><code>## Joining, by = c(&quot;word&quot;, &quot;lexicon&quot;)</code></pre>
 <p>Notice, there are some specific Twitter words, like “rt”, “follow”, and “im”, in the top20 and I’ve added these to the stop_words. I think these words are more about the structure of the community and less about actual communicative text.</p>
 </div>
@@ -593,49 +614,49 @@ word_sources %&gt;%
 <p>Now our data is clean, I am going to focus on the Twitter document to build a relationship network with associated probabilities. The goal of this network is the map all of the words immediatly following a word of interest (WOI). In network terminology this is neighborhood of the first order, since we are only interested in direct connections from our WOI. To accomplish these network task, I am using <a href="http://igraph.org/r/"><code>library(igraph)</code></a>.</p>
 <p>First we need to reprocess the Twitter document as bi-grams, not the words we did above. The steps here are similar to those above, but it takes a little longer to unnest, becasue bigrams are by defauly overlapping. Meaning the chacter vector “I really love Coursera”, would be split into c(“I really”, “really love”, “love Coursera”), expanding the size of the object being generated and increasing processing time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># unnest to bigrams</span>
-g2_twitter &lt;-<span class="st"> </span>tidy_sources[[<span class="st">&quot;twitter&quot;</span>]] %&gt;%
+g2_twitter &lt;-<span class="st"> </span>tidy_sources[[<span class="st">&quot;twitter&quot;</span>]] <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">unnest_tokens</span>(gram, text, <span class="dt">token =</span> <span class="st">&quot;ngrams&quot;</span>, <span class="dt">n =</span> <span class="dv">2</span>)
 
 <span class="co"># same steps as above, just adapted to cover two columns here </span>
-g2_twitter %&lt;&gt;%<span class="st"> </span><span class="kw">separate</span>(gram, <span class="kw">c</span>(<span class="st">&quot;w1&quot;</span>, <span class="st">&quot;w2&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>) %&gt;%
-<span class="st">    </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;w&quot;</span>)), <span class="kw">funs</span>(<span class="kw">str_extract</span>(., <span class="st">&quot;[a-z]+&#39;?[a-z]+&quot;</span>))) %&gt;%
-<span class="st">    </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(w1),
-           !<span class="kw">is.na</span>(w2),
-           !w1 %in%<span class="st"> </span>stop_words$word,
-           !w2 %in%<span class="st"> </span>stop_words$word)
+g2_twitter <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">separate</span>(gram, <span class="kw">c</span>(<span class="st">&quot;w1&quot;</span>, <span class="st">&quot;w2&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;w&quot;</span>)), <span class="kw">funs</span>(<span class="kw">str_extract</span>(., <span class="st">&quot;[a-z]+&#39;?[a-z]+&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(w1),
+           <span class="op">!</span><span class="kw">is.na</span>(w2),
+           <span class="op">!</span>w1 <span class="op">%in%</span><span class="st"> </span>stop_words<span class="op">$</span>word,
+           <span class="op">!</span>w2 <span class="op">%in%</span><span class="st"> </span>stop_words<span class="op">$</span>word)
 <span class="co"># leave separated for pairwise work</span>
 
 <span class="co"># count up pair frequencies</span>
-g2_counts &lt;-<span class="st"> </span>g2_twitter %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(w1) %&gt;%
-<span class="st">    </span><span class="kw">count</span>(w2, <span class="dt">sort =</span> T) %&gt;%
-<span class="st">    </span><span class="kw">filter</span>(n &gt;<span class="st"> </span><span class="dv">2</span>)
+g2_counts &lt;-<span class="st"> </span>g2_twitter <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(w1) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">count</span>(w2, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)
 <span class="co"># we could plot similar bar charts like above</span></code></pre></div>
 <div id="neighborhood" class="section level4">
 <h4>Neighborhood</h4>
 <p>Now we have a dataframe of with counts of bigrams that appear more than 2 times. We can easily turn this into a graph object and plot it to look at patters. For this example I am looking at the first order neighborhood around “fast”:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make a large network</span>
-tnet &lt;-<span class="st"> </span><span class="kw">graph_from_data_frame</span>(g2_counts[,<span class="dv">1</span>:<span class="dv">2</span>])
+tnet &lt;-<span class="st"> </span><span class="kw">graph_from_data_frame</span>(g2_counts[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])
 <span class="co"># weight the edges with count data</span>
-<span class="kw">E</span>(tnet)$weight &lt;-<span class="st"> </span>g2_counts$n
+<span class="kw">E</span>(tnet)<span class="op">$</span>weight &lt;-<span class="st"> </span>g2_counts<span class="op">$</span>n
 
 <span class="co"># this is just a short hand reference variable</span>
-v &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;fast&quot;</span>, <span class="kw">V</span>(tnet)$name)[<span class="dv">1</span>]
+v &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;fast&quot;</span>, <span class="kw">V</span>(tnet)<span class="op">$</span>name)[<span class="dv">1</span>]
 
 <span class="co"># make 1-edge &quot;neighborhood&quot; network of around v</span>
 small_net &lt;-<span class="st"> </span><span class="kw">make_ego_graph</span>(tnet, <span class="dt">order =</span> <span class="dv">1</span>, <span class="dt">nodes =</span> v)[[<span class="dv">1</span>]]
 
 <span class="co"># plot it</span>
-<span class="kw">ggraph</span>(small_net, <span class="dt">layout =</span> <span class="st">&quot;nicely&quot;</span>) +<span class="st"> </span>
+<span class="kw">ggraph</span>(small_net, <span class="dt">layout =</span> <span class="st">&quot;nicely&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">width =</span> <span class="kw">log</span>(weight),
                        <span class="dt">alpha =</span> <span class="kw">log</span>(weight)),
                    <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">10</span>, <span class="st">&#39;mm&#39;</span>)),
                    <span class="dt">end_cap =</span> <span class="kw">circle</span>(<span class="dv">5</span>, <span class="st">&#39;mm&#39;</span>),
                    <span class="dt">edge_colour =</span> <span class="st">&quot;purple&quot;</span>,
-                   <span class="dt">show.legend =</span> F) +
+                   <span class="dt">show.legend =</span> F) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name),
-                    <span class="dt">size =</span> <span class="dv">5</span>) +
-<span class="st">    </span><span class="kw">scale_edge_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(.<span class="dv">1</span>, .<span class="dv">9</span>)) +
+                    <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_edge_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(.<span class="dv">1</span>, .<span class="dv">9</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_void</span>()</code></pre></div>
 <p><img src="Milestone_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>We can see a lot of relationship that make sense, like “fast food”, “fast lane” and “move fast”. The edge thickness and transparency are scaled to show the probability of the association and the arrows show direction from first word to second word. It’s always nice to look at the data to make sure things behaving like expected. Note, so of the nodes are connected directly without going through “fast” and this is because we started with a much larger network and are only plotting the “neighborhood” one node away from our target.</p>
@@ -647,32 +668,32 @@ small_net &lt;-<span class="st"> </span><span class="kw">make_ego_graph</span>(t
 my_n &lt;-<span class="st"> </span><span class="dv">10</span>
 
 <span class="co"># grab the topn for each first word</span>
-topn_list &lt;-<span class="st"> </span>g2_counts %&gt;%
-<span class="st">    </span><span class="kw">split</span>(.$w1) %&gt;%
-<span class="st">    </span><span class="kw">map</span>(~<span class="st"> </span><span class="kw">top_n</span>(., my_n)) <span class="co"># these are the trade-offs we make</span>
+topn_list &lt;-<span class="st"> </span>g2_counts <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">split</span>(.<span class="op">$</span>w1) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">top_n</span>(., my_n)) <span class="co"># these are the trade-offs we make</span>
 <span class="co"># looks good, but some groups don&#39;t have 10 preditions</span>
 
 <span class="co"># fill these gaps with the top 10 overall words</span>
-topn_overall &lt;-<span class="st"> </span><span class="kw">count</span>(word_sources[[<span class="st">&quot;twitter&quot;</span>]], word, <span class="dt">sort =</span> T) %&gt;%
-<span class="st">    </span><span class="kw">top_n</span>(my_n) %&gt;%
-<span class="st">    </span><span class="kw">select</span>(word) %&gt;%
+topn_overall &lt;-<span class="st"> </span><span class="kw">count</span>(word_sources[[<span class="st">&quot;twitter&quot;</span>]], word, <span class="dt">sort =</span> T) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">top_n</span>(my_n) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(word) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">unlist</span>()
 <span class="co"># long term we could do this within the specific og document (i.e. chapter, post, etc...)</span>
 
 <span class="co"># anon() for map(.f)</span>
-anon &lt;-<span class="st"> </span>function(df) {
-    if (<span class="kw">nrow</span>(df) &lt;<span class="st"> </span>my_n) {
-        df %&lt;&gt;%<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">tibble</span>(<span class="dt">w1 =</span> <span class="kw">unique</span>(df$w1),
-                                 <span class="dt">w2 =</span> topn_overall[<span class="dv">1</span>:(my_n -<span class="st"> </span><span class="kw">nrow</span>(df))],
+anon &lt;-<span class="st"> </span><span class="cf">function</span>(df) {
+    <span class="cf">if</span> (<span class="kw">nrow</span>(df) <span class="op">&lt;</span><span class="st"> </span>my_n) {
+        df <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">tibble</span>(<span class="dt">w1 =</span> <span class="kw">unique</span>(df<span class="op">$</span>w1),
+                                 <span class="dt">w2 =</span> topn_overall[<span class="dv">1</span><span class="op">:</span>(my_n <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(df))],
                                  <span class="dt">n =</span> <span class="dv">1</span>) ) }
     <span class="kw">return</span>(df) }
 <span class="co"># run anon on the list</span>
-topn_list %&lt;&gt;%<span class="st"> </span><span class="kw">map</span>(anon)
+topn_list <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw">map</span>(anon)
 
 <span class="co"># lets ungroup and lean it out</span>
-topn_lean &lt;-<span class="st"> </span><span class="kw">map</span>(topn_list, ~<span class="st"> </span><span class="kw">ungroup</span>(.) %&gt;%
-<span class="st">                     </span><span class="kw">select</span>(<span class="dt">pred =</span> w2, n) %&gt;%
-<span class="st">                     </span><span class="kw">mutate</span>(<span class="dt">p =</span> n /<span class="st"> </span><span class="kw">sum</span>(n)))
+topn_lean &lt;-<span class="st"> </span><span class="kw">map</span>(topn_list, <span class="op">~</span><span class="st"> </span><span class="kw">ungroup</span>(.) <span class="op">%&gt;%</span>
+<span class="st">                     </span><span class="kw">select</span>(<span class="dt">pred =</span> w2, n) <span class="op">%&gt;%</span>
+<span class="st">                     </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)))
 
 topn_lean[[<span class="st">&quot;fast&quot;</span>]] <span class="co"># with probabilities</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 3
@@ -703,7 +724,7 @@ topn_lean[[<span class="st">&quot;fast&quot;</span>]] <span class="co"># with pr
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        Copyright &copy; 2017.
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
 </p>
 
 

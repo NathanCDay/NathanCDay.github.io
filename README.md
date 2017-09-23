@@ -1,2 +1,2 @@
-# NathanCDay.github.io
-Personal website with a collection of projects
+# nateday.me
+PeRsonal website with a collection of pRojects :)

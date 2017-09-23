@@ -9,9 +9,10 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Nathan Day" />
 
 
-<title>Shiny</title>
+<title>Shiny Text Prediction</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -313,48 +314,63 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Shiny</h1>
+<h1 class="title toc-ignore">Shiny Text Prediction</h1>
+<h4 class="author"><em>Nathan Day</em></h4>
+<h4 class="date"><em>6/18/2017</em></h4>
 
 </div>
 
 
-<p>In my day job I constantly am trying to put together the proper series of plots to help people understand and identify the relevant trends in their data.</p>
-<p>Unfortunately this minimizes the investigative and exploratory capabilities of the researchers/team leaders. I really believe that using reactive frameworks like R’s <a href="https://shiny.rstudio.com/">“Shiny”</a> paired with interactive visualization libraries like <a href="https://plot.ly/r/">“plotly”</a>, driven by <a href="https://d3js.org/">“d3”</a> can help restore some of that.</p>
-<p>With a good user interface on the front end, the research data can speak for itself. Easily accessible data makes sharing and showing data decisions so simple. The hard part is finding a balance between when to build out a Shiny app and when to make a quick pdf summary….</p>
-<hr />
-<div id="my-apps" class="section level3">
-<h3>My Apps</h3>
-<p>I have built several Shiny apps for fun and all my code is available on <a href="https://github.com/NathanCDay">Github</a>. Let me know if you find any bugs :)</p>
+<div id="problem" class="section level2">
+<h2>Problem</h2>
 <ul>
-<li><a href="https://nathanday.shinyapps.io/CrimeCast/">Cville CrimeCast</a>
-<ul>
-<li>Packages: <code>leaflet</code>, <code>ggmap</code>, <code>geojsonio</code>, <code>rgeos</code>, <code>rgdal</code></li>
-<li>Shows the block location for police reports in Charlottesvile for 2016</li>
-<li>Allows sorting by offense type and date range, to check on those <a href="./tow_forecast.html">pesky kids</a></li>
-<li>Shape files of police beat areas can be used to summarise as a chloropleth</li>
-</ul></li>
-<li><a href="https://nathanday.shinyapps.io/orange_polls/">Presidential Approval</a>
-<ul>
-<li>Packages: <code>rvest</code>, <code>tidyverse</code>, <code>plotly</code>, <code>magrittr</code></li>
-<li>Compares ratings of past US Presidents</li>
-<li>Highlights historic standing of the 🍊</li>
-<li>Uses a linear model for having fun projecting future ratings</li>
-</ul></li>
-<li><a href="https://nathanday.shinyapps.io/TextPred_Shiny/">Text Prediction</a>
-<ul>
-<li>Packages: <code>tidytext</code>, <code>ggplot2</code>, <code>plotly</code>, <code>magrittr</code></li>
-<li>Predicts next word based on previously parsed n-gram look up tibble</li>
-<li>Uses a <a href="./TextPred_Slides.html">back-off model</a> to work from specific to universal</li>
-<li>Simple button-less UI for completely reactive experience</li>
-</ul></li>
-<li><a href="https://nathanday.shinyapps.io/Shiny_Pokemon/">Pokemon Stat Distributions</a>
-<ul>
-<li>Packages: <code>ggbeeswarm</code>, <code>DT</code>, <code>plotly</code>, <code>magrittr</code></li>
-<li>Tab sets offer multiple viewing options</li>
-<li>Hover events provide additional details</li>
-<li>Filters by type for restricted comparisons</li>
-</ul></li>
+<li><p>Create a lightweight text prediction application that anticipates the next word in a phrase.</p></li>
+<li><p>Given three large (~ 200 Mb) txt files from blog, news and twitter scrapes, contruct a codebase for cleaning, crunching and showing the best guesses for the next word.</p></li>
+<li><p>Utilize <a href="https://en.wikipedia.org/wiki/N-gram">ngrams</a> and a <a href="https://en.wikipedia.org/wiki/Katz%27s_back-off_model">Kat’z back-off model</a> to estimate the next word based on observed frequencies.</p></li>
 </ul>
+</div>
+<div id="solution" class="section level2 smaller">
+<h2>Solution</h2>
+<div id="n-grams" class="section level3">
+<h3>N-grams</h3>
+<ul>
+<li>Deconstruct the text documents into <a href="https://en.wikipedia.org/wiki/N-gram">ngrams</a>, between 2-6 words in length.</li>
+<li>Key the last word in that n-gram as the <code>next_word</code> and tally the frequency of the remaining words in, <code>gram</code>, as a group.</li>
+<li>Sort and filter the tallys to keep the top entries required to cover &gt;50% of all cases observed.</li>
+</ul>
+</div>
+<div id="back-off" class="section level3">
+<h3>Back-off</h3>
+<ul>
+<li>Use a <a href="https://en.wikipedia.org/wiki/Katz%27s_back-off_model">Kat’z back-off model</a> to work backwards from the most specific prediction <code>gram</code> (i.e. 5 words) to the lest specific (i.e. 1 word)</li>
+<li>For every <code>gram</code> that doesn’t produce a guess match from our lookup, remove the first word from the <code>gram</code> and search again (i.e. “sometimes there isn’t a match” -&gt; “there isn’t a match”)</li>
+<li>If we get all the way back to a single word and still can’t produce a guess from our lookup, use the most common words in the lookup.</li>
+</ul>
+</div>
+</div>
+<div id="code" class="section level2 smaller">
+<h2>Code</h2>
+<div id="ngram_algorithim.r" class="section level3">
+<h3><a href="https://github.com/NathanCDay/Text/blob/master/ngram_algorithim.R">ngram_algorithim.R</a></h3>
+<p>Reads in raw data, cleans data using <code>library(tidytext)</code> and contrusts a large list object, <code>ngrams</code>, with the 1-5 word-grams and the tallys of the most frequent next words. Also includes <code>best_guessN()</code> the function that performs the back-off approximation for the user input.</p>
+</div>
+<div id="ui.r" class="section level3">
+<h3><a href="https://github.com/NathanCDay/Text/blob/master/TextPred_Shiny/ui.R">ui.R</a></h3>
+<p>Simple sidebar layout, themed with “United”.</p>
+</div>
+<div id="server.r" class="section level3">
+<h3><a href="https://github.com/NathanCDay/Text/blob/master/TextPred_Shiny/server.R">server.R</a></h3>
+<p>Utilizes RDS to read in stored lookup list form <code>ngram_algorithim.R</code>. Then uses reactive objects to respond to user input and trigger <code>best_guessN()</code> to calculate most probably next words. Output plot is in turn triggered to build with <code>library(ggplot)</code> using <code>geom_col() + geom_label()</code>.</p>
+</div>
+</div>
+<div id="shiny" class="section level2">
+<h2>Shiny</h2>
+<ul>
+<li><p>The shiny server waits until the user starts typing before any computing. All caluculations are reactive so no buttons presses are required (although it takes it a second to complete all of the output).</p></li>
+<li><p>The sidebar panel holds the raw text input box and displays the curent parsed input text being used for lookup.</p></li>
+<li><p>The main panel shows the most popular next words and their relative percentage of occurances based on the current parsed input text.</p></li>
+</ul>
+<p><a href="https://nathanday.shinyapps.io/TextPred_Shiny/" class="uri">https://nathanday.shinyapps.io/TextPred_Shiny/</a></p>
 </div>
 
 <hr>

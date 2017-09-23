@@ -373,7 +373,7 @@ div.tocify {
       <a href="tow_forecast.html">
         <span class="fa fa-key"></span>
          
-        Cville Open Data
+        Tow Forcast
       </a>
     </li>
     <li>
@@ -384,17 +384,17 @@ div.tocify {
       </a>
     </li>
     <li>
+      <a href="Milestone.html">
+        <span class="fa fa-comment"></span>
+         
+        Text Prediction
+      </a>
+    </li>
+    <li>
       <a href="state_park_viz.html">
         <span class="fa fa-globe"></span>
          
         State Park Popularity
-      </a>
-    </li>
-    <li>
-      <a href="Cats_with_Pipes.html">
-        <span class="fa fa-puzzle-piece"></span>
-         
-        Piping with Purrr
       </a>
     </li>
     <li>
@@ -420,6 +420,13 @@ div.tocify {
         <span class="fa fa-cloud"></span>
          
         HTTPS via CloudFlare
+      </a>
+    </li>
+    <li>
+      <a href="Cats_with_Pipes.html">
+        <span class="fa fa-puzzle-piece"></span>
+         
+        Piping with Purrr
       </a>
     </li>
   </ul>
@@ -579,7 +586,7 @@ read_scores &lt;-<span class="st"> </span><span class="kw">with</span>(sports, <
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
-<p><img src="sports_senti_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="sports_senti_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Those two outliers are: Kyle Bush (NASCAR) and J.R. Smith (NBA). Let’s see why…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sports, speaker <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;J.R. SMITH&quot;</span>, <span class="st">&quot;KYLE BUSCH&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 2 x 3
@@ -600,7 +607,7 @@ read_scores <span class="op">%&lt;&gt;%</span><span class="st"> </span><span cla
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
-<p><img src="sports_senti_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="sports_senti_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>After we kick out those outliers, we can see that NBA athletes are consistently rated the highest in terms of reading level. And that NASCAR athletes are consistently the lowest. It also looks like the gaps between NASCAR-NBA and NHL-NBA might be statistically significant. Remember, non-overlapping 95% mean confidence intervals indicate significant difference at p = .05, before multiple test corrections ;)</p>
 </div>
 <div id="sentiment" class="section level1">
@@ -622,7 +629,7 @@ sents <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
-<p><img src="sports_senti_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="sports_senti_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Ah man, why is Nicolar Colserats having such a bad day in that one quote?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sents, sent <span class="op">&lt;</span><span class="st"> </span><span class="op">-</span><span class="fl">0.5</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">select</span>(text) <span class="op">%&gt;%</span>
@@ -643,7 +650,7 @@ sents <span class="op">%&lt;&gt;%</span><span class="st"> </span><span class="kw
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_color_d3</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
-<p><img src="sports_senti_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="sports_senti_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>From the looks of this plot it seems like hockey players are the lowest (in this case least positive) sentiment athletes, but this scoring system is based on word score summation, lets try binning words based on associated sentiment.</p>
 <p>To do this we will switch package gears.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidytext)
@@ -667,7 +674,7 @@ sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words
 <span class="st">    </span><span class="kw">facet_grid</span>(<span class="op">~</span><span class="st"> </span>sport) <span class="op">+</span>
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_d3</span>()</code></pre></div>
-<p><img src="sports_senti_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="sports_senti_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Well now it looks like all athletes have a similar sentiment distribution with high levels of ‘positive’, ‘anticipation’ and ‘trust’ sentiments across sports. Maybe all of that sports psychology is onto something after all. (Bob Rotella is a golf-genius)</p>
 <p>But to truly see whether hockey players are nice, lets do side by side comparisons for each sport, only paneled by sentiments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sport_words, <span class="kw">aes</span>(sport, prop, <span class="dt">fill =</span> sport)) <span class="op">+</span>
@@ -675,7 +682,7 @@ sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sentiment, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_fill_rickandmorty</span>() <span class="co"># it really exists like that szechuan sauce</span></code></pre></div>
-<p><img src="sports_senti_files/figure-html/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="sports_senti_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Now we can see golfers are the angriest, racers have the most anticipation, basketball players have the least fear and hockey players are the most positive and least negative (at least in this small sample). Maybe hockey players really are nicer than other professional athletes. More tests are in order and more scraping is required to power them, off we go.</p>
 <p>Thanks for reading :)</p>
 </div>
@@ -685,7 +692,7 @@ sport_words &lt;-<span class="st"> </span><span class="kw">group_by</span>(words
     Built with <a href = "http://rmarkdown.rstudio.com/rmarkdown_websites.html">Rmd</a>.
     Hosted on <a href = "https://pages.github.com/">Github</a>.
         Maintained by <a href = "mailto:nathancday@gmail.com">me</a>.
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
 </p>
 
 
