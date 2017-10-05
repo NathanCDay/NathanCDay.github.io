@@ -327,38 +327,39 @@ $(document).ready(function () {
 
 <p>Thanks for coming to my little corner of the inter webs. I try to keep this webpage up to date and mildly interesting, but no promises.</p>
 <hr />
-<div id="using-the-open-data-portals-api" class="section level2">
-<h2>Using the Open Data Portal’s API</h2>
+<div id="the-odp-api" class="section level3">
+<h3>The ODP API 🖲️</h3>
+</div>
 <div id="october-1-2017" class="section level3">
 <h3>October 1, 2017</h3>
-<p>I added a write up to help you get started with using <a href="http://opendata.charlottesville.org/">Charlottesville Open Data Portal</a> API in <code>R</code> with <code>library(geojsonio)</code>. In the ‘Tech Docs’ section we walk through how to access two different data types: a table of historic crime data and a shape file of the city’s police patrol beats. This seems to cover all of the data I have encountered so far on the portal, but if you find a different use case, let me know. <a href="./api.html">Happy API-ing</a>!</p>
+<p>Getting started with the <a href="http://opendata.charlottesville.org/">Charlottesville Open Data Portal’s API</a> is super simple in <code>R</code>, thanks to the awesome <code>library(geojsonio)</code>. There is <a href="./api.html">brief markdown</a> in the ‘Tech Docs’ section that shows how to download two different types of datasets from the Portal. In only a couple of lines of code you can be done downloading and happily mapping your data visualizations.</p>
 <hr />
 </div>
-</div>
-<div id="smart-cvilles-bootcamp" class="section level2">
-<h2>Smart Cville’s Bootcamp</h2>
+<div id="cville-crimecast" class="section level3">
+<h3>Cville CrimeCast</h3>
 <div id="september-23-2017" class="section level4">
 <h4>September 23, 2017</h4>
-<p>Yesterday’s Data Boot Camp but on by <a href="https://www.smartcville.com/">Smart Cville</a> was the follow up event for the introduction of the <a href="http://opendata.charlottesville.org/">Open Data Portal</a> August’s <a href="https://www.meetup.com/CharlottesvilleDataScience/events/242006576/">Cville Data Science</a> meetup. So I’m updating links now to track down the <a href="https://nathanday.shinyapps.io/CrimeCast/">Shiny</a> app I showed in the gallery walk. Also I’m typing up a how to <code>ggmap::geo_code() %&gt;% leaflet()</code>, that will get you rocking ’n rolling on awesome map making in R.</p>
+<p>At yesterday’s Data Bootcamp by <a href="https://www.smartcville.com/">Smart Cville</a> I shared my <a href="https://nathanday.shinyapps.io/CrimeCast/">CrimeCast Shiny app</a> for mapping the city’s top 16 most frequent crime types. I used the <a href="">ODP’s police reports</a> to <code>ggmap::geocode()</code> the block address, to show the spatial distrution with a slide input for showing only certain time of year. There is a big spike in towing around the football stadium in the fall, maybe I was wrong about the Wahoo students, maybe it’s the Wahoo fans who are causing the fall ruckus in Charlottesville.</p>
 <hr />
 </div>
 </div>
-<div id="opening-the-charlotesville-open-data-portal" class="section level2">
-<h2>Opening the Charlotesville Open Data Portal</h2>
+<div id="towing-on-the-rise-in-cville" class="section level3">
+<h3>Towing on the rise in Cville 📈</h3>
 <div id="september-4-2017" class="section level4">
 <h4>September 4, 2017</h4>
-<p>I just posted a first draft of my markdown time-series analysis using the city’s brand new <a href="http://opendata.charlottesville.org/">Open Data Portal</a> to forecast towing events. I also take a quick look at the size, scope and quality of the currently available <a href="http://opendata.charlottesville.org/datasets/crime-data">Crime Data</a>. I’m planning to follow this post up by expanding into map based viz and developing a time of day forecasts to help people decide when and where is a good time to risk an quick illegal park for convenience. Check out the <a href="./tow_forecast.html">tow forcast</a> in ‘Data Docs’.</p>
+<p>I just posted a first draft of <a href="(./tow_forecast.html)">my towing time-series analysis</a> using the city’s brand new <a href="http://opendata.charlottesville.org/">Open Data Portal</a> to forecast towing events. I also take a quick look at the size, scope and quality of the currently available <a href="http://opendata.charlottesville.org/datasets/crime-data">Crime Data</a>. I’m planning to follow this post up by expanding into map based viz and developing a time of day forecasts to help people decide when and where is a good time to risk an quick illegal park for convenience.</p>
 <hr />
 </div>
 </div>
-<div id="rework-the-approval-app" class="section level2">
-<h2>Rework the 🍊 approval app</h2>
+<div id="rework-the-approval-app" class="section level3">
+<h3>Rework the 🍊 approval app</h3>
 <div id="august-30-2017" class="section level4">
 <h4>August 30, 2017</h4>
 <p>Earlier this year I built a <a href="https://nathanday.shinyapps.io/orange_polls/">Shiny app</a> to visualize historical Gallup polling data for US Presidents. In light of the recent events in my hometown of Charlottesville and the rest of the country, I decided to go back and rework the code to make my visualization better.</p>
 <p>I originally wanted this app to be solid visual evidence for just how historically abnormal the current public opinion of the Executive branch really is. My first build used loess regression to fit a smoothed trend line for the “average” Republican and Democratic President in an effort to show how today compared to a “typical” president.</p>
 <p>In the new build I decided to show all of the poll numbers directly which shows just how good or bad each president fared over his term(s). And I added an option to project just how bad it will get for the 🍊, only time will tell. But one thing is clear no other president to date has started as low as the 🍊 has, not even Ford after Nixon resigned amid Watergate. And that could be a good sign for Mike Pence. :)</p>
 <hr />
+</div>
 </div>
 <div id="enable-https-on-github-pages-via-cloudflare" class="section level3">
 <h3>Enable https on GitHub Pages via CloudFlare</h3>
@@ -417,7 +418,6 @@ $(document).ready(function () {
 <h4>March 26, 2017:</h4>
 <p>I’m giving on lightening talk about <code>library(magrittr)</code> and <code>library(purrr)</code> for the <a href="https://www.meetup.com/UVa-R-Users-Group/events/238302940/">UVA R Users Meetup</a> on March 29, 2017. There is an Rmd version of my code demo in the Data Docs menu.</p>
 <hr />
-</div>
 </div>
 </div>
 
